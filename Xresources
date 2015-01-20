@@ -1,0 +1,57 @@
+! terminal colors ------------------------------------------------------------
+
+*background: #000000
+*foreground: #ffffff
+*color0:  #000000
+*color8:  #555753
+*color1:  #d685b0
+*color9:  #e2b2c0
+*color2:  #dbe159
+*color10: #b3d3ac
+*color3:  #fff353
+*color11: #f9e697
+*color4:  #7fc2ef
+*color12: #a5d1f4
+*color5:  #e4ad6d
+*color13: #c4a6ca
+*color6:  #eabf4c
+*color14: #eac7cd
+*color7:  #cccccc
+*color15: #ffffff
+! ===
+! Xft
+! ===
+
+Xft.dpi: 96
+Xft.lcdfilter: lcddefault
+Xft.antialias: true
+Xft.autohint: true
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+
+! =====
+! URxvt
+! =====
+
+URxvt*depth: 32
+URxvt*foreground: #f4f4f4
+URxvt*background: [55]#000000
+! URxvt.transparent: true
+! URxvt*shading: 20
+! URxvt.fading: 0
+! URxvt*inheritPixmap: true
+URxvt.loginShell: true
+URxvt.saveLines: 100000
+URxvt.internalBoarder: 3
+URxvt.lineSpace: 0
+URxvt.allow_bold: true
+URxvt.font: xft:Migu 1M:pixelsize=15:style=bold:antialias=true:hinting=true:autohint=true
+URxvt*letterSpace: -2
+URxvt.scrollBar: false
+URxvt.scrollStyle: rxvt
+URxvt.iso14755: false
+
+URxvt.keysym.Mod4-c:   perl:clipboard:copy
+URxvt.keysym.Mod4-v:   perl:clipboard:paste
+URxvt.perl-ext-common: clipboard
