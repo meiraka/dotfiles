@@ -106,7 +106,7 @@ class _Variables(object):
                                           name,
                                           _py2vimliteral(value)))
 
-variables = _Variables()
+variables = _Variables('v:')
 
 
 class _Scope(object):
