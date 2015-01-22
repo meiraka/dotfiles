@@ -9,7 +9,12 @@ import time
 
 start = time.time()
 sys.path.append(os.path.expanduser('~/.vim/'))
-import vimrc
-reload(vimrc)
+
+if 'vimrc' not in sys.modules:
+    import vimrc
+else:
+    print 'reload'
+    import vimrc
+    reload(vimrc)
 end = time.time()
 EOP

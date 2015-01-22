@@ -24,6 +24,7 @@ vim.settings.backspace = 'start,eol,indent'
 vim.settings.tabstop = 4
 vim.settings.shiftwidth = 4
 vim.settings.expandtab = True
+vim.settings.path += ',/home/y/include'
 # vim.settings.ambiwidth = 'single'
 
 plugin_manager_path = os.path.join(BUNDLE_DIR, 'neobundle.vim')
