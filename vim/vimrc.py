@@ -61,10 +61,8 @@ if os.path.exists(plugin_manager_path):
 
     if vim.functions.has("lua") == '1':
         NeoBundle("'Shougo/neocomplete.vim'")
-    else:
-        NeoBundle("'Shougo/neocomplcache'")
 
-    if vim.variables.version >= 704:
+    if int(vim.variables.version) >= 704:
         NeoBundle("'Shougo/vimshell.vim'")
         NeoBundle("'ujihisa/vimshell-ssh'")
     NeoBundle("'scrooloose/nerdtree'")
@@ -116,9 +114,11 @@ if os.path.exists(plugin_manager_path):
 
     # Lang: Python
     NeoBundle("'davidhalter/jedi-vim'")
-    vim.autocmd.bind('FileType python', '',
-                     setattr, [vim.buffer.variables, 'did_ftplugin', '1'])
-    vim.autoloads.jedi.variables.use_tabs_not_buffers = 0
+    if neobundle.is_installed('neocomplete.vim') == '1':
+        vim.autocmd.bind('FileType', 'python',
+                         vim.commands.setlocal, ['omnifunc=jedi#completions'])
+        vim.autoloads.jedi.variables.completions_enabled = 0
+        vim.autoloads.jedi.variables.auto_vim_configuration = 0
     NeoBundle("'nvie/vim-flake8'")
 
     # Lang: Haskell
