@@ -24,7 +24,8 @@ vim.settings.backspace = 'start,eol,indent'
 vim.settings.tabstop = 4
 vim.settings.shiftwidth = 4
 vim.settings.expandtab = True
-vim.settings.path += ',/home/y/include'
+user = 'y'
+vim.settings.path += ',/home/{0}/include'.format(user)
 # vim.settings.ambiwidth = 'single'
 
 plugin_manager_path = os.path.join(BUNDLE_DIR, 'neobundle.vim')
@@ -79,6 +80,7 @@ if os.path.exists(plugin_manager_path):
     g.syntastic_cpp_check_header = 1
     g.syntastic_cpp_no_include_search = 1
     g.syntastic_cpp_auto_refresh_includes = 1
+    g.syntastic_cpp_include_dirs = [i for i in vim.settings.path.split(',') if i]
 
     # Status line
     NeoBundle("'itchyny/lightline.vim'")
