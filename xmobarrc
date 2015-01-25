@@ -2,7 +2,7 @@ Config { font = "xft:Migu 1C:bold:size=11:antialias=true"
        , bgColor = "#141414"
        , fgColor = "#f4f4f4"
        , position = TopW R 90
-       , lowerOnStart = False
+       , lowerOnStart = True
        , commands = [ Run Date "%a %b %_d %Y %H:%M:%S " "date" 10
                     , Run StdinReader
                     ]
