@@ -17,6 +17,7 @@ vim.settings.t_Co = 256
 vim.settings.number = True
 vim.settings.cursorline = True
 
+vim.commands.filetype('plugin', 'indent', 'on')
 vim.commands.syntax('on')
 vim.settings.hlsearch = True
 vim.settings.incsearch = True
@@ -63,6 +64,7 @@ if os.path.exists(plugin_manager_path):
 
     if vim.functions.has("lua") == '1':
         NeoBundle("'Shougo/neocomplete.vim'")
+        vim.autoloads.neocomplete.variables.enable_at_startup = 1
 
     if int(vim.variables.version) >= 704:
         NeoBundle("'Shougo/vimshell.vim'")
@@ -117,11 +119,6 @@ if os.path.exists(plugin_manager_path):
 
     # Lang: Python
     NeoBundle("'davidhalter/jedi-vim'")
-    if neobundle.is_installed('neocomplete.vim') == '1':
-        vim.autocmd.bind('FileType', 'python',
-                         vim.commands.setlocal, ['omnifunc=jedi#completions'])
-        vim.autoloads.jedi.variables.completions_enabled = 0
-        vim.autoloads.jedi.variables.auto_vim_configuration = 0
     NeoBundle("'nvie/vim-flake8'")
 
     # Lang: Haskell
@@ -139,6 +136,15 @@ if os.path.exists(plugin_manager_path):
     neobundle.end()
     vim.commands.filetype("plugin", "indent", "on")
     NeoBundleCheck()
+
+if neobundle.is_installed('jedi-vim') == '1':
+    if neobundle.is_installed('neocomplete.vim') == '1':
+        vim.autocmd.bind('FileType', 'python',
+                         vim.commands.setlocal, ['omnifunc=jedi#completions'])
+        vim.autoloads.jedi.variables.completions_enabled = 0
+        vim.autoloads.jedi.variables.auto_vim_configuration = 0
+        vim.autoloads.neocomplete.variables.force_omni_input_patterns = {
+            'python': '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'}
 
 vim.commands.colorscheme("tricolore")
 
