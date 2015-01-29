@@ -47,7 +47,7 @@ URxvt.saveLines: 100000
 URxvt.internalBoarder: 3
 URxvt.lineSpace: 0
 URxvt.allow_bold: true
-URxvt.font: xft:Ricty Discord:pixelsize=17:style=bold:antialias=true:hinting=true:autohint=true
+URxvt.font: xft:Ricty Discord:pixelsize=15:style=bold:antialias=true:hinting=true:autohint=true
 URxvt*letterSpace: -2
 URxvt.scrollBar: false
 URxvt.scrollStyle: rxvt
