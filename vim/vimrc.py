@@ -7,7 +7,7 @@ import viimproved as vim
 BUNDLE_DIR = os.path.expanduser('~/.vim-plugins')
 
 plugin_manager_path = os.path.join(BUNDLE_DIR, 'neobundle.vim')
-if vim.functions.has('vim_starting'):
+if vim.functions.has('vim_starting') == '1':
     if vim.settings.compatible:
         vim.settings.compatible = False
     # fetch neobundle and add runtimepath
