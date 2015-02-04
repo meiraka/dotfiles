@@ -1,6 +1,7 @@
 """meiraka vim config."""
 
 import os
+import pprint
 import subprocess
 import viimproved as vim
 
@@ -29,43 +30,63 @@ if vim.functions.has('vim_starting') == '1':
 if os.path.exists(plugin_manager_path):
     g = vim.globals.variables
     neobundle = vim.autoloads.neobundle.functions
+
+    def nbwrap(func):
+        """Return function that decorate arguments with nb()."""
+        def nb(args):
+            """Convert python data to NeoBundle args."""
+            pout = pprint.pformat(args, 0).replace(u'\n', u'')
+            if pout[0] == u'(' and pout[-1] == u')':
+                return pout[1:-1]
+            else:
+                return pout
+
+        def wrapfunc(*args):
+            if len(args) == 0:
+                func()
+            elif len(args) == 1:
+                func(nb(args[0]))
+            else:
+                func(nb(args))
+        return wrapfunc
+
     NeoBundleFetch, NeoBundle, NeoBundleCheck = [
-        getattr(vim.commands, i) for i in
+        nbwrap(getattr(vim.commands, i)) for i in
         ['NeoBundleFetch', 'NeoBundle', 'NeoBundleCheck']]
-    plugins_config = []
 
     neobundle.begin(os.path.expanduser(BUNDLE_DIR))
-    NeoBundleFetch("'Shougo/neobundle.vim'")
-    NeoBundle("'meiraka/vim-hysteric-colors'")
-    NeoBundle("'Shougo/vimproc',{'build':{'unix':'make -f make_unix.mak'"
-              ",'mac':'make -f make_mac.mak'}}")
+    NeoBundleFetch('Shougo/neobundle.vim')
+    NeoBundle('meiraka/vim-hysteric-colors')
+    NeoBundle('Shougo/vimproc',
+              {'build': {'unix': 'make -f make_unix.mak',
+               'mac': 'make -f make_mac.mak'}})
 
     if vim.functions.has("lua") == '1':
-        NeoBundle("'Shougo/neocomplete.vim'")
+        NeoBundle('Shougo/neocomplete.vim', {'rev': 'ver.1.1'})
 
     if int(vim.variables.version) >= 704:
-        NeoBundle("'Shougo/vimshell.vim'")
-        NeoBundle("'ujihisa/vimshell-ssh'")
-    NeoBundle("'scrooloose/syntastic'")  # syntax checker
-    NeoBundle("'itchyny/lightline.vim'")  # statusline
-    NeoBundle("'nathanaelkane/vim-indent-guides'")  # indent view
-    NeoBundle("'tpope/vim-fugitive'")  # git
+        NeoBundle('Shougo/vimshell.vim')
+        NeoBundle('ujihisa/vimshell-ssh')
+    NeoBundle('scrooloose/syntastic')  # syntax checker
+    NeoBundle('itchyny/lightline.vim')  # statusline
+    NeoBundle('nathanaelkane/vim-indent-guides')  # indent view
+    NeoBundle('tpope/vim-fugitive')  # git
 
     # Lang: C++
-    NeoBundle("'meiraka/vim-google-cpp-style-indent'")
+    NeoBundle('meiraka/vim-google-cpp-style-indent')
 
     # Lang: Python
-    NeoBundle("'davidhalter/jedi-vim'")
-    NeoBundle("'nvie/vim-flake8'")
+    NeoBundle('davidhalter/jedi-vim')
+    NeoBundle('nvie/vim-flake8')
 
     # Lang: Haskell
-    NeoBundle("'kana/vim-filetype-haskell'")
+    NeoBundle('kana/vim-filetype-haskell')
 
     # Lang: Vim
-    NeoBundle("'vim-jp/vimdoc-ja'")
+    NeoBundle('vim-jp/vimdoc-ja')
 
     # Lang: Scala
-    NeoBundle("'derekwyatt/vim-scala'")
+    NeoBundle('derekwyatt/vim-scala')
 
     neobundle.end()
     vim.commands.filetype("plugin", "indent", "on")

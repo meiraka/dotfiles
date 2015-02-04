@@ -36,9 +36,8 @@ class _Command(object):
         self.name = name
 
     def __call__(self, *args):
-        encoded_args = u' '.join([unicode(i).replace(' ', '\\ ')
-                                  for i in args])
-        vim.command('%s %s' % (self.name, encoded_args))
+        fixed_args = u' '.join(args)
+        vim.command('%s %s' % (self.name, fixed_args))
 
 
 def _py2vimliteral(python_value):
