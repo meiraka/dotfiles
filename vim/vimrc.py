@@ -147,12 +147,12 @@ if os.path.exists(plugin_manager_path):
             'python': '\%([^. \t]\.\|^\s*@\|'
                       '^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'}
 
-    vim.commands.colorscheme("tricolore")
+    vim.commands.colorscheme("le_petit_chaperonrouge")
 
 if vim.functions.has('gui_running') == '1':
     vim.settings.background = 'light'
-    vim.settings.guifont = "Migu 1M bold 12"
-    vim.settings.guifontwide = "Migu 1M bold 12"
+    vim.settings.guifont = "Ricty\ bold\ 12"
+    vim.settings.guifontwide = "Ricty\ bold\ 12"
 else:
     vim.settings.background = 'dark'
 

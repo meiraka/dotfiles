@@ -11,7 +11,10 @@ start = time.time()
 sys.path.append(os.path.expanduser('~/.vim/'))
 
 if 'vimrc' not in sys.modules:
-    import vimrc
+    try:	
+        import vimrc
+    except:
+        pass
 else:
     print 'reload'
     import vimrc
