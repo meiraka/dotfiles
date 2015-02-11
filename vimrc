@@ -13,8 +13,8 @@ sys.path.append(os.path.expanduser('~/.vim/'))
 if 'vimrc' not in sys.modules:
     try:	
         import vimrc
-    except:
-        pass
+    except Exception, err:
+        print err
 else:
     print 'reload'
     import vimrc

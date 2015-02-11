@@ -61,8 +61,8 @@ if os.path.exists(plugin_manager_path):
               {'build': {'unix': 'make -f make_unix.mak',
                'mac': 'make -f make_mac.mak'}})
 
-    if vim.functions.has("lua") == '1':
-        NeoBundle('Shougo/neocomplete.vim', {'rev': 'ver.1.1'})
+    # if vim.functions.has("lua") == '1':
+    #     NeoBundle('Shougo/neocomplete.vim', {'rev': 'ver.1.1'})
 
     if int(vim.variables.version) >= 704:
         NeoBundle('Shougo/vimshell.vim')
@@ -74,6 +74,7 @@ if os.path.exists(plugin_manager_path):
 
     # Lang: C++
     NeoBundle('meiraka/vim-google-cpp-style-indent')
+    NeoBundle('Rip-Rip/clang_complete')
 
     # Lang: Python
     NeoBundle('davidhalter/jedi-vim')
@@ -137,6 +138,10 @@ if os.path.exists(plugin_manager_path):
             vim.autocmd.bind('BufWritePost', '*',
                              show_syntastic_errors, [])
 
+    if neobundle.is_installed('clang_complete') == '1':
+        g.clang_library_path = os.path.expanduser('~/local/lib')
+        g.clang_complete_auto = 1
+
     if (neobundle.is_installed('jedi-vim') == '1' and
             neobundle.is_installed('neocomplete.vim') == '1'):
         vim.autocmd.bind('FileType', 'python',
@@ -150,7 +155,7 @@ if os.path.exists(plugin_manager_path):
     vim.commands.colorscheme("le_petit_chaperonrouge")
 
 if vim.functions.has('gui_running') == '1':
-    vim.settings.background = 'light'
+    vim.settings.background = 'dark'
     vim.settings.guifont = "Ricty\ bold\ 12"
     vim.settings.guifontwide = "Ricty\ bold\ 12"
 else:
