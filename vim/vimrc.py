@@ -158,6 +158,7 @@ if vim.functions.has('gui_running') == '1':
     vim.settings.background = 'dark'
     vim.settings.guifont = "Ricty\ bold\ 12"
     vim.settings.guifontwide = "Ricty\ bold\ 12"
+    vim.settings.guioptions = vim.settings.guioptions.translate(None, 'mTrL')
 else:
     vim.settings.background = 'dark'
 
