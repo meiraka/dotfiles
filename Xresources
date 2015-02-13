@@ -26,9 +26,9 @@
 Xft.dpi: 96
 Xft.lcdfilter: lcddefault
 Xft.antialias: true
-Xft.autohint: true
+Xft.autohint: false
 Xft.hinting: true
-Xft.hintstyle: hintslight
+Xft.hintstyle: hintfull
 Xft.rgba: rgb
 
 ! =====
@@ -47,8 +47,8 @@ URxvt.saveLines: 100000
 URxvt.internalBoarder: 3
 URxvt.lineSpace: 0
 URxvt.allow_bold: true
-URxvt.font: xft:Ricty Discord:pixelsize=15:style=bold:antialias=true:hinting=true:autohint=true
-URxvt*letterSpace: -2
+URxvt.font: xft:Migu 1M:pixelsize=17:style=bold
+URxvt*letterSpace: -1
 URxvt.scrollBar: false
 URxvt.scrollStyle: rxvt
 URxvt.iso14755: false
