@@ -11,6 +11,9 @@ else
   alias ls="ls --color=auto"
 fi
 
+alias v=vim
+alias va=valgrind
+
 if which ~/local/tmp/dircolors > /dev/null; then
   mkdir -p ~/local/tmp
   python ~/local/bin/dir_colors.py > ~/local/tmp/dir_colors
