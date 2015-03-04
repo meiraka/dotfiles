@@ -103,6 +103,7 @@ if os.path.exists(plugin_manager_path):
     if neobundle.is_installed('syntastic') == '1':
         g.syntastic_python_checkers = ['python', 'pylint',
                                        'flake8', 'pep257']
+        g.syntastic_cpp_checkers = ['gcc', 'cpplint', 'clang_check']
         g.syntastic_cpp_cpplint_args = ('--verbose=3 '
                                         'filter=-legal/copyright '
                                         '--extensions=hpp,cpp ')
