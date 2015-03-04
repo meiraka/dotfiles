@@ -67,7 +67,7 @@ myStartupHook = do
 myBorderWidth = 2
 myNormalBorderColor = "#141414"
 myFocusedBorderColor = "#ffffff"
-myTerminal = "urxvt"
+myTerminal = "sakura"
 myWorkspaces = ["♥", "♡", "♦", "♢", "♠", "♤", "♣", "♧"]
 myManageHook =
   composeAll
@@ -99,7 +99,7 @@ myLogHook statusbar = dynamicLogWithPP $ xmobarPP
 
 scratchpads =
   [ NS "terminal"
-      "urxvt -name terminalScratchpad -title terminal"
+      "sakura --name terminalScratchpad"
       (resource =? "terminalScratchpad") large
   , NS "sound"
       "pavucontrol --name soundScratchpad"
