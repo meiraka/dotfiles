@@ -20,6 +20,8 @@ let g:syntastic_cpp_cpplint_args =
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_no_include_search = 1
 let g:syntastic_cpp_auto_refresh_includes = 1
+let s:user = 'y'
+let g:syntastic_cpp_include_dirs = ['/home/'.s:user.'/include']
 
 Plug 'itchyny/lightline.vim'  " statusline
 set laststatus=2
@@ -76,7 +78,7 @@ set backspace=start,eol,indent
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set path+=/home/y/include
+set path=
 " set ambiwidth='single'
 
 
