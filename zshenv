@@ -6,5 +6,5 @@ export LANG=ja_JP.UTF-8
 export LC_LANG=${LANG}
 export LC_ALL=${LANG}
 export EDITOR=vi
-export MPD_HOST="volumio.local"
+export MPD_HOST="runeaudio.local"
 
