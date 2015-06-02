@@ -2,7 +2,8 @@
 # set background
 nitrogen --restore & 
 
-~/local/bin/compton -r 20 -m 0.8 -f -I 0.1 -I 0.09 -i 0.8 -r 20 -o 0.25 -c -b &
+killall compton
+~/local/bin/compton -b &
 
 # tray
 killall trayer
