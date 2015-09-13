@@ -2,14 +2,14 @@
 # set background
 nitrogen --restore & 
 
-killall compton
-~/local/bin/compton -b &
-
 # tray
 killall trayer
 trayer --edge top --align left --SetDockType true \
     --expand true --widthtype percent --width 10% \
     --tint 0x141414 --transparent true --alpha 0 --height 25 &
+
+killall compton
+~/local/bin/compton -b &
 
 # file manager daemon
 if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then
