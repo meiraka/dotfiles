@@ -44,6 +44,7 @@ augroup AutoSyntastic
   autocmd BufWritePost * call s:show_syntasitc_errors()
 augroup END
 Plug 'nathanaelkane/vim-indent-guides'  " indent view
+Plug 'tpope/vim-surround'  " surroundings cs
 Plug 'tpope/vim-fugitive'  " git
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
