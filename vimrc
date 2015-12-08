@@ -59,8 +59,11 @@ Plug 'kana/vim-filetype-haskell'
 Plug 'vim-jp/vimdoc-ja'
 " Lang: Scala
 Plug 'derekwyatt/vim-scala'
+" Lang: Ansible
+Plug 'chase/vim-ansible-yaml'
 call plug#end()
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme le_petit_chaperonrouge
 set guifont="Ricty\ bold\ 14"
 set guifontwide="Ricty\ bold\ 14"
