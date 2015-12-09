@@ -64,7 +64,7 @@ Plug 'chase/vim-ansible-yaml'
 call plug#end()
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme le_petit_chaperonrouge
+set t_Co=256
 set guifont="Ricty\ bold\ 14"
 set guifontwide="Ricty\ bold\ 14"
 set guioptions-=m
@@ -72,8 +72,8 @@ set guioptions-=T
 set guioptions-=r
 set guioptions-=L
 set background=dark
+colorscheme le_petit_chaperonrouge
 
-set t_Co=256
 set number
 set cursorline
 set hlsearch
