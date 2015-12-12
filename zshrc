@@ -1,6 +1,7 @@
 #
 # alias
 #
+alias vim=nvim
 alias x=exit
 alias reload="source ~/.zshrc"
 if [ `uname` = Darwin ]; then
