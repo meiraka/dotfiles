@@ -73,6 +73,7 @@ myManageHook =
   composeAll
     [ className =? "Xfce4-notifyd" --> doIgnore
     , className =? "Gimp" --> doFloat
+    , title =? "Cities: Skylines" --> doFloat
     ] <+>
   manageDocks <+>
   namedScratchpadManageHook scratchpads <+>
