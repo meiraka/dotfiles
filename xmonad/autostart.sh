@@ -9,7 +9,7 @@ trayer --edge top --align left --SetDockType true \
     --tint 0x141414 --transparent true --alpha 0 --height 25 &
 
 killall compton
-~/local/bin/compton -b &
+~/bin/compton -b &
 
 # file manager daemon
 if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then

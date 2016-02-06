@@ -100,7 +100,7 @@ myLogHook statusbar = dynamicLogWithPP $ xmobarPP
 
 scratchpads =
   [ NS "terminal"
-      "LD_LIBRARY_PATH=~/local/lib:$LD_LIBRARY_PATH sakura --name terminalScratchpad"
+      "LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH sakura --name terminalScratchpad"
       (resource =? "terminalScratchpad") large
   , NS "sound"
       "pavucontrol --name soundScratchpad"
