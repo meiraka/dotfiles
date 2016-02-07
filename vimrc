@@ -59,6 +59,7 @@ Plug 'kana/vim-filetype-haskell'
 Plug 'vim-jp/vimdoc-ja'
 " Lang: Scala
 Plug 'derekwyatt/vim-scala'
+Plug 'ktvoelker/sbt-vim'
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
 call plug#end()
