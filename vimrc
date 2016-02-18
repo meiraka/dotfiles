@@ -49,7 +49,7 @@ Plug 'tpope/vim-fugitive'  " git
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
 Plug 'Rip-Rip/clang_complete'
-let g:clang_library_path = expand('~/local/lib')
+let g:clang_library_path = expand('~/lib')
 let g:clang_complete_auto = 1
 " Lang: Python
 Plug 'davidhalter/jedi-vim'
