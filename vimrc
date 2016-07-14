@@ -62,6 +62,7 @@ Plug 'derekwyatt/vim-scala'
 Plug 'ktvoelker/sbt-vim'
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
+Plug 'stephpy/vim-yaml'
 call plug#end()
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
