@@ -65,7 +65,8 @@ Plug 'chase/vim-ansible-yaml'
 Plug 'stephpy/vim-yaml'
 call plug#end()
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
 set guifont="Ricty\ bold\ 14"
 set guifontwide="Ricty\ bold\ 14"
