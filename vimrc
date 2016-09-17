@@ -9,7 +9,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/bundle')
-Plug 'meiraka/vim-hysteric-colors'
+Plug 'meiraka/le_petit_chaperonrouge.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/vimshell.vim'
 Plug 'scrooloose/syntastic'  " syntax checker
