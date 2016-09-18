@@ -85,22 +85,30 @@ function zsh-update-prompt {
         else
             # generate color code
             code=-1
+            style=38
+            if [ "$1" = "bg" ]
+            then
+                (( style = 48 ))
+            fi
             if [ "$2" = "6rgb" ]
             then
                 (( code = 16 + $3 * 6 * 6 + $4 * 6 + $5 ))
-            elif ["$2" = "25gray" ]
+                echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
+            elif [ "$2" = "25gray" ]
             then
                 (( code = 231 + $3 ))
+                (( style = 5 ))
+                echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
+            elif [ "$2" = "24hex" ]
+            then
+                (( rv = `printf '%d\n' 0x\`echo $3 | cut -b 1,2\`` ))
+                (( gv = `printf '%d\n' 0x\`echo $3 | cut -b 3,4\`` ))
+                (( bv = `printf '%d\n' 0x\`echo $3 | cut -b 5,6\`` ))
+                echo '%{\e['"${style}"';2;'"${rv}"';'"${gv}"';'"${bv}"'m%}'
             else
                 echo unknown type $2
             fi
             # set bg or fg
-            if [ "$1" = "bg" ]
-            then
-                echo '%{\e[0;48;5;'"${code}"'m%}'
-            else
-                echo '%{\e[0;38;5;'"$code"'m%}'
-            fi
         fi
     }
 
@@ -116,17 +124,17 @@ function zsh-update-prompt {
         fi
     }
 
-    PROMPT="`colorcode fg 6rgb 4 0 0`"'> '"`colorcode reset`"
+    PROMPT="`colorcode fg 24hex 993745`"'> '"`colorcode reset`"
     case $KEYMAP in
         vicmd)
-            PROMPT="`colorcode fg 6rgb 4 2 0`"'> '"`colorcode reset`"
+            PROMPT="`colorcode fg 24hex 94998a`"'> '"`colorcode reset`"
         ;;
         main|viins)
-            PROMPT="`colorcode fg 6rgb 4 0 0`"'> '"`colorcode reset`"
+            PROMPT="`colorcode fg 24hex 7f0906`"'> '"`colorcode reset`"
         ;;  
     esac
     PROMPT2=". "
-    RPROMPT="`colorcode fg 6rgb 2 2 2`""`vcsinfo`""`colorcode reset`"
+    RPROMPT="`colorcode fg 24hex 81553d`""`vcsinfo`""`colorcode reset`"
     SPROMPT="%F{$COLOR_BG_LPROMPT}%{$suggest%}(＠ﾟ△ﾟ%)ノ < もしかして %B%r%b かな? [そう!(y), 違う!(n),a,e] > "
 }
 
