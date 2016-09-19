@@ -10,6 +10,8 @@ endif
 
 call plug#begin('~/.vim/bundle')
 Plug 'meiraka/le_petit_chaperonrouge.vim'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/vimshell.vim'
 Plug 'scrooloose/syntastic'  " syntax checker
