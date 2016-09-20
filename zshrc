@@ -15,11 +15,7 @@ fi
 alias v=vim
 alias va=valgrind
 
-if which ~/local/tmp/dircolors > /dev/null; then
-  mkdir -p ~/local/tmp
-  python ~/local/bin/dir_colors.py > ~/local/tmp/dir_colors
-  eval $(dircolors -b ~/local/etc/dir_colors) > /dev/null 2> /dev/null
-fi
+eval $(dircolors -b ~/local/share/dircolors/le_petit_chaperonrouge) > /dev/null 2> /dev/null
 
 if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
