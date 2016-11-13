@@ -5,7 +5,7 @@ CONFIGSRC = $(wildcard config/*)
 DOTPATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(CONFIGSRC))
 
 all: link gitconfig
-link: $(DOTPATH) $(DST_PREFIX)vimrc  $(DST_PREFIX)vim
+link: $(DOTPATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)config
 echo:
 	echo $(DST_PREFIX)
 
@@ -22,6 +22,9 @@ clean:
 
 $(DOTPATH): $(DST_PREFIX)%: %
 	ln -s $(abspath $<) $@
+
+$(DST_PREFIX)config:
+	mkdir -p $(DST_PREFIX)config
 
 $(DST_PREFIX)vimrc:
 	ln -s $(DST_PREFIX)config/nvim/init.vim $(DST_PREFIX)vimrc
