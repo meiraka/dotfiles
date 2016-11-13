@@ -4,8 +4,8 @@ SRC = $(filter-out $(IGNORE), $(wildcard *))
 CONFIGSRC = $(wildcard config/*)
 DOTPATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(CONFIGSRC))
 
-all: link nvim gitconfig
-link: $(DOTPATH)
+all: link gitconfig
+link: $(DOTPATH) $(DST_PREFIX)vimrc  $(DST_PREFIX)vim
 echo:
 	echo $(DST_PREFIX)
 
@@ -23,11 +23,11 @@ clean:
 $(DOTPATH): $(DST_PREFIX)%: %
 	ln -s $(abspath $<) $@
 
-$(DST_PREFIX)config/nvim/init.vim: $(DST_PREFIX)vimrc
-	ln -s $(DST_PREFIX)vim $(DST_PREFIX)config/nvim
-	ln -s $(DST_PREFIX)vimrc $(DST_PREFIX)config/nvim/init.vim
+$(DST_PREFIX)vimrc:
+	ln -s $(DST_PREFIX)config/nvim/init.vim $(DST_PREFIX)vimrc
 
-nvim: $(DST_PREFIX)config/nvim/init.vim
+$(DST_PREFIX)vim:
+	ln -s $(DST_PREFIX)config/nvim $(DST_PREFIX)vim
 
 gitconfig:
 	@touch $(DST_PREFIX)gitconfig

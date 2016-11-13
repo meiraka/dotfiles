@@ -2,13 +2,13 @@ let $LANG="en_US.utf8"
 let $LC_LANG="en_US.utf8"
 let $LC_ALL="en_US.utf8"
 
-if empty(glob('~/.vim/autoload/plug.vim'))
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.config/nvim/bundle')
 Plug 'meiraka/le_petit_chaperonrouge.vim'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
