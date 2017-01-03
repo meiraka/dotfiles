@@ -1,4 +1,9 @@
 
+# set display size
+xrandr --newmode "1200x1600_60.00"  162.25  1200 1288 1416 1632  1600 1603 1613 1658 -hsync +vsync
+xrandr --addmode DVI-1 1200x1600_60.00
+xrandr --output DVI-1 --mode 1200x1600_60.00
+
 # set background
 nitrogen --restore & 
 
