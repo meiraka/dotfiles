@@ -6,8 +6,6 @@ DOTPATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(CONFIGSRC))
 
 all: link gitconfig
 link: $(DOTPATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)config
-echo:
-	echo $(DST_PREFIX)
 
 .PHONY: clean gitconfig
 clean:
