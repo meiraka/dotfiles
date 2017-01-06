@@ -1,4 +1,4 @@
-.PHONY: clean gitconfig
+.PHONY: clean gitconfig help
 
 DST_PREFIX = $(shell echo  ~/.)
 IGNORE = Makefile config bootstrap README.rst
@@ -6,14 +6,14 @@ SRC = $(filter-out $(IGNORE), $(wildcard *))
 CONFIGSRC = $(wildcard config/*)
 DOTPATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(CONFIGSRC))
 
-all: link gitconfig
+all: link gitconfig ## execute all targets
 
-link: $(DOTPATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)config
+link: $(DOTPATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)config ## make dotfiles link
 
 # Change gitconfig target if [include] directive is already applied
 GITCONFIG_APPLIED = $(shell grep .gitconfig.shared $(DST_PREFIX)gitconfig)
 ifeq ($(GITCONFIG_APPLIED),)
-gitconfig: $(DST_PREFIX)gitconfig
+gitconfig: $(DST_PREFIX)gitconfig  ## include gitconfig.shared
 	if ! grep .gitconfig.shared $(DST_PREFIX)gitconfig 2> /dev/null > /dev/null; then\
 		echo "[include]" >> $(DST_PREFIX)gitconfig;\
 		echo "    path = $(DST_PREFIX)gitconfig.shared" >> $(DST_PREFIX)gitconfig;\
@@ -46,3 +46,6 @@ $(DST_PREFIX)vim:
 
 $(DST_PREFIX)gitconfig:
 	touch $(DST_PREFIX)gitconfig
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
