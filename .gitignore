@@ -1,0 +1,9 @@
+config/nvim/autoload
+config/nvim/bundle
+*.o
+*.hi
+.netrwhist
+
+
+xmonad-x86_64-linux
+xmonad.errors
