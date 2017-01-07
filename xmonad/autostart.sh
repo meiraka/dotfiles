@@ -39,5 +39,8 @@ synclient VertScrollDelta=-70
 synclient HorizScrollDelta=-70
 synclient VertEdgeScroll=0
 synclient HorizEdgeScroll=0
+# coasting
+synclient CoastingFriction=30
+synclient CoastingSpeed=25
 xrdb ~/.Xresources
 xmodmap ~/.Xmodmap
