@@ -35,8 +35,8 @@ fi
 synclient TapButton1=0
 synclient TapButton2=0
 synclient HorizTwoFingerScroll=1
-synclient VertScrollDelta=-237
-synclient HorizScrollDelta=-237
+synclient VertScrollDelta=-70
+synclient HorizScrollDelta=-70
 synclient VertEdgeScroll=0
 synclient HorizEdgeScroll=0
 xrdb ~/.Xresources
