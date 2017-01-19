@@ -14,6 +14,7 @@ fi
 
 alias v=vim
 alias va=valgrind
+alias ws=peco-ghq-workspace
 
 eval $(dircolors -b ~/local/share/dircolors/le_petit_chaperonrouge) > /dev/null 2> /dev/null
 
@@ -39,6 +40,26 @@ then
     ln -sf $SSH_AUTH_SOCK $SOCK
     export SSH_AUTH_SOCK=$SOCK
 fi
+
+#
+# functions
+#
+
+function peco-ghq-workspace() {
+    ghq list -p | peco
+}
+
+function peco-ghq-cd-workspace() {
+    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+
+zle -N peco-ghq-workspace
+bindkey '^w' peco-ghq-workspace
 
 #
 # history
@@ -144,3 +165,9 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 zsh-update-prompt
+
+#
+# scripts
+#
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
