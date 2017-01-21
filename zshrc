@@ -16,7 +16,7 @@ alias v=vim
 alias va=valgrind
 alias ws=peco-ghq-workspace
 
-eval $(dircolors -b ~/local/share/dircolors/le_petit_chaperonrouge) > /dev/null 2> /dev/null
+eval $(dircolors -b ~/.dircolors/le_petit_chaperonrouge) > /dev/null 2> /dev/null
 
 if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -58,8 +58,8 @@ function peco-ghq-cd-workspace() {
     zle clear-screen
 }
 
-zle -N peco-ghq-workspace
-bindkey '^w' peco-ghq-workspace
+zle -N peco-ghq-cd-workspace
+bindkey '^w' peco-ghq-cd-workspace
 
 #
 # history
