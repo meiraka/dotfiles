@@ -49,6 +49,8 @@ augroup END
 Plug 'nathanaelkane/vim-indent-guides'  " indent view
 Plug 'tpope/vim-surround'  " surroundings cs
 Plug 'tpope/vim-fugitive'  " git
+Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+Plug 'junegunn/fzf.vim'
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
 Plug 'Rip-Rip/clang_complete'
