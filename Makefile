@@ -1,7 +1,7 @@
 .PHONY: clean gitconfig help
 
 DST_PREFIX = $(shell echo  ~/.)
-IGNORE = Makefile config bootstrap README.rst
+IGNORE = Makefile config bootstrap README.rst LICENSE
 SRC = $(filter-out $(IGNORE), $(wildcard *))
 CONFIGSRC = $(wildcard config/*)
 DOTPATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(CONFIGSRC))
