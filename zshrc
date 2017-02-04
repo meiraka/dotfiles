@@ -56,6 +56,15 @@ function fzf-ghq-cd-workspace() {
 zle -N fzf-ghq-cd-workspace
 bindkey '^w' fzf-ghq-cd-workspace
 
+# search mpd playlist and play
+function fmpc() {
+  local song_position
+  song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
+    fzf --query="$1" --reverse --select-1 --exit-0 | \
+    sed -n 's/^\([0-9]\+\)).*/\1/p') || return 1
+  [ -n "$song_position" ] && mpc -q play $song_position
+}
+
 #
 # history
 #
