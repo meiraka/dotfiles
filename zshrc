@@ -45,7 +45,7 @@ fi
 #
 
 function fzf-ghq-cd-workspace() {
-    local selected_dir=$(ghq list -p | fzf)
+    local selected_dir=$(ghq list -p | fzf --query=${LBUFFER})
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
