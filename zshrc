@@ -14,7 +14,6 @@ fi
 
 alias v=vim
 alias va=valgrind
-alias ws=peco-ghq-workspace
 
 eval $(dircolors -b ~/.dircolors/le_petit_chaperonrouge) > /dev/null 2> /dev/null
 
@@ -45,12 +44,8 @@ fi
 # functions
 #
 
-function peco-ghq-workspace() {
-    ghq list -p | peco
-}
-
-function peco-ghq-cd-workspace() {
-    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+function fzf-ghq-cd-workspace() {
+    local selected_dir=$(ghq list -p | fzf)
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
@@ -58,8 +53,8 @@ function peco-ghq-cd-workspace() {
     zle clear-screen
 }
 
-zle -N peco-ghq-cd-workspace
-bindkey '^w' peco-ghq-cd-workspace
+zle -N fzf-ghq-cd-workspace
+bindkey '^w' fzf-ghq-cd-workspace
 
 #
 # history
