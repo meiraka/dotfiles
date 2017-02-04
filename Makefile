@@ -1,16 +1,39 @@
 .PHONY: clean gitconfig help
 
 DST_PREFIX = $(shell echo  ~/.)
-IGNORE = Makefile config bootstrap README.rst LICENSE
-SRC = $(filter-out $(IGNORE), $(wildcard *))
-CONFIGSRC = $(wildcard config/*)
-DOTPATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(CONFIGSRC))
+SUBDIRS = config
+IGNORE = Makefile bootstrap README.rst LICENSE $(SUBDIRS)
+SRC = $(filter-out $(IGNORE), $(wildcard *)) $(wildcard $(patsubst %, %/*, $(SUBDIRS)))
+DOT_PATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(SUBDIRSSRC))
+DOT_SUBDIRS = $(patsubst %, $(DST_PREFIX)%, $(SUBDIRS))
 
-all: link gitconfig ## execute all targets
 
-link: $(DOTPATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)config ## make dotfiles link
+all: link special  ## execute all targets
 
-# Change gitconfig target if [include] directive is already applied
+link: $(DOT_SUBDIRS) $(DOT_PATH)  ## make dotfiles link
+
+clean:  # remove linked files
+	@LIST="$(DOT_PATH)";\
+		for x in $$LIST; do\
+		if [ ! -L "$$x" ]; then\
+		echo warning: "$$x" is not symbolic link\
+		; else\
+		rm "$$x";\
+		fi\
+		done
+
+$(DOT_PATH): $(DST_PREFIX)%: %
+	ln -s $(abspath $<) $@
+
+$(DOT_SUBDIRS):
+	@LIST="$(DOTSUBDIRS)";\
+		for x in $$LIST; do\
+		mkdir -p "$$x";\
+		done
+
+special: $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)gitconfig gitconfig  ## make special files
+
+# Add [include] directive in gitconfig
 GITCONFIG_APPLIED = $(shell grep .gitconfig.shared $(DST_PREFIX)gitconfig)
 ifeq ($(GITCONFIG_APPLIED),)
 gitconfig: $(DST_PREFIX)gitconfig  ## include gitconfig.shared
@@ -22,28 +45,15 @@ else
 gitconfig: $(DST_PREFIX)gitconfig
 endif
 
-clean:
-	@LIST="$(DOTPATH)";\
-		for x in $$LIST; do\
-		if [ ! -L "$$x" ]; then\
-		echo warning: "$$x" is not symbolic link\
-		; else\
-		rm "$$x";\
-		fi\
-		done
-
-$(DOTPATH): $(DST_PREFIX)%: %
-	ln -s $(abspath $<) $@
-
-$(DST_PREFIX)config:
-	mkdir -p $(DST_PREFIX)config
-
+# Link nvim/init.vim to .vimrc
 $(DST_PREFIX)vimrc:
 	ln -s $(DST_PREFIX)config/nvim/init.vim $(DST_PREFIX)vimrc
 
+# Link nvim to .vim
 $(DST_PREFIX)vim:
 	ln -s $(DST_PREFIX)config/nvim $(DST_PREFIX)vim
 
+# Make gitconfig
 $(DST_PREFIX)gitconfig:
 	touch $(DST_PREFIX)gitconfig
 
