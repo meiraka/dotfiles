@@ -1,5 +1,5 @@
 Config { font = "xft:Migu 1C:bold:size=11:antialias=true"
-       , bgColor = "#141414"
+       , bgColor = "#242424"
        , fgColor = "#f4f4f4"
        , position = TopW R 90
        , lowerOnStart = True

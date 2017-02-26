@@ -26,23 +26,6 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified Data.List
 
-myToolbarTheme = defaultTheme
-  { activeColor = "#141414"
-  , inactiveColor = "#141414"
-  , urgentColor = "#f4f4f4"
-  , activeBorderColor = "#141414"
-  , inactiveBorderColor = "#141414"
-  , urgentBorderColor = "#f4f4f4"
-  , activeTextColor = "#7a202f"
-  , inactiveTextColor = "#c0c0c0"
-  , urgentTextColor = "#f4f4f4"
-  , fontName = "xft:Migu 1C:bold"
-  }
-
-myWindowTheme = myToolbarTheme
-  { activeTextColor = "#ffffff"
-  }
-
 main = do
   xmproc <- spawnPipe "xmobar"
   xmonad defaultConfig
@@ -60,13 +43,43 @@ main = do
     , mouseBindings = myMouseBindings
     }
 
+myToolbarTheme = defaultTheme
+  { activeColor = "#242424"
+  , inactiveColor = "#242424"
+  , urgentColor = "#f4f4f4"
+  , activeBorderColor = "#242424"
+  , inactiveBorderColor = "#242424"
+  , urgentBorderColor = "#f4f4f4"
+  , activeTextColor = "#6a9a8e"
+  , inactiveTextColor = "#c0c0c0"
+  , urgentTextColor = "#f4f4f4"
+  , fontName = "xft:Migu 1C:bold"
+  }
+
+myWindowTheme = myToolbarTheme
+  { activeTextColor = "#ffffff"
+  }
+
+myLogHook statusbar = dynamicLogWithPP $ xmobarPP
+  { ppOutput = hPutStrLn statusbar
+  , ppCurrent = xmobarColor "#6a9a8e" "" .wrap " " ""
+  , ppHidden = xmobarColor "#f4f4f4" "" .wrap " " "" .noScratchPad
+  , ppHiddenNoWindows = xmobarColor "#c4c4c4" "" .wrap " " "" .noScratchPad
+  , ppTitle = xmobarColor "#6a9a8e" "" . shorten 80
+  , ppSep = "  "
+  , ppLayout = xmobarColor "#6a9a8e" ""
+  }
+  where
+    noScratchPad ws = if ws == "NSP" then "" else ws
+
+myNormalBorderColor = "#eeeeee"
+myFocusedBorderColor = "#6a9a8e"
+
 myStartupHook :: X ()
 myStartupHook = do
     spawn "sh ~/.xmonad/autostart.sh"
 
 myBorderWidth = 2
-myNormalBorderColor = "#141414"
-myFocusedBorderColor = "#ffffff"
 myTerminal = "sakura"
 myWorkspaces = ["♥", "♡", "♦", "♢", "♠", "♤", "♣", "♧"]
 myManageHook =
@@ -86,18 +99,6 @@ myLayoutHook = avoidStruts $ toggleLayouts (tabbedFull ||| full) (break ||| fill
     break = Circle
     full = named "FullScreen" (noBorders Full)
     tabbedFull = named "FullScreen Tabbed" (noBorders (tabbed shrinkText myToolbarTheme))
-
-myLogHook statusbar = dynamicLogWithPP $ xmobarPP
-  { ppOutput = hPutStrLn statusbar
-  , ppCurrent = xmobarColor "#7a202f" "" .wrap " " ""
-  , ppHidden = xmobarColor "#f4f4f4" "" .wrap " " "" .noScratchPad
-  , ppHiddenNoWindows = xmobarColor "#c4c4c4" "" .wrap " " "" .noScratchPad
-  , ppTitle = xmobarColor "#7a202f" "" . shorten 80
-  , ppSep = "  "
-  , ppLayout = xmobarColor "#7a202f" ""
-  }
-  where
-    noScratchPad ws = if ws == "NSP" then "" else ws
 
 scratchpads =
   [ NS "terminal"

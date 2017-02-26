@@ -11,7 +11,7 @@ nitrogen --restore &
 killall trayer
 trayer --edge top --align left --SetDockType true \
     --expand true --widthtype percent --width 10% \
-    --tint 0x141414 --transparent true --alpha 0 --height 25 &
+    --tint 0x242424 --transparent true --alpha 0 --height 25 &
 
 # killall compton
 # ~/bin/compton -b &
