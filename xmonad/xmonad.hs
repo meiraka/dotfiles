@@ -50,7 +50,7 @@ myToolbarTheme = defaultTheme
   , activeBorderColor = "#242424"
   , inactiveBorderColor = "#242424"
   , urgentBorderColor = "#f4f4f4"
-  , activeTextColor = "#6a9a8e"
+  , activeTextColor = "#a01d2f"
   , inactiveTextColor = "#c0c0c0"
   , urgentTextColor = "#f4f4f4"
   , fontName = "xft:Migu 1C:bold"
@@ -62,18 +62,18 @@ myWindowTheme = myToolbarTheme
 
 myLogHook statusbar = dynamicLogWithPP $ xmobarPP
   { ppOutput = hPutStrLn statusbar
-  , ppCurrent = xmobarColor "#6a9a8e" "" .wrap " " ""
+  , ppCurrent = xmobarColor "#a01d2f" "" .wrap " " ""
   , ppHidden = xmobarColor "#f4f4f4" "" .wrap " " "" .noScratchPad
   , ppHiddenNoWindows = xmobarColor "#c4c4c4" "" .wrap " " "" .noScratchPad
-  , ppTitle = xmobarColor "#6a9a8e" "" . shorten 80
+  , ppTitle = xmobarColor "#a01d2f" "" . shorten 80
   , ppSep = "  "
-  , ppLayout = xmobarColor "#6a9a8e" ""
+  , ppLayout = xmobarColor "#a01d2f" ""
   }
   where
     noScratchPad ws = if ws == "NSP" then "" else ws
 
 myNormalBorderColor = "#eeeeee"
-myFocusedBorderColor = "#6a9a8e"
+myFocusedBorderColor = "#a01d2f"
 
 myStartupHook :: X ()
 myStartupHook = do
