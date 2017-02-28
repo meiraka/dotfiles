@@ -71,7 +71,6 @@ Plug 'vim-jp/vim-go-extra'
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
-Plug 'stephpy/vim-yaml'
 call plug#end()
 
 set termguicolors
