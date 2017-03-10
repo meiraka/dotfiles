@@ -24,6 +24,11 @@ fi
 # power management
 xfce4-power-manager &
 
+# network management
+if [ `ps aux | grep nm-applet | grep -v grep | wc -l` = '0' ]; then
+    nm-applet &
+fi
+
 
 # enabling update manager and ubuntu software center
 if [ -e /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
