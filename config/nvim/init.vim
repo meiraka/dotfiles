@@ -25,6 +25,7 @@ let g:syntastic_cpp_auto_refresh_includes = 1
 let s:user = 'y'
 let g:syntastic_cpp_include_dirs = ['/home/'.s:user.'/include']
 let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
+let g:syntastic_javascript_checkers = ['eslint']
 
 Plug 'itchyny/lightline.vim'  " statusline
 set laststatus=2
