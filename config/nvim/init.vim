@@ -72,6 +72,8 @@ Plug 'vim-jp/vim-go-extra'
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
+" Lang: CSS
+Plug 'kewah/vim-stylefmt'
 call plug#end()
 
 set termguicolors
