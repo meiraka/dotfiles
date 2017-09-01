@@ -59,7 +59,7 @@ Plug 'justmao945/vim-clang'
 " let g:clang_library_path = expand('~/lib')
 " let g:clang_complete_auto = 1
 " Lang: Python
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 " Lang: Haskell
 Plug 'kana/vim-filetype-haskell'
 " Lang: Vim
