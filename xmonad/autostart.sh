@@ -1,8 +1,8 @@
 
 # set display size
-xrandr --newmode "1200x1600_60.00"  162.25  1200 1288 1416 1632  1600 1603 1613 1658 -hsync +vsync
-xrandr --addmode DVI-1 1200x1600_60.00
-xrandr --output DVI-1 --mode 1200x1600_60.00
+xrandr --newmode "1200x1600R"  134.25  1200 1248 1280 1360  1600 1603 1613 1646 +hsync -vsync
+xrandr --addmode DVI-1 1200x1600R
+xrandr --output DVI-1 --mode 1200x1600R
 
 # set background
 nitrogen --restore & 
@@ -13,8 +13,8 @@ trayer --edge top --align left --SetDockType true \
     --expand true --widthtype percent --width 10% \
     --tint 0x242424 --transparent true --alpha 0 --height 25 &
 
-killall compton
-~/bin/compton -b &
+# killall compton
+# ~/bin/compton -b &
 
 # file manager daemon
 if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then
