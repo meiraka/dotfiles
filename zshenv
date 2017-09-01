@@ -1,5 +1,5 @@
 export TERM="xterm-256color"
-export PATH=/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/bin:~/local/go/bin
+export PATH=/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/bin:~/local/go/bin:./node_modules/.bin
 export LD_LIBRARY_PATH=$HOME/lib:$HOME/local/lib:$LD_LIBRARY_PATH
 export GOROOT=~/local/go
 export GOPATH=~/
