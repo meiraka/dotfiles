@@ -68,8 +68,7 @@ Plug 'vim-jp/vimdoc-ja'
 Plug 'derekwyatt/vim-scala'
 Plug 'ktvoelker/sbt-vim'
 " Lang: Go
-Plug 'vim-jp/vim-go-extra'
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
+Plug 'fatih/vim-go'
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
 " Lang: CSS
