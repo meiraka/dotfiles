@@ -85,6 +85,7 @@ set guioptions-=T
 set guioptions-=r
 set guioptions-=L
 set background=dark
+set scrollback=100000
 colorscheme le_petit_chaperonrouge
 
 set number
