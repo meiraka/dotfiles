@@ -86,6 +86,7 @@ set guioptions-=r
 set guioptions-=L
 set background=dark
 set scrollback=100000
+set wildmode=list:longest,full
 colorscheme le_petit_chaperonrouge
 
 set number
