@@ -28,7 +28,7 @@ import qualified Data.List
 
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad defaultConfig
+  xmonad $ docks def
     { manageHook = myManageHook
     , logHook = myLogHook xmproc
     , layoutHook = myLayoutHook
