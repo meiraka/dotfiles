@@ -79,7 +79,7 @@ myStartupHook :: X ()
 myStartupHook = do
     spawn "sh ~/.xmonad/autostart.sh"
 
-myBorderWidth = 2
+myBorderWidth = 0
 myTerminal = "sakura"
 myWorkspaces = ["♥", "♡", "♦", "♢", "♠", "♤", "♣", "♧"]
 myManageHook =
