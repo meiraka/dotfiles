@@ -93,7 +93,7 @@ myManageHook =
   namedScratchpadManageHook scratchpads <+>
   manageHook defaultConfig
 
-myLayoutHook = avoidStruts $ toggleLayouts (tabbedFull ||| full) (break ||| fill)
+myLayoutHook = toggleLayouts (tabbedFull ||| full) (avoidStruts $ (break ||| fill))
   where
     fill = named "fill" (spacing 12 $ Grid)
     break = Circle

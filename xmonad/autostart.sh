@@ -9,7 +9,7 @@ nitrogen --restore &
 
 # tray
 killall trayer
-trayer --edge top --align left --SetDockType true \
+trayer -l --edge top --align left \
     --expand true --widthtype percent --width 10% \
     --tint 0x242424 --transparent true --alpha 0 --height 25 &
 
