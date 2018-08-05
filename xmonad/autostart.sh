@@ -11,10 +11,10 @@ nitrogen --restore &
 killall trayer
 trayer -l --edge top --align left \
     --expand true --widthtype percent --width 10% \
-    --tint 0x242424 --transparent true --alpha 0 --height 25 &
+    --tint 0x242424 --transparent true --alpha 10 --height 25 &
 
-# killall compton
-# ~/bin/compton -b &
+killall compton
+~/bin/compton -b &
 
 # file manager daemon
 if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then

@@ -49,11 +49,11 @@ myToolbarTheme = defaultTheme
   , urgentColor = "#f4f4f4"
   , activeBorderColor = "#242424"
   , inactiveBorderColor = "#242424"
-  , urgentBorderColor = "#f4f4f4"
-  , activeTextColor = "#a01d2f"
-  , inactiveTextColor = "#c0c0c0"
-  , urgentTextColor = "#f4f4f4"
-  , fontName = "xft:Migu 1C:bold"
+  , urgentBorderColor = "#242424"
+  , activeTextColor = "#ffffff"
+  , inactiveTextColor = "#aaaaaa"
+  , urgentTextColor = "#ffffff"
+  , fontName = "xft:Migu 1C"
   }
 
 myWindowTheme = myToolbarTheme
@@ -62,12 +62,12 @@ myWindowTheme = myToolbarTheme
 
 myLogHook statusbar = dynamicLogWithPP $ xmobarPP
   { ppOutput = hPutStrLn statusbar
-  , ppCurrent = xmobarColor "#a01d2f" "" .wrap " " ""
-  , ppHidden = xmobarColor "#f4f4f4" "" .wrap " " "" .noScratchPad
-  , ppHiddenNoWindows = xmobarColor "#c4c4c4" "" .wrap " " "" .noScratchPad
-  , ppTitle = xmobarColor "#a01d2f" "" . shorten 80
+  , ppCurrent = xmobarColor "#ffffff" "" .wrap " " ""
+  , ppHidden = xmobarColor "#aaaaaa" "" .wrap " " "" .noScratchPad
+  , ppHiddenNoWindows = xmobarColor "#aaaaaa" "" .wrap " " "" .noScratchPad
+  , ppTitle = xmobarColor "#ffffff" "" . shorten 80
   , ppSep = "  "
-  , ppLayout = xmobarColor "#a01d2f" ""
+  , ppLayout = xmobarColor "#ffffff" ""
   }
   where
     noScratchPad ws = if ws == "NSP" then "" else ws
