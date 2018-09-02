@@ -1,29 +1,29 @@
-import System.IO
-import System.Exit
-import Text.Printf
-import XMonad
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops(ewmh,fullscreenEventHook)
-import XMonad.Hooks.FadeInactive
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers(doFullFloat,isFullscreen)
-import XMonad.Hooks.UrgencyHook
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig
-import XMonad.Util.NamedScratchpad
-import XMonad.Layout.Named
-import XMonad.Layout.Circle
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Spacing
-import XMonad.Layout.ToggleLayouts
-import XMonad.Layout.Grid
-import XMonad.Actions.GridSelect
-import XMonad.Actions.CycleWindows
-import XMonad.Actions.RotSlaves
+import           System.Exit
+import           System.IO
+import           Text.Printf
+import           XMonad
+import           XMonad.Actions.CycleWindows
+import           XMonad.Actions.GridSelect
+import           XMonad.Actions.RotSlaves
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops   (ewmh, fullscreenEventHook)
+import           XMonad.Hooks.FadeInactive
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.ManageHelpers  (doFullFloat, isFullscreen)
+import           XMonad.Hooks.UrgencyHook
+import           XMonad.Layout.Circle
+import           XMonad.Layout.Grid
+import           XMonad.Layout.Named
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.Spacing
+import           XMonad.Layout.ToggleLayouts
+import           XMonad.Util.EZConfig
+import           XMonad.Util.NamedScratchpad
+import           XMonad.Util.Run             (spawnPipe)
 
-import qualified XMonad.StackSet as W
-import qualified Data.Map as M
 import qualified Data.List
+import qualified Data.Map                    as M
+import qualified XMonad.StackSet             as W
 
 main = do
   xmproc <- spawnPipe "xmobar"
