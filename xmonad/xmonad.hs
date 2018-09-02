@@ -3,7 +3,9 @@ import System.Exit
 import Text.Printf
 import XMonad
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops(ewmh,fullscreenEventHook)
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers(doFullFloat,isFullscreen)
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig
@@ -12,7 +14,6 @@ import XMonad.Layout.Named
 import XMonad.Layout.Circle
 import XMonad.Layout.DecorationMadness
 import XMonad.Layout.Tabbed
-import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
@@ -28,8 +29,9 @@ import qualified Data.List
 
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad $ docks def
-    { manageHook = myManageHook
+  xmonad $ ewmh $ docks def
+    { handleEventHook = fullscreenEventHook
+    , manageHook = myManageHook
     , logHook = myLogHook xmproc
     , layoutHook = myLayoutHook
     , workspaces = myWorkspaces
@@ -91,7 +93,8 @@ myManageHook =
     ] <+>
   manageDocks <+>
   namedScratchpadManageHook scratchpads <+>
-  manageHook defaultConfig
+  manageHook defaultConfig <+>
+  (isFullscreen --> doFullFloat)
 
 myLayoutHook = toggleLayouts (tabbedFull ||| full) (avoidStruts $ (break ||| fill))
   where
