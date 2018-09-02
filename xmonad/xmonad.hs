@@ -4,6 +4,7 @@ import Text.Printf
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops(ewmh,fullscreenEventHook)
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers(doFullFloat,isFullscreen)
 import XMonad.Hooks.UrgencyHook
@@ -12,8 +13,6 @@ import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
 import XMonad.Layout.Named
 import XMonad.Layout.Circle
-import XMonad.Layout.DecorationMadness
-import XMonad.Layout.Tabbed
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
@@ -22,7 +21,6 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.CycleWindows
 import XMonad.Actions.RotSlaves
 
-import XMonad.Hooks.FadeInactive
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified Data.List
@@ -44,23 +42,6 @@ main = do
     , keys = myKeys
     , mouseBindings = myMouseBindings
     }
-
-myToolbarTheme = defaultTheme
-  { activeColor = "#242424"
-  , inactiveColor = "#242424"
-  , urgentColor = "#f4f4f4"
-  , activeBorderColor = "#242424"
-  , inactiveBorderColor = "#242424"
-  , urgentBorderColor = "#242424"
-  , activeTextColor = "#ffffff"
-  , inactiveTextColor = "#aaaaaa"
-  , urgentTextColor = "#ffffff"
-  , fontName = "xft:Migu 1C"
-  }
-
-myWindowTheme = myToolbarTheme
-  { activeTextColor = "#ffffff"
-  }
 
 myLogHook statusbar = dynamicLogWithPP $ xmobarPP
   { ppOutput = hPutStrLn statusbar
@@ -176,5 +157,3 @@ myMouseBindings (XConfig {XMonad.modMask = keyModMask}) = M.fromList
   ]
   where
     mouseModMask = mod1Mask
-
-
