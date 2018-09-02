@@ -96,12 +96,11 @@ myManageHook =
   manageHook defaultConfig <+>
   (isFullscreen --> doFullFloat)
 
-myLayoutHook = toggleLayouts (tabbedFull ||| full) (avoidStruts $ (break ||| fill))
+myLayoutHook = avoidStruts $ (toggleLayouts full (break ||| fill))
   where
     fill = named "fill" (spacing 12 $ Grid)
     break = Circle
     full = named "FullScreen" (noBorders Full)
-    tabbedFull = named "FullScreen Tabbed" (noBorders (tabbed shrinkText myToolbarTheme))
 
 scratchpads =
   [ NS "terminal"
