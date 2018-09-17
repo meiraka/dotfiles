@@ -77,7 +77,7 @@ myManageHook =
   manageHook defaultConfig <+>
   (isFullscreen --> doFullFloat)
 
-myLayoutHook = avoidStruts $ (toggleLayouts full (break ||| fill))
+myLayoutHook = toggleLayouts full (avoidStruts $ (break ||| fill))
   where
     fill = named "fill" (spacing 12 $ Grid)
     break = Circle
