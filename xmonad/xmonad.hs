@@ -11,8 +11,8 @@ import           XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers  (doFullFloat, isFullscreen)
 import           XMonad.Hooks.UrgencyHook
-import           XMonad.Layout.Circle
-import           XMonad.Layout.Grid
+import           XMonad.Layout.BinarySpacePartition
+import           XMonad.Layout.Roledex
 import           XMonad.Layout.Named
 import           XMonad.Layout.NoBorders
 import           XMonad.Layout.Spacing
@@ -77,10 +77,10 @@ myManageHook =
   manageHook defaultConfig <+>
   (isFullscreen --> doFullFloat)
 
-myLayoutHook = toggleLayouts full (avoidStruts $ (break ||| fill))
+myLayoutHook = toggleLayouts full (avoidStruts $ (fill ||| list))
   where
-    fill = named "fill" (spacing 12 $ Grid)
-    break = Circle
+    fill = named "fill" (spacing 12 $ emptyBSP)
+    list = named "list" (spacing 12 $ Roledex)
     full = named "FullScreen" (noBorders Full)
 
 scratchpads =
