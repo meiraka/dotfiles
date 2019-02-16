@@ -9,7 +9,7 @@ export LC_LANG=${LANG}
 export LC_ALL=${LANG}
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-export MPD_HOST="music.local"
+export MPD_HOST="moode.local"
 export FZF_DEFAULT_OPTS='
   --height 50%
   --no-bold
