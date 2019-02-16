@@ -14,7 +14,7 @@ trayer -l --edge top --align left \
     --tint 0x242424 --transparent true --alpha 10 --height 25 &
 
 killall compton
-~/bin/compton -b &
+compton -b &
 
 # file manager daemon
 if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then
