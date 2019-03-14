@@ -52,6 +52,13 @@ Plug 'tpope/vim-surround'  " surroundings cs
 Plug 'tpope/vim-fugitive'  " git
 Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
 Plug 'junegunn/fzf.vim'
+" LSP
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'natebosch/vim-lsc'
+let g:lsp_async_completion = 1
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
 Plug 'justmao945/vim-clang'
@@ -69,6 +76,16 @@ Plug 'derekwyatt/vim-scala'
 Plug 'ktvoelker/sbt-vim'
 " Lang: Go
 Plug 'fatih/vim-go'
+if executable('gopls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+        \ 'whitelist': ['go'],
+        \ })
+endif
+let g:go_fmt_command = "goimports"
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
 " Lang: CSS
