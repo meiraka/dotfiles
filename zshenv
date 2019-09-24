@@ -3,6 +3,7 @@ export PATH=/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/bin:~/local/go/bin:.
 export LD_LIBRARY_PATH=$HOME/lib:$HOME/local/lib:$LD_LIBRARY_PATH
 export GOROOT=~/local/go
 export GOPATH=~/
+export GO111MODULE=on
 export CLICOLOR=1
 export LANG=ja_JP.UTF-8
 export LC_LANG=${LANG}
