@@ -25,12 +25,6 @@ Plug 'mattn/vim-lsp-settings'
 let g:lsp_async_completion = 1
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
-Plug 'justmao945/vim-clang'
-" Plug 'Rip-Rip/clang_complete'
-" let g:clang_library_path = expand('~/lib')
-" let g:clang_complete_auto = 1
-" Lang: Python
-" Plug 'davidhalter/jedi-vim'
 " Lang: Haskell
 Plug 'kana/vim-filetype-haskell'
 " Lang: Vim
