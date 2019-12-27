@@ -65,5 +65,3 @@ set shiftwidth=4
 set expandtab
 set path=
 " set ambiwidth='single'
-
-
