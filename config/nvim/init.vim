@@ -10,10 +10,7 @@ endif
 
 call plug#begin('~/.config/nvim/bundle')
 Plug 'meiraka/le_petit_chaperonrouge.vim'
-" Plug 'altercation/vim-colors-solarized'
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/vimshell.vim'
 Plug 'scrooloose/syntastic'  " syntax checker
 let g:syntastic_python_checkers = ['python', 'pylint', 'flake8', 'pep257']
 let g:syntastic_cpp_checkers = ['gcc', 'cpplint', 'clang_check']
@@ -54,10 +51,10 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
 Plug 'junegunn/fzf.vim'
 " LSP
 Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'natebosch/vim-lsc'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 let g:lsp_async_completion = 1
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
@@ -73,19 +70,8 @@ Plug 'kana/vim-filetype-haskell'
 Plug 'vim-jp/vimdoc-ja'
 " Lang: Scala
 Plug 'derekwyatt/vim-scala'
-Plug 'ktvoelker/sbt-vim'
 " Lang: Go
-Plug 'fatih/vim-go'
-if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
-        \ 'whitelist': ['go'],
-        \ })
-endif
-let g:go_fmt_command = "goimports"
-let g:go_def_mapping_enabled = 0
-let g:go_doc_keywordprg_enabled = 0
+Plug 'mattn/vim-goimports'
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
 " Lang: CSS
@@ -102,7 +88,9 @@ set guioptions-=T
 set guioptions-=r
 set guioptions-=L
 set background=dark
-set scrollback=100000
+if has('nvim')
+  set scrollback=100000
+endif
 set wildmode=list:longest,full
 colorscheme le_petit_chaperonrouge
 
