@@ -14,7 +14,7 @@ Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'nathanaelkane/vim-indent-guides'  " indent view
 Plug 'tpope/vim-surround'  " surroundings cs
 Plug 'tpope/vim-fugitive'  " git
-Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " LSP
 Plug 'prabirshrestha/async.vim'
