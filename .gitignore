@@ -3,6 +3,7 @@ config/nvim/bundle
 *.o
 *.hi
 .netrwhist
+*.tar.gz
 
 
 xmonad-x86_64-linux
