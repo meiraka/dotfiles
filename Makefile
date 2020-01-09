@@ -1,7 +1,7 @@
 .PHONY: clean gitconfig help
 
 DST_PREFIX = $(shell echo  ~/.)
-SUBDIRS = config
+SUBDIRS = config local/bin local/ports
 IGNORE = Makefile bootstrap README.rst LICENSE $(SUBDIRS)
 SRC = $(filter-out $(IGNORE), $(wildcard *)) $(wildcard $(patsubst %, %/*, $(SUBDIRS)))
 DOT_PATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(SUBDIRSSRC))
@@ -26,7 +26,7 @@ $(DOT_PATH): $(DST_PREFIX)%: %
 	ln -s $(abspath $<) $@
 
 $(DOT_SUBDIRS):
-	@LIST="$(DOTSUBDIRS)";\
+	@LIST="$(DOT_SUBDIRS)";\
 		for x in $$LIST; do\
 		mkdir -p "$$x";\
 		done
@@ -59,3 +59,4 @@ $(DST_PREFIX)gitconfig:
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	echo $(DOT_SUBDIRS)
