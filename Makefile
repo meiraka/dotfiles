@@ -7,6 +7,7 @@ SRC = $(filter-out $(IGNORE), $(wildcard *)) $(wildcard $(patsubst %, %/*, $(SUB
 DOT_PATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(SUBDIRSSRC))
 DOT_SUBDIRS = $(patsubst %, $(DST_PREFIX)%, $(SUBDIRS))
 
+# dotfiles
 
 all: link special  ## execute all targets
 
@@ -57,6 +58,15 @@ $(DST_PREFIX)vim:
 $(DST_PREFIX)gitconfig:
 	touch $(DST_PREFIX)gitconfig
 
+# apps
+
+APPS = $(wildcard local/ports/*)
+.PHONY: install $(APPS)
+
+$(APPS):
+	$(MAKE) -C $@
+
+install: $(APPS)
+
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-	echo $(DOT_SUBDIRS)
