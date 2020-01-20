@@ -28,6 +28,8 @@ xfce4-power-manager &
 if [ `ps aux | grep nm-applet | grep -v grep | wc -l` = '0' ]; then
     nm-applet &
 fi
+# bluetooth
+blueman-applet &
 
 
 # enabling update manager and ubuntu software center
