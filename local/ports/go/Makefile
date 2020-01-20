@@ -16,7 +16,7 @@ else
 ARCH=386
 endif
 
-VERSION=1.13.5
+VERSION=1.13.6
 
 ARCHIVE=go$(VERSION).$(OS)-$(ARCH).tar.gz
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
@@ -34,7 +34,9 @@ $(INSTALL_PATH):| $(ARCHIVE)
 clean:
 	rm $(ARCHIVE)
 
-link: $(INSTALL_PATH)
+$(INSTALL_LINK): $(INSTALL_PATH)
 	@touch $(INSTALL_LINK)
 	@rm $(INSTALL_LINK)
 	ln -si $(INSTALL_PATH) $(INSTALL_LINK)
+
+link: $(INSTALL_LINK)
