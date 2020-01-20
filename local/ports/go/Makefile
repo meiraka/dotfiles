@@ -1,4 +1,4 @@
-.PHONY: clean link
+.PHONY: clean
 all: link
 
 INSTALL_PREFIX?=$(HOME)

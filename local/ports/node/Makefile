@@ -1,4 +1,4 @@
-.PHONY: clean link
+.PHONY: clean
 all: link
 
 INSTALL_PREFIX?=$(HOME)
@@ -41,7 +41,9 @@ $(INSTALL_PATH):| $(ARCHIVE)
 clean:
 	rm $(ARCHIVE)
 
-link: $(INSTALL_PATH)
+$(INSTALL_LINK): $(INSTALL_PATH)
 	@touch $(INSTALL_LINK)
 	@rm $(INSTALL_LINK)
 	ln -si $(INSTALL_PATH) $(INSTALL_LINK)
+
+link: $(INSTALL_LINK)
