@@ -39,6 +39,8 @@ Plug 'chase/vim-ansible-yaml'
 Plug 'kewah/vim-stylefmt'
 call plug#end()
 
+au QuickfixCmdPost make,grep,grepadd,vimgrep copen
+
 set termguicolors
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
