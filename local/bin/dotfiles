@@ -1,6 +1,6 @@
 #!/bin/dash
 
-ROOT=$(cd $(dirname $0);cd ../..; pwd)
+ROOT=$(cd $(dirname "$(realpath "$0")");cd ../..; pwd)
 
 update() {
   cd ${ROOT}
@@ -9,11 +9,41 @@ update() {
   make install
 }
 
+check() {
+  DST_PREFIX=`echo ~/.`
+  FILE=`echo $1 | sed -e "s@${DST_PREFIX}@@g"`
+  if [ ! -e "$1" ]; then
+    echo not found
+    return
+  fi
+  orig=`readlink "$1"`
+  echo ${ROOT}/${FILE}
+  if [ -e "${ROOT}/${FILE}" ]; then
+    if [ -L "$1" ]; then
+      if [ "${orig}" = "${ROOT}/${FILE}" ]; then
+        echo synced
+      else
+        echo different link
+      fi
+    fi
+    elif [ -L "$1" ]; then
+      echo different link
+    else
+      echo not synced
+  fi
+}
+
 if [ "$#" = 0 ]; then
   echo "req args"
   exit 1
 elif [ "$1" = "update" ]; then
   update
+elif [ "$1" = "check" ]; then
+  if [ "$#" != 2 ]; then
+    echo "req args"
+    exit 1
+  fi
+  check $2
 else
   echo "unknown option $1"
   exit 1
