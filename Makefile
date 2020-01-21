@@ -2,7 +2,7 @@
 
 DST_PREFIX = $(shell echo  ~/.)
 SUBDIRS = config local/bin
-IGNORE = Makefile bootstrap README.rst LICENSE local/ports $(SUBDIRS)
+IGNORE = Makefile bootstrap README.rst LICENSE local local/ports $(SUBDIRS)
 SRC = $(filter-out $(IGNORE), $(wildcard *)) $(wildcard $(patsubst %, %/*, $(SUBDIRS)))
 DOT_PATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(SUBDIRSSRC))
 DOT_SUBDIRS = $(patsubst %, $(DST_PREFIX)%, $(SUBDIRS))

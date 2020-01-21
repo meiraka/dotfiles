@@ -1,0 +1,20 @@
+#!/bin/dash
+
+ROOT=$(cd $(dirname $0);cd ../..; pwd)
+
+update() {
+  cd ${ROOT}
+  git pull origin master
+  make
+  make install
+}
+
+if [ "$#" = 0 ]; then
+  echo "req args"
+  exit 1
+elif [ "$1" = "update" ]; then
+  update
+else
+  echo "unknown option $1"
+  exit 1
+fi
