@@ -9,9 +9,7 @@ DOT_SUBDIRS = $(patsubst %, $(DST_PREFIX)%, $(SUBDIRS))
 
 # dotfiles
 
-all: link special  ## execute all targets
-
-link: $(DOT_SUBDIRS) $(DOT_PATH)  ## make dotfiles link
+link: $(DOT_SUBDIRS) $(DOT_PATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)gitconfig gitconfig ## create dotfiles link
 
 clean:  # remove linked files
 	@LIST="$(DOT_PATH)";\
@@ -27,17 +25,12 @@ $(DOT_PATH): $(DST_PREFIX)%: %
 	ln -s $(abspath $<) $@
 
 $(DOT_SUBDIRS):
-	@LIST="$(DOT_SUBDIRS)";\
-		for x in $$LIST; do\
-		mkdir -p "$$x";\
-		done
-
-special: $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)gitconfig gitconfig  ## make special files
+	mkdir -p $@
 
 # Add [include] directive in gitconfig
 GITCONFIG_APPLIED = $(shell grep .gitconfig.shared $(DST_PREFIX)gitconfig)
 ifeq ($(GITCONFIG_APPLIED),)
-gitconfig: $(DST_PREFIX)gitconfig  ## include gitconfig.shared
+gitconfig: $(DST_PREFIX)gitconfig
 	if ! grep .gitconfig.shared $(DST_PREFIX)gitconfig 2> /dev/null > /dev/null; then\
 		echo "[include]" >> $(DST_PREFIX)gitconfig;\
 		echo "    path = $(DST_PREFIX)gitconfig.shared" >> $(DST_PREFIX)gitconfig;\
@@ -66,7 +59,9 @@ APPS = $(wildcard local/ports/*)
 $(APPS):
 	$(MAKE) -C $@
 
-install: $(APPS)
+install: $(APPS)  ## install applications
+
+all: link install  ## execute all targets
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
