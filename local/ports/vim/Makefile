@@ -15,6 +15,13 @@ CONFIG_LOG=$(WORKDIR)/src/auto/config.log
 ARCHIVE=v$(TAG).tar.gz
 WORKDIR=$(REPO)-$(TAG)
 
+ifeq ($(JOBS),)
+JOBS := $(shell grep -c ^processor /proc/cpuinfo 2>/dev/null)
+ifeq ($(JOBS),)
+JOBS := 1
+endif
+endif
+
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/$(ARCHIVE) -o $(ARCHIVE)
 
@@ -25,7 +32,7 @@ $(CONFIG_LOG):| $(WORKDIR)
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 
 $(WORKDIR)/src/vim: $(CONFIG_LOG)
-	cd $(WORKDIR); make
+	cd $(WORKDIR); make -j$(JOBS)
 
 clean:
 	rm -rf $(ARCHIVE)
