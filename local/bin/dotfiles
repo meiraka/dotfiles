@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 ROOT=$(cd $(dirname "$(realpath "$0")");cd ../..; pwd)
 
