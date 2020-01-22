@@ -17,7 +17,6 @@ check() {
     return
   fi
   orig=`readlink "$1"`
-  echo ${ROOT}/${FILE}
   if [ -e "${ROOT}/${FILE}" ]; then
     if [ -L "$1" ]; then
       if [ "${orig}" = "${ROOT}/${FILE}" ]; then
