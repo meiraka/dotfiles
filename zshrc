@@ -90,6 +90,7 @@ bindkey ""    history-beginning-search-forward-end
 bindkey "[B"  history-beginning-search-forward-end
 
 zstyle ':completion:*:default' menu select=1
+typeset -U path cdpath fpath manpath PATH
 
 #
 # prompt

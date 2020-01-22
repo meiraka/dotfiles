@@ -1,6 +1,6 @@
 export TERM="xterm-256color"
-export PATH=/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/bin:~/.local/opt/go/bin:~/.local/opt/node/bin:./node_modules/.bin
-export LD_LIBRARY_PATH=$HOME/lib:$HOME/local/lib:$LD_LIBRARY_PATH
+export PATH=~/.local/bin:/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/opt/go/bin:~/.local/opt/node/bin:./node_modules/.bin
+export LD_LIBRARY_PATH=$HOME/lib:$HOME/local/lib:$HOME/.local/lib:$LD_LIBRARY_PATH
 export GOROOT=~/.local/opt/go
 export GOPATH=~/
 export GO111MODULE=on
