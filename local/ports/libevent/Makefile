@@ -39,4 +39,4 @@ $(WORKDIR)/libevent.la: $(WORKDIR)
 $(INSTALL_PREFIX)/lib/libevent.la: $(WORKDIR)/libevent.la
 	cd $(WORKDIR); make install
 
-install: $(INSTALL_PREFIX)/lib/libevent.so
+install: $(INSTALL_PREFIX)/lib/libevent.la
