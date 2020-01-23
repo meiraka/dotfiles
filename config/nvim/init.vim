@@ -39,7 +39,8 @@ Plug 'chase/vim-ansible-yaml'
 Plug 'kewah/vim-stylefmt'
 call plug#end()
 
-au QuickfixCmdPost make,grep,grepadd,vimgrep copen
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 set termguicolors
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -68,3 +69,6 @@ set shiftwidth=4
 set expandtab
 set path=
 " set ambiwidth='single'
+
+let mapleader = "\<Space>"
+:map <Leader>r :silent make\|redraw!\|cc<CR>
