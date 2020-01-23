@@ -44,6 +44,7 @@ au QuickfixCmdPost make,grep,grepadd,vimgrep copen
 set termguicolors
 " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
+set t_ut=
 set guifont="Ricty\ bold\ 14"
 set guifontwide="Ricty\ bold\ 14"
 set guioptions-=m
