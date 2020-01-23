@@ -36,7 +36,7 @@ $(WORKDIR)/libevent.la: $(WORKDIR)
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 	make -C $(WORKDIR) -j$(JOBS)
 
-$(INSTALL_PREFIX)/lib/libevent.so: $(WORKDIR)/libevent.la
+$(INSTALL_PREFIX)/lib/libevent.la: $(WORKDIR)/libevent.la
 	cd $(WORKDIR); make install
 
 install: $(INSTALL_PREFIX)/lib/libevent.so
