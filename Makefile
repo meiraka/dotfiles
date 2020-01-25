@@ -22,6 +22,7 @@ clean:  # remove linked files
 		done
 
 $(DOT_PATH): $(DST_PREFIX)%: %
+	@if [ -e "$@" ]; then echo $@ already exists; exit 1; fi
 	ln -s $(abspath $<) $@
 
 $(DOT_SUBDIRS):
