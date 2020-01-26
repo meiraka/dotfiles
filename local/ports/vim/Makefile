@@ -5,7 +5,7 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=vim
 REPO=vim
-TAG=8.2.0140
+TAG=8.2.0148
 
 CONFIGURE_ARGS+= --with-features=huge
 CONFIGURE_ARGS+= --enable-fail-if-missing
