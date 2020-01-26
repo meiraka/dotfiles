@@ -1,0 +1,17 @@
+name: build
+
+on: 
+  push:
+    paths:
+      - local/ports/*/Makefile
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macos-latest]
+    steps:
+    - uses: actions/checkout@v1
+    - name: make install
+      run: make install
