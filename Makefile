@@ -64,6 +64,7 @@ $(APPS):
 .PHONY: apt-cli apt-desktop
 APT = $(shell which apt)
 ifneq ($(APT),)
+ifneq ($(shell which dpkg),)
 APT_REQUIRED_CLI = zsh libevent-dev libncurses5-dev
 APT_REQUIRED_DESKTOP = $(APT_REQUIRED_CLI) thunar thunar-archive-plugin thunar-media-tags-plugin tumbler-plugins-extra lxappearance nitrogen xmonad xmobar trayer gmrun pavucontrol sakura xfce4-power-manager xfce4-power-manager-plugins mupdf
 APT_INSTALLED = $(shell dpkg -l | grep ii | cut -d ' ' -f 3)
@@ -78,6 +79,7 @@ endif
 ifneq ($(APT_INSTALL_DESKTOP),)
 apt-desktop: ## install desktop applications via apt
 	echo $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_DESKTOP))
+endif
 endif
 endif
 
