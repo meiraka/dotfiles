@@ -62,23 +62,22 @@ $(APPS):
 
 ### apt ###
 .PHONY: apt-cli apt-desktop
-APT = $(shell which apt)
-ifneq ($(APT),)
+ifneq ($(shell which apt),)
 ifneq ($(shell which dpkg),)
-APT_REQUIRED_CLI = zsh libevent-dev libncurses5-dev
+APT_REQUIRED_CLI = zsh git automake build-essential pkg-config libevent-dev libncurses5-dev
 APT_REQUIRED_DESKTOP = $(APT_REQUIRED_CLI) thunar thunar-archive-plugin thunar-media-tags-plugin tumbler-plugins-extra lxappearance nitrogen xmonad xmobar trayer gmrun pavucontrol sakura xfce4-power-manager xfce4-power-manager-plugins mupdf
-APT_INSTALLED = $(shell dpkg -l | grep ii | cut -d ' ' -f 3)
+APT_INSTALLED = $(shell dpkg -l cut -d ' ' -f 3)
 APT_PREFIX = apt/
 APT_INSTALL_CLI = $(patsubst %, $(APT_PREFIX)%, $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_CLI)))
 APT_INSTALL_DESKTOP = $(patsubst %, $(APT_PREFIX)%, $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_DESKTOP)))
 .PHONY: $(APT_INSTALL_CLI) $(APT_INSTALL_DESKTOP)
 ifneq ($(APT_INSTALL_CLI),)
 apt-cli: ## install cli applications via apt
-	echo $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_CLI))
+	sudo apt install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_CLI))
 endif
 ifneq ($(APT_INSTALL_DESKTOP),)
 apt-desktop: ## install desktop applications via apt
-	echo $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_DESKTOP))
+	sudo apt install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_DESKTOP))
 endif
 endif
 endif
