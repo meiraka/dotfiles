@@ -73,11 +73,11 @@ APT_INSTALL_DESKTOP = $(patsubst %, $(APT_PREFIX)%, $(filter-out $(APT_INSTALLED
 .PHONY: $(APT_INSTALL_CLI) $(APT_INSTALL_DESKTOP)
 ifneq ($(APT_INSTALL_CLI),)
 apt-cli: ## install cli applications via apt
-	sudo apt install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_CLI))
+	sudo apt-get install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_CLI))
 endif
 ifneq ($(APT_INSTALL_DESKTOP),)
 apt-desktop: ## install desktop applications via apt
-	sudo apt install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_DESKTOP))
+	sudo apt-get install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_DESKTOP))
 endif
 endif
 endif
