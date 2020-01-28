@@ -16,7 +16,6 @@ update() {
   cd ${ROOT}
   git pull origin master
   make
-  make install
 }
 
 check() {
