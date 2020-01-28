@@ -13,5 +13,5 @@ jobs:
         os: [ubuntu-18.04, macos-latest]
     steps:
     - uses: actions/checkout@v1
-    - name: make install
-      run: make install
+    - name: make cli
+      run: make cli
