@@ -4,6 +4,7 @@ config/nvim/bundle
 *.hi
 .netrwhist
 *.tar.*
+*.zip
 local/ports/*/*/
 
 
