@@ -62,8 +62,8 @@ $(APPS):
 
 ### apt ###
 .PHONY: apt-cli apt-desktop
-ifneq ($(shell which apt),)
-ifneq ($(shell which dpkg),)
+ifneq ($(shell which apt 2> /dev/null),)
+ifneq ($(shell which -v dpkg 2> /dev/null),)
 APT_REQUIRED_CLI = zsh git automake build-essential pkg-config libevent-dev libncurses5-dev
 APT_REQUIRED_DESKTOP = $(APT_REQUIRED_CLI) thunar thunar-archive-plugin thunar-media-tags-plugin tumbler-plugins-extra lxappearance nitrogen xmonad xmobar trayer gmrun pavucontrol sakura xfce4-power-manager xfce4-power-manager-plugins mupdf
 APT_INSTALLED = $(shell dpkg -l | cut -d ' ' -f 3 | cut -d ':' -f 1 | sort | uniq)
