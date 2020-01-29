@@ -59,17 +59,15 @@ ifneq ($(shell which -v dpkg 2> /dev/null),)
 APT_REQUIRED_CLI = zsh git vim curl tmux automake build-essential pkg-config libevent-dev libncurses5-dev
 APT_REQUIRED_DESKTOP = $(APT_REQUIRED_CLI) thunar thunar-archive-plugin thunar-media-tags-plugin tumbler-plugins-extra lxappearance nitrogen xmonad xmobar trayer gmrun pavucontrol sakura xfce4-power-manager xfce4-power-manager-plugins mupdf
 APT_INSTALLED = $(shell dpkg -l | cut -d ' ' -f 3 | cut -d ':' -f 1 | sort | uniq)
-APT_PREFIX = apt/
-APT_INSTALL_CLI = $(patsubst %, $(APT_PREFIX)%, $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_CLI)))
-APT_INSTALL_DESKTOP = $(patsubst %, $(APT_PREFIX)%, $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_DESKTOP)))
-.PHONY: $(APT_INSTALL_CLI) $(APT_INSTALL_DESKTOP)
+APT_INSTALL_CLI = $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_CLI))
+APT_INSTALL_DESKTOP = $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_DESKTOP))
 ifneq ($(APT_INSTALL_CLI),)
 apt-cli: ## install cli applications via apt
-	sudo apt-get install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_CLI))
+	sudo apt-get install -y $(APT_INSTALL_CLI)
 endif
 ifneq ($(APT_INSTALL_DESKTOP),)
 apt-desktop: ## install desktop applications via apt
-	sudo apt-get install -y $(patsubst $(APT_PREFIX)%, %, $(APT_INSTALL_DESKTOP))
+	sudo apt-get install -y $(APT_INSTALL_DESKTOP)
 endif
 endif
 endif
