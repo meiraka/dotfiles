@@ -74,12 +74,23 @@ endif
 endif
 endif
 
+### brew ###
+.PHONY: brew-cli
+ifneq ($(shell which brew 2> /dev/null),)
+BREW_REQUIRED_CLI = libevent
+BREW_INSTALLED = $(shell brew list)
+BREW_INSTALL_CLI = $(filter-out $(BREW_INSTALLED), $(BREW_REQUIRED_CLI))
+ifneq ($(BREW_INSTALL_CLI),)
+brew-cli: ## install cli applications via brew
+	sudo brew install $(BREW_INSTALL_CLI)
+endif
+endif
 # apps
 
 APPS = $(dir $(wildcard local/ports/*/Makefile))
 .PHONY: install $(APPS)
 
-$(APPS): apt-cli
+$(APPS): apt-cli brew-cli
 	$(MAKE) -C $@
 
 cli: $(APPS) ## install cli applications
