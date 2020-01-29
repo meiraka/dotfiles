@@ -76,7 +76,7 @@ endif
 
 # apps
 
-APPS = $(wildcard local/ports/*)
+APPS = $(dir $(wildcard local/ports/*/Makefile))
 .PHONY: install $(APPS)
 
 $(APPS): apt-cli

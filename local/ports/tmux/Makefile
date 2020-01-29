@@ -32,10 +32,7 @@ fetch: $(ARCHIVE)
 extract: $(WORKDIR)
 build-dep: apt
 
-$(INSTALL_PREFIX)/lib/libevent.la:
-	$(MAKE) -C ../libevent
-
-$(WORKDIR)/tmux: $(WORKDIR) $(INSTALL_PREFIX)/lib/libevent.la
+$(WORKDIR)/tmux: $(WORKDIR)
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 	make -C $(WORKDIR) -j$(JOBS)
 	touch $(WORKDIR)/tmux
