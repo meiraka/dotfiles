@@ -46,7 +46,7 @@ $(DST_PREFIX)gitconfig:
 	touch $(DST_PREFIX)gitconfig
 
 ### apt ###
-.PHONY: apt-cli apt-desktop
+.PHONY: cli-apt desktop-apt
 ifneq ($(shell which apt 2> /dev/null),)
 ifneq ($(shell which -v dpkg 2> /dev/null),)
 APT_REQUIRED_CLI = zsh git vim curl tmux automake build-essential pkg-config libevent-dev libncurses5-dev
@@ -55,36 +55,36 @@ APT_INSTALLED = $(shell dpkg -l | cut -d ' ' -f 3 | cut -d ':' -f 1 | sort | uni
 APT_INSTALL_CLI = $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_CLI))
 APT_INSTALL_DESKTOP = $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_DESKTOP))
 ifneq ($(APT_INSTALL_CLI),)
-apt-cli: ## install cli applications via apt
+cli-apt: ## install cli applications via apt
 	sudo apt-get install -y $(APT_INSTALL_CLI)
 endif
 ifneq ($(APT_INSTALL_DESKTOP),)
-apt-desktop: ## install desktop applications via apt
+desktop-apt: ## install desktop applications via apt
 	sudo apt-get install -y $(APT_INSTALL_DESKTOP)
 endif
 endif
 endif
 
 ### brew ###
-.PHONY: brew-cli
+.PHONY: cli-brew
 ifneq ($(shell which brew 2> /dev/null),)
 BREW_REQUIRED_CLI = libevent
 BREW_INSTALLED = $(shell brew list)
 BREW_INSTALL_CLI = $(filter-out $(BREW_INSTALLED), $(BREW_REQUIRED_CLI))
 ifneq ($(BREW_INSTALL_CLI),)
-brew-cli: ## install cli applications via brew
+cli-brew: ## install cli applications via brew
 	sudo brew install $(BREW_INSTALL_CLI)
 endif
 endif
 
 ### yum ###
-.PHONY: yum-cli
+.PHONY: cli-yum
 ifneq ($(shell which yum 2> /dev/null),)
 YUM_REQUIRED_CLI = autoconf automake byacc gcc-c++ libevent-devel
 YUM_INSTALLED = $(shell yum list installed | cut -d ' ' -f 1 | cut -d '.' -f 1)
 YUM_INSTALL_CLI = $(filter-out $(YUM_INSTALLED), $(YUM_INSTALL_CLI))
 ifneq ($(YUM_INSTALL_CLI),)
-yum-cli: ## install cli applications via yum
+cli-yum: ## install cli applications via yum
 	echo yum install $(YUM_INSTALL_CLI)
 endif
 endif
@@ -94,10 +94,11 @@ endif
 APPS = $(dir $(wildcard local/ports/*/Makefile))
 .PHONY: install $(APPS)
 
-$(APPS): apt-cli brew-cli
+$(APPS): cli-apt cli-brew
 	$(MAKE) -C $@
 
 cli: $(APPS) ## install cli applications
+desktop: desktop-apt ## install desktop applications
 
 all: link cli  ## execute all targets
 
