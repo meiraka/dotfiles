@@ -36,19 +36,12 @@ gitconfig: $(DST_PREFIX)gitconfig
 		echo "[include]" >> $(DST_PREFIX)gitconfig;\
 		echo "    path = $(DST_PREFIX)gitconfig.shared" >> $(DST_PREFIX)gitconfig;\
 		fi
-else
-gitconfig: $(DST_PREFIX)gitconfig
 endif
 
-# Link nvim/init.vim to .vimrc
 $(DST_PREFIX)vimrc:
 	ln -s $(DST_PREFIX)config/nvim/init.vim $(DST_PREFIX)vimrc
-
-# Link nvim to .vim
 $(DST_PREFIX)vim:
 	ln -s $(DST_PREFIX)config/nvim $(DST_PREFIX)vim
-
-# Make gitconfig
 $(DST_PREFIX)gitconfig:
 	touch $(DST_PREFIX)gitconfig
 
