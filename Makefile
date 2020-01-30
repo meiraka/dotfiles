@@ -82,7 +82,7 @@ endif
 ifneq ($(shell which yum 2> /dev/null),)
 YUM_REQUIRED_CLI = autoconf automake byacc gcc-c++ libevent-devel
 YUM_INSTALLED = $(shell yum list installed | cut -d ' ' -f 1 | cut -d '.' -f 1)
-YUM_INSTALL_CLI = $(filter-out $(YUM_INSTALLED), $(YUM_INSTALL_CLI))
+YUM_INSTALL_CLI = $(filter-out $(YUM_INSTALLED), $(YUM_REQUIRED_CLI))
 ifneq ($(YUM_INSTALL_CLI),)
 cli-yum: ## install cli applications via yum
 	echo yum install $(YUM_INSTALL_CLI)
