@@ -73,7 +73,7 @@ BREW_INSTALLED = $(shell brew list)
 BREW_INSTALL_CLI = $(filter-out $(BREW_INSTALLED), $(BREW_REQUIRED_CLI))
 ifneq ($(BREW_INSTALL_CLI),)
 cli-brew: ## install cli applications via brew
-	sudo brew install $(BREW_INSTALL_CLI)
+	brew install $(BREW_INSTALL_CLI)
 endif
 endif
 
