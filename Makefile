@@ -85,7 +85,7 @@ YUM_INSTALLED = $(shell yum list installed | cut -d ' ' -f 1 | cut -d '.' -f 1)
 YUM_INSTALL_CLI = $(filter-out $(YUM_INSTALLED), $(YUM_REQUIRED_CLI))
 ifneq ($(YUM_INSTALL_CLI),)
 cli-yum: ## install cli applications via yum
-	yum install $(YUM_INSTALL_CLI)
+	sudo yum install $(YUM_INSTALL_CLI)
 endif
 endif
 
@@ -94,7 +94,7 @@ endif
 APPS = $(dir $(wildcard local/ports/*/Makefile))
 .PHONY: install $(APPS)
 
-$(APPS): cli-apt cli-brew
+$(APPS): cli-apt cli-brew cli-yum
 	$(MAKE) -C $@
 
 cli: $(APPS) ## install cli applications
