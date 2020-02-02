@@ -45,9 +45,9 @@ main = do
 
 myLogHook statusbar = dynamicLogWithPP $ xmobarPP
   { ppOutput = hPutStrLn statusbar
-  , ppCurrent = xmobarColor "#ffffff" "" .wrap " " ""
-  , ppHidden = xmobarColor "#aaaaaa" "" .wrap " " "" .noScratchPad
-  , ppHiddenNoWindows = xmobarColor "#aaaaaa" "" .wrap " " "" .noScratchPad
+  , ppCurrent = \ x -> xmobarColor "#ffffff" "" " ● "
+  , ppHidden = \ x -> xmobarColor "#aaaaaa" "" " ● "
+  , ppHiddenNoWindows = \ x -> xmobarColor "#aaaaaa" "" " ● "
   , ppTitle = xmobarColor "#ffffff" "" . shorten 80
   , ppSep = "  "
   , ppLayout = xmobarColor "#ffffff" ""
@@ -64,7 +64,7 @@ myStartupHook = do
 
 myBorderWidth = 0
 myTerminal = "sakura"
-myWorkspaces = ["♥", "♡", "♦", "♢", "♠", "♤", "♣", "♧"]
+myWorkspaces = ["1","2","3","4","5","6","7","8"]
 myManageHook =
   composeAll
     [ className =? "Xfce4-notifyd" --> doIgnore
