@@ -41,3 +41,10 @@ $(INSTALL_PREFIX)/bin/tmux: $(WORKDIR)/tmux
 	cd $(WORKDIR); make install
 
 install: $(INSTALL_PREFIX)/bin/tmux
+
+.PHONY: update
+update:
+	$(eval NEW_TAG := $(shell curl https://api.github.com/repos/$(USER)/$(REPO)/releases | jq -r '. - map(select(.prerelease)) | .[0].tag_name'))
+	@if [ "$(NEW_TAG)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/TAG=$(TAG)/TAG=$(NEW_TAG)/" Makefile
+	$(MAKE) install
