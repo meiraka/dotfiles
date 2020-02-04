@@ -5,15 +5,15 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=vim
 REPO=vim
-TAG=8.2.0148
+TAG=v8.2.0148
 
 CONFIGURE_ARGS+= --with-features=huge
 CONFIGURE_ARGS+= --enable-fail-if-missing
 CONFIGURE_ARGS+= --prefix=$(INSTALL_PREFIX)
 
 CONFIG_LOG=$(WORKDIR)/src/auto/config.log
-ARCHIVE=v$(TAG).tar.gz
-WORKDIR=$(REPO)-$(TAG)
+ARCHIVE=$(TAG).tar.gz
+WORKDIR=$(REPO)-$(patsubst v%,%,$(TAG))
 
 ifeq ($(JOBS),)
 JOBS := $(shell grep -c ^processor /proc/cpuinfo 2>/dev/null)
