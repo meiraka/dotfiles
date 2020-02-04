@@ -28,3 +28,11 @@ $(INSTALL_DIR)/bin/$(BIN): $(INSTALL_DIR)/bin/$(BIN_VERSION)
 	ln -nsf $(INSTALL_DIR)/bin/$(BIN_VERSION) $(INSTALL_DIR)/bin/$(BIN)
 
 install: $(INSTALL_DIR)/bin/$(BIN)
+
+.PHONY: update
+update:
+	$(eval NEW_TAG := $(shell curl https://api.github.com/repos/stedolan/jq/releases | jq -r .[0].tag_name))
+	@if [ "$(NEW_TAG)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/TAG=$(TAG)/TAG=$(NEW_TAG)/" Makefile
+	echo update jq $(NEW_TAG)
+	$(MAKE) install
