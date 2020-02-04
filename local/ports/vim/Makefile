@@ -5,7 +5,7 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=vim
 REPO=vim
-TAG=v8.2.0148
+TAG=v8.2.0205
 
 CONFIGURE_ARGS+= --with-features=huge
 CONFIGURE_ARGS+= --enable-fail-if-missing
@@ -42,3 +42,11 @@ $(INSTALL_PREFIX)/bin/vim: $(WORKDIR)/src/vim
 	cd $(WORKDIR); make install
 
 install: $(INSTALL_PREFIX)/bin/vim
+
+.PHONY: update
+update:
+	$(eval NEW_TAG := $(shell curl https://api.github.com/repos/$(USER)/$(REPO)/tags | jq -re .[0].name))
+	@if [ "$(NEW_TAG)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/TAG=$(TAG)/TAG=$(NEW_TAG)/" Makefile
+	echo update jq $(NEW_TAG)
+	$(MAKE) install
