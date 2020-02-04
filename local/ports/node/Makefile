@@ -23,7 +23,7 @@ endif
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
 
 
-VERSION=v12.14.1
+VERSION=v13.7.0
 
 ARCHIVE=node-$(VERSION)-$(OS)-$(ARCH).tar.$(ENC)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
@@ -47,3 +47,10 @@ $(INSTALL_LINK): $(INSTALL_PATH)
 	ln -si $(INSTALL_PATH) $(INSTALL_LINK)
 
 link: $(INSTALL_LINK)
+
+.PHONY: update
+update:
+	$(eval NEW_VERSION := $(shell curl https://api.github.com/repos/nodejs/node/releases/latest | jq -r .tag_name))
+	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
+	$(MAKE) link
