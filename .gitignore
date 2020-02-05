@@ -6,6 +6,7 @@ config/nvim/bundle
 *.tar.*
 *.zip
 local/ports/*/*/
+.cli
 
 
 xmonad-x86_64-linux

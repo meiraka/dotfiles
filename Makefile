@@ -98,6 +98,7 @@ $(APPS): cli-apt cli-brew cli-yum
 	$(MAKE) -C $@
 
 cli: $(APPS) ## install cli applications
+	@touch .cli
 desktop: desktop-apt ## install desktop applications
 
 all: link cli  ## execute all targets

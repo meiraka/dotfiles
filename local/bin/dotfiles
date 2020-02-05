@@ -16,6 +16,9 @@ update() {
   cd ${ROOT}
   git pull origin master
   make
+  if [ -e ".cli" ]; then
+      make cli
+  fi
 }
 
 check() {
