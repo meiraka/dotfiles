@@ -19,3 +19,5 @@ $(WORKDIR)/HackGen-Regular.ttf: $(ARCHIVE)
 	-fc-cache -vf
 
 install: ~/.fonts/HackGen-Regular.ttf
+
+.PHONY: update
