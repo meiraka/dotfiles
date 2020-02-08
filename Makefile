@@ -95,7 +95,11 @@ APPS = $(dir $(wildcard local/ports/*/Makefile))
 .PHONY: install $(APPS)
 
 $(APPS): cli-apt cli-brew cli-yum
-	$(MAKE) -C $@
+	$(MAKE) -C $@ $(SUBTARGET)
+
+.PHONY: update
+update:
+	$(eval SUBTARGET := update)
 
 cli: $(APPS) ## install cli applications
 	@touch .cli

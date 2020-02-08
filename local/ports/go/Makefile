@@ -42,7 +42,7 @@ $(INSTALL_LINK): $(INSTALL_PATH)
 link: $(INSTALL_LINK)
 
 src:
-	git clone https://go.googlesource.com/go src
+	@git clone https://go.googlesource.com/go src
 
 .PHONY: update
 update: src

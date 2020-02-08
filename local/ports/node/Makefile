@@ -49,7 +49,7 @@ $(INSTALL_LINK): $(INSTALL_PATH)
 link: $(INSTALL_LINK)
 
 src:
-	git clone git@github.com:nodejs/node.git src
+	@git clone git@github.com:nodejs/node.git src
 
 .PHONY: update
 update: src
