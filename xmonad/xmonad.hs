@@ -12,6 +12,7 @@ import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers  (doFullFloat, isFullscreen)
 import           XMonad.Hooks.UrgencyHook
 import           XMonad.Layout.BinarySpacePartition
+import           XMonad.Layout.Gaps
 import           XMonad.Layout.OneBig
 import           XMonad.Layout.Named
 import           XMonad.Layout.NoBorders
@@ -77,11 +78,13 @@ myManageHook =
   manageHook defaultConfig <+>
   (isFullscreen --> doFullFloat)
 
-myLayoutHook = toggleLayouts full (avoidStruts $ (fill ||| youtube))
+myLayoutHook = toggleLayouts full (avoidStruts $ (fill ||| thin))
   where
-    fill = named "fill" (spacing 12 $ emptyBSP)
-    youtube = named "youtube" (spacing 12 $ Tall 1 (3/100) (5/6))
+    fill = named "fill" (sp $ gp $ emptyBSP)
+    thin = named "thin" (sp $ gp $ Tall 1 (3/100) (5/6))
     full = named "FullScreen" (noBorders Full)
+    sp = spacing 12
+    gp = gaps [(L, 12), (R, 12)]
 
 scratchpads =
   [ NS "terminal"
