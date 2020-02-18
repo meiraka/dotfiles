@@ -5,7 +5,8 @@ config/nvim/bundle
 .netrwhist
 *.tar.*
 *.zip
-local/ports/*/*/
+local/ports/*/*
+!Makefile
 .cli
 
 
