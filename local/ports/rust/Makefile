@@ -1,18 +1,20 @@
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
 .PHONY: install update
-install: $(HOME)/.cargo/bin/rustc
+install: $(HOME)/.cargo/bin/rustup $(HOME)/.cargo/bin/rls
 
 INSTALLER=sh.rustup.rs
 
 $(INSTALLER):
 	curl -Lf https://$(INSTALLER) -o $(INSTALLER)
 
-$(HOME)/.cargo/bin/rustc: $(INSTALLER)
+$(HOME)/.cargo/bin/rustup: $(INSTALLER)
 	sh $(INSTALLER) -y --no-modify-path
 
+$(HOME)/.cargo/bin/rls: $(HOME)/.cargo/bin/rustup
+	rustup component add rls rust-analysis rust-src
+
 update:
-	rm sh.rustup.rs
-	$(MAKE) install
+	rustup update
 
 
