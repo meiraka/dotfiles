@@ -23,7 +23,7 @@ endif
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
 
 
-VERSION=v13.8.0
+VERSION=v13.9.0
 
 ARCHIVE=node-$(VERSION)-$(OS)-$(ARCH).tar.$(ENC)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
