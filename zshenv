@@ -11,6 +11,7 @@ export LC_LANG=${LANG}
 export LC_ALL=${LANG}
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+export QT_QPA_PLATFORMTHEME=gtk2
 export MPD_HOST="moode.local"
 export FZF_DEFAULT_OPTS='
   --height 50%
