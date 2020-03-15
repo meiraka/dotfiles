@@ -23,7 +23,7 @@ endif
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
 
 
-VERSION=v13.9.0
+VERSION=v13.10.1
 
 ARCHIVE=node-$(VERSION)-$(OS)-$(ARCH).tar.$(ENC)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
@@ -57,4 +57,4 @@ update: src
 	$(eval NEW_VERSION := $(shell cd src && git tag | grep -E ^v[0-9]+\.[0-9]+\.[0-9]+$ | sort --version-sort | tail -n 1))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
-	@if [ ! "$(NEW_VERSION)" = "$(VERSION)" ]; then echo "node $(NEW_VERSION) available"; fi
+	$(MAKE) link
