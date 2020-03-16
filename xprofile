@@ -1,0 +1,3 @@
+#!/bin/sh
+test -f ~/.zshenv && . ~/.zshenv
+echo $QT_QPA_PLATFORMTHEME
