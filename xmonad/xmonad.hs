@@ -69,8 +69,6 @@ myWorkspaces = ["1","2","3","4","5","6","7","8"]
 myManageHook =
   composeAll
     [ className =? "Xfce4-notifyd" --> doIgnore
-    , className =? "Gimp" --> doFloat
-    , className =? "Gimp-2.6" --> doFloat
     , title =? "Cities: Skylines" --> doFloat
     ] <+>
   manageDocks <+>
