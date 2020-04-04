@@ -1,18 +1,18 @@
 .PHONY: clean gitconfig help
 
-DST_PREFIX = $(shell echo  ~/.)
-SUBDIRS = config local/bin
-IGNORE = Makefile bootstrap README.rst LICENSE local $(SUBDIRS)
-SRC = $(filter-out $(IGNORE), $(wildcard *)) $(wildcard $(patsubst %, %/*, $(SUBDIRS)))
-DOT_PATH = $(patsubst %, $(DST_PREFIX)%, $(SRC) $(SUBDIRSSRC))
-DOT_SUBDIRS = $(patsubst %, $(DST_PREFIX)%, $(SUBDIRS))
+DOT_DST_PREFIX = $(shell echo  ~/.)
+DOT_SRC_SUBDIRS = config local/bin
+DOT_SRC_IGNORES = Makefile bootstrap README.rst LICENSE local $(DOT_SRC_SUBDIRS)
+DOT_SRC = $(filter-out $(DOT_SRC_IGNORES), $(wildcard *)) $(wildcard $(patsubst %, %/*, $(DOT_SRC_SUBDIRS)))
+DOT_DST = $(patsubst %, $(DOT_DST_PREFIX)%, $(DOT_SRC))
+DOT_DST_SUBDIRS = $(patsubst %, $(DOT_DST_PREFIX)%, $(DOT_SRC_SUBDIRS))
 
 # dotfiles
 
-link: $(DOT_SUBDIRS) $(DOT_PATH) $(DST_PREFIX)vimrc $(DST_PREFIX)vim $(DST_PREFIX)gitconfig gitconfig ## create dotfiles link
+link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)vimrc $(DOT_DST_PREFIX)vim $(DOT_DST_PREFIX)gitconfig gitconfig ## create dotfiles link
 
 clean:  # remove linked files
-	@LIST="$(DOT_PATH)";\
+	@LIST="$(DOT_DST)";\
 		for x in $$LIST; do\
 		if [ ! -L "$$x" ]; then\
 		echo warning: "$$x" is not symbolic link\
@@ -21,29 +21,29 @@ clean:  # remove linked files
 		fi\
 		done
 
-$(DOT_PATH): $(DST_PREFIX)%: %
+$(DOT_DST): $(DOT_DST_PREFIX)%: %
 	@if [ -e "$@" ]; then echo $@ already exists; exit 1; fi
 	ln -s $(abspath $<) $@
 
-$(DOT_SUBDIRS):
+$(DOT_DST_SUBDIRS):
 	mkdir -p $@
 
 # Add [include] directive in gitconfig
-GITCONFIG_APPLIED = $(shell grep .gitconfig.shared $(DST_PREFIX)gitconfig)
+GITCONFIG_APPLIED = $(shell grep .gitconfig.shared $(DOT_DST_PREFIX)gitconfig)
 ifeq ($(GITCONFIG_APPLIED),)
-gitconfig: $(DST_PREFIX)gitconfig
-	if ! grep .gitconfig.shared $(DST_PREFIX)gitconfig 2> /dev/null > /dev/null; then\
-		echo "[include]" >> $(DST_PREFIX)gitconfig;\
-		echo "    path = $(DST_PREFIX)gitconfig.shared" >> $(DST_PREFIX)gitconfig;\
+gitconfig: $(DOT_DST_PREFIX)gitconfig
+	if ! grep .gitconfig.shared $(DOT_DST_PREFIX)gitconfig 2> /dev/null > /dev/null; then\
+		echo "[include]" >> $(DOT_DST_PREFIX)gitconfig;\
+		echo "    path = $(DOT_DST_PREFIX)gitconfig.shared" >> $(DOT_DST_PREFIX)gitconfig;\
 		fi
 endif
 
-$(DST_PREFIX)vimrc:
-	ln -s $(DST_PREFIX)config/nvim/init.vim $(DST_PREFIX)vimrc
-$(DST_PREFIX)vim:
-	ln -s $(DST_PREFIX)config/nvim $(DST_PREFIX)vim
-$(DST_PREFIX)gitconfig:
-	touch $(DST_PREFIX)gitconfig
+$(DOT_DST_PREFIX)vimrc:
+	ln -s $(DOT_DST_PREFIX)config/nvim/init.vim $(DOT_DST_PREFIX)vimrc
+$(DOT_DST_PREFIX)vim:
+	ln -s $(DOT_DST_PREFIX)config/nvim $(DOT_DST_PREFIX)vim
+$(DOT_DST_PREFIX)gitconfig:
+	touch $(DOT_DST_PREFIX)gitconfig
 
 ### apt ###
 .PHONY: cli-apt desktop-apt
