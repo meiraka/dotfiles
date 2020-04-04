@@ -1,9 +1,9 @@
 .PHONY: clean gitconfig help
 
-DOT_DST_PREFIX = $(HOME)/.
 DOT_SRC_SUBDIRS = config local/bin
 DOT_SRC_IGNORES = Makefile bootstrap README.rst LICENSE local $(DOT_SRC_SUBDIRS)
 DOT_SRC = $(filter-out $(DOT_SRC_IGNORES), $(wildcard *) $(wildcard $(addsuffix /*, $(DOT_SRC_SUBDIRS))))
+DOT_DST_PREFIX = $(HOME)/.
 DOT_DST_SUBDIRS = $(patsubst %, $(DOT_DST_PREFIX)%, $(DOT_SRC_SUBDIRS))
 DOT_DST = $(addprefix $(DOT_DST_PREFIX), $(DOT_SRC))
 
