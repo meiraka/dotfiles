@@ -9,7 +9,7 @@ DOT_DST = $(addprefix $(DOT_DST_PREFIX), $(DOT_SRC))
 
 # dotfiles
 
-link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)vimrc $(DOT_DST_PREFIX)vim $(DOT_DST_PREFIX)gitconfig gitconfig ## create dotfiles link
+link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)vimrc $(DOT_DST_PREFIX)vim $(DOT_DST_PREFIX)gitconfig ## create dotfiles link
 
 clean:  # remove linked files
 	@LIST="$(DOT_DST)";\
@@ -29,21 +29,16 @@ $(DOT_DST_SUBDIRS):
 	mkdir -p $@
 
 # Add [include] directive in gitconfig
-GITCONFIG_APPLIED = $(shell grep .gitconfig.shared $(DOT_DST_PREFIX)gitconfig)
-ifeq ($(GITCONFIG_APPLIED),)
-gitconfig: $(DOT_DST_PREFIX)gitconfig
-	if ! grep .gitconfig.shared $(DOT_DST_PREFIX)gitconfig 2> /dev/null > /dev/null; then\
-		echo "[include]" >> $(DOT_DST_PREFIX)gitconfig;\
-		echo "    path = $(DOT_DST_PREFIX)gitconfig.shared" >> $(DOT_DST_PREFIX)gitconfig;\
-		fi
+ifeq ($(shell grep .gitconfig.shared $(DOT_DST_PREFIX)gitconfig),)
+.PHONY: $(DOT_DST_PREFIX)gitconfig
 endif
+$(DOT_DST_PREFIX)gitconfig:
+	git config --global include.path /home/mei/.gitconfig.shared
 
 $(DOT_DST_PREFIX)vimrc:
 	ln -s $(DOT_DST_PREFIX)config/nvim/init.vim $(DOT_DST_PREFIX)vimrc
 $(DOT_DST_PREFIX)vim:
 	ln -s $(DOT_DST_PREFIX)config/nvim $(DOT_DST_PREFIX)vim
-$(DOT_DST_PREFIX)gitconfig:
-	touch $(DOT_DST_PREFIX)gitconfig
 
 ### apt ###
 .PHONY: cli-apt desktop-apt
