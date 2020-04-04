@@ -10,6 +10,8 @@ jobs:
         os: [ubuntu-18.04, macos-latest]
     steps:
     - uses: actions/checkout@v1
+    - name: version
+      run: make --version
     - name: make
       run: make
     - name: test
