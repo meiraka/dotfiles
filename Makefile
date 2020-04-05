@@ -22,8 +22,7 @@ clean:  # remove linked files
 		done
 
 $(DOT_DST): $(DOT_DST_PREFIX)%: %
-	@if [ -e "$@" ]; then echo $@ already exists; exit 1; fi
-	ln -s $(abspath $<) $@
+	ln -nsf $(abspath $<) $@
 
 $(DOT_DST_SUBDIRS):
 	mkdir -p $@
@@ -35,10 +34,11 @@ endif
 $(DOT_DST_PREFIX)gitconfig:
 	git config --global include.path /home/mei/.gitconfig.shared
 
+# link neovim config to vim
 $(DOT_DST_PREFIX)vimrc:
-	ln -s $(DOT_DST_PREFIX)config/nvim/init.vim $(DOT_DST_PREFIX)vimrc
+	ln -nsf $(DOT_DST_PREFIX)config/nvim/init.vim $(DOT_DST_PREFIX)vimrc
 $(DOT_DST_PREFIX)vim:
-	ln -s $(DOT_DST_PREFIX)config/nvim $(DOT_DST_PREFIX)vim
+	ln -nsf $(DOT_DST_PREFIX)config/nvim $(DOT_DST_PREFIX)vim
 
 ### apt ###
 .PHONY: cli-apt desktop-apt
@@ -50,11 +50,11 @@ APT_INSTALLED = $(shell dpkg -l | cut -d ' ' -f 3 | cut -d ':' -f 1 | sort | uni
 APT_INSTALL_CLI = $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_CLI))
 APT_INSTALL_DESKTOP = $(filter-out $(APT_INSTALLED), $(APT_REQUIRED_DESKTOP))
 ifneq ($(APT_INSTALL_CLI),)
-cli-apt: ## install cli applications via apt
+cli-apt:
 	sudo apt-get install -y $(APT_INSTALL_CLI)
 endif
 ifneq ($(APT_INSTALL_DESKTOP),)
-desktop-apt: ## install desktop applications via apt
+desktop-apt:
 	sudo apt-get install -y $(APT_INSTALL_DESKTOP)
 endif
 endif
@@ -67,7 +67,7 @@ BREW_REQUIRED_CLI = libevent
 BREW_INSTALLED = $(shell brew list)
 BREW_INSTALL_CLI = $(filter-out $(BREW_INSTALLED), $(BREW_REQUIRED_CLI))
 ifneq ($(BREW_INSTALL_CLI),)
-cli-brew: ## install cli applications via brew
+cli-brew:
 	brew install $(BREW_INSTALL_CLI)
 endif
 endif
@@ -79,7 +79,7 @@ YUM_REQUIRED_CLI = autoconf automake byacc gcc-c++ libevent-devel
 YUM_INSTALLED = $(shell yum list installed | cut -d ' ' -f 1 | cut -d '.' -f 1)
 YUM_INSTALL_CLI = $(filter-out $(YUM_INSTALLED), $(YUM_REQUIRED_CLI))
 ifneq ($(YUM_INSTALL_CLI),)
-cli-yum: ## install cli applications via yum
+cli-yum:
 	sudo yum install -y $(YUM_INSTALL_CLI)
 endif
 endif
