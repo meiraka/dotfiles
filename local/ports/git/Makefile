@@ -28,7 +28,7 @@ $(WORKDIR):| $(ARCHIVE)
 $(INSTALL_PREFIX)/bin/git: $(WORKDIR)
 	cd $(WORKDIR); make configure
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
-	cd $(WORKDIR); make -j$(JOBS) NO_GETTEXT=1
+	cd $(WORKDIR); make -j$(JOBS)
 	cd $(WORKDIR); make install
 	touch $(INSTALL_PREFIX)/bin/git
 
