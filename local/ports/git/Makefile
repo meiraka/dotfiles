@@ -5,7 +5,7 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=git
 REPO=git
-TAG=v2.26.0
+TAG=v2.26.1
 
 CONFIGURE_ARGS+= --prefix=$(INSTALL_PREFIX)
 
@@ -22,10 +22,8 @@ endif
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/$(ARCHIVE) -o $(ARCHIVE)
 
-$(WORKDIR):| $(ARCHIVE)
+$(INSTALL_PREFIX)/bin/git: $(ARCHIVE)
 	tar -xf $(ARCHIVE)
-
-$(INSTALL_PREFIX)/bin/git: $(WORKDIR)
 	cd $(WORKDIR); make configure
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 	cd $(WORKDIR); make -j$(JOBS)
