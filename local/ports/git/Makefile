@@ -46,5 +46,5 @@ update: src
 	@cd src; git fetch
 	$(eval NEW_VERSION := $(shell cd src && git tag | grep -E -e '^v[0-9]+\.[0-9]+\.[0-9]+$$' | sort --version-sort | tail -n 1))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
-	@sed -i -e "s/VERSION=v2.26.0$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
+	@sed -i -e "s/TAG=$(TAG)/TAG=$(NEW_VERSION)/" Makefile
 	$(MAKE) install
