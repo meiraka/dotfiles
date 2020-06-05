@@ -23,6 +23,12 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 let g:lsp_async_completion = 1
+let g:lsp_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_highlight_references_enabled = 1
+autocmd BufWritePre <buffer>  call execute('LspCodeActionSync source.organizeImports')
+autocmd BufWritePre <buffer> LspDocumentFormatSync
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
 " Lang: Haskell
@@ -31,8 +37,6 @@ Plug 'kana/vim-filetype-haskell'
 Plug 'vim-jp/vimdoc-ja'
 " Lang: Scala
 Plug 'derekwyatt/vim-scala'
-" Lang: Go
-Plug 'mattn/vim-goimports'
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
 " Lang: CSS
@@ -71,4 +75,7 @@ set path=
 " set ambiwidth='single'
 
 let mapleader = "\<Space>"
-:map <Leader>r :silent make\|redraw!\|cc<CR>
+:map <Leader>t :silent make\|redraw!\|cc<CR>
+:map <Leader>i :LspPeekDefinition<CR>
+:map <Leader>d :LspDocumentDiagnostics<CR>
+:map <Leader>r :LspRename<CR>
