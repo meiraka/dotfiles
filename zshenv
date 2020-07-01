@@ -11,7 +11,9 @@ export CLICOLOR=1
 export LANG=ja_JP.UTF-8
 export LC_LANG=${LANG}
 export LC_ALL=${LANG}
-export VISUAL=nvim
+if which vim > /dev/null 2>&1; then
+    export VISUAL=vim
+fi
 export EDITOR="$VISUAL"
 export QT_QPA_PLATFORMTHEME=gtk2
 export MPD_HOST="moode.local"
