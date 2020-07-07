@@ -28,11 +28,11 @@ $(DOT_DST_SUBDIRS):
 	mkdir -p $@
 
 # Add [include] directive in gitconfig
-ifeq ($(shell grep .gitconfig.shared $(DOT_DST_PREFIX)gitconfig),)
+ifeq ($(shell grep $(DOT_DST_PREFIX)gitconfig.shared $(DOT_DST_PREFIX)gitconfig),)
 .PHONY: $(DOT_DST_PREFIX)gitconfig
 endif
 $(DOT_DST_PREFIX)gitconfig:
-	git config --global include.path /home/mei/.gitconfig.shared
+	git config --global include.path $(DOT_DST_PREFIX)gitconfig.shared
 
 # link neovim config to vim
 $(DOT_DST_PREFIX)vimrc:
