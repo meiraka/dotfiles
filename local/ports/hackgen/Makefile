@@ -15,7 +15,7 @@ $(WORKDIR)/HackGen-Regular.ttf: $(ARCHIVE)
 
 ~/.fonts/HackGen-Regular.ttf: $(WORKDIR)/HackGen-Regular.ttf
 	mkdir -p ~/.fonts
-	cp --preserve=timestamps -f $(WORKDIR)/*.ttf ~/.fonts/
+	cp -p -f $(WORKDIR)/*.ttf ~/.fonts/
 	-fc-cache -vf
 
 install: ~/.fonts/HackGen-Regular.ttf
