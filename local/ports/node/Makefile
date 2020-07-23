@@ -53,8 +53,7 @@ src:
 
 .PHONY: update
 update: src
-	@cd src; git fetch
-	$(eval NEW_VERSION := $(shell cd src && git tag | grep -E ^v[0-9]+\.[0-9]+\.[0-9]+$ | sort --version-sort | tail -n 1))
+	$(eval NEW_VERSION := $(shell cd src && git fetch && git tag | grep -E ^v[0-9]+\.[0-9]+\.[0-9]+$ | sort --version-sort | tail -n 1))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) link
