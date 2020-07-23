@@ -29,6 +29,8 @@ let g:lsp_diagnostics_enabled = 1
 let g:lsp_highlight_references_enabled = 1
 autocmd BufWritePre <buffer>  call execute('LspCodeActionSync source.organizeImports')
 autocmd BufWritePre <buffer> LspDocumentFormatSync
+" Lang: Go
+Plug 'mattn/vim-goimports'
 " Lang: C++
 Plug 'meiraka/vim-google-cpp-style-indent'
 " Lang: Haskell
