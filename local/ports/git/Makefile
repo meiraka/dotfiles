@@ -5,7 +5,7 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=git
 REPO=git
-TAG=v2.27.0
+TAG=v2.28.0
 
 CONFIGURE_ARGS+= --prefix=$(INSTALL_PREFIX)
 
