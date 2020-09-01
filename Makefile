@@ -75,7 +75,7 @@ endif
 ### yum ###
 .PHONY: cli-yum
 ifneq ($(shell which yum 2> /dev/null),)
-YUM_REQUIRED_CLI = autoconf automake byacc gcc-c++ libevent-devel libcurl-devel ncurses-devel
+YUM_REQUIRED_CLI = autoconf automake byacc gcc-c++ libevent-devel libcurl-devel ncurses-devel curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-CPAN perl-devel
 YUM_INSTALLED = $(shell yum list installed | cut -d ' ' -f 1 | cut -d '.' -f 1)
 YUM_INSTALL_CLI = $(filter-out $(YUM_INSTALLED), $(YUM_REQUIRED_CLI))
 ifneq ($(YUM_INSTALL_CLI),)
