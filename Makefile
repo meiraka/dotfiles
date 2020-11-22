@@ -63,12 +63,14 @@ endif
 ### brew ###
 .PHONY: cli-brew
 ifneq ($(shell which brew 2> /dev/null),)
+ifeq ($(shell which -v dpkg 2> /dev/null),)
 BREW_REQUIRED_CLI = libevent autoconf automake libtool
 BREW_INSTALLED = $(shell brew list)
 BREW_INSTALL_CLI = $(filter-out $(BREW_INSTALLED), $(BREW_REQUIRED_CLI))
 ifneq ($(BREW_INSTALL_CLI),)
 cli-brew:
 	brew install $(BREW_INSTALL_CLI)
+endif
 endif
 endif
 
