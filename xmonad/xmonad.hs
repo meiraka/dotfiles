@@ -91,6 +91,9 @@ scratchpads =
   , NS "sound"
       "pavucontrol --name soundScratchpad"
       (resource =? "soundScratchpad") middle
+  , NS "bluetooth"
+      "blueman-manager"
+      (className =? "Blueman-manager") middle
   ]
   where
     large = customFloating $ W.RationalRect (1/20) (1/20) (18/20) (18/20)
@@ -104,6 +107,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((keyModMask,                 xK_r     ), spawn "gmrun") -- %! Launch gmrun
   , ((keyModMask,                 xK_space ), namedScratchpadAction scratchpads "terminal") -- %! Toggle terminal
   , ((keyModMask .|. shiftMask,   xK_s     ), namedScratchpadAction scratchpads "sound") -- %! Toggle sound control
+  , ((keyModMask .|. shiftMask,   xK_b     ), namedScratchpadAction scratchpads "bluetooth") -- %! Toggle bluetooth control
   , ((keyModMask,                 xK_w     ), kill) -- %! Close the focused window
   , ((keyModMask,                 xK_f     ), sendMessage ToggleLayout) -- %! Toggle fullscreen mode
   , ((keyModMask,                 xK_t     ), sendMessage NextLayout) -- %! Toggle tab view in fullscreen mode
