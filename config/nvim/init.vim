@@ -82,3 +82,4 @@ let mapleader = "\<Space>"
 :map <Leader>i :LspPeekDefinition<CR>
 :map <Leader>d :LspDocumentDiagnostics<CR>
 :map <Leader>r :LspRename<CR>
+:map <Leader>f :Files<CR>
