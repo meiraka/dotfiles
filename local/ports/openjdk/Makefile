@@ -28,6 +28,7 @@ $(ARCHIVE):
 
 $(INSTALL_PATH): $(ARCHIVE)
 	tar -xf $(ARCHIVE)
+	@mkdir -p $(INSTALL_DIR)
 	@touch $(INSTALL_PATH)
 	@rm -rf $(INSTALL_PATH)
 	mv jdk-$(JDK_VERSION) $(INSTALL_PATH)
