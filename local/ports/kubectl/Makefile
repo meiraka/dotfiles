@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-RELEASE=v1.21.1
+RELEASE=v1.22.2
 INSTALL_DIR=$(HOME)/.local
 
 OS=$(shell uname -s | tr A-Z a-z)

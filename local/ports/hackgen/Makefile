@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-TAG=v2.3.2
+TAG=v2.5.1
 GITHUB=https://github.com/yuru7/HackGen
 ARCHIVE=HackGen_$(TAG).zip
 WORKDIR=HackGen_$(TAG)
