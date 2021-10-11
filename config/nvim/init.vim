@@ -42,8 +42,6 @@ Plug 'vim-jp/vimdoc-ja'
 Plug 'derekwyatt/vim-scala'
 " Lang: Ansible
 Plug 'chase/vim-ansible-yaml'
-" Lang: CSS
-Plug 'kewah/vim-stylefmt'
 call plug#end()
 
 autocmd QuickFixCmdPost [^l]* nested cwindow
