@@ -9,7 +9,7 @@ import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.EwmhDesktops   (ewmh, fullscreenEventHook)
 import           XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers  (doFullFloat, isFullscreen)
+import           XMonad.Hooks.ManageHelpers  (doFullFloat, isFullscreen, doCenterFloat)
 import           XMonad.Hooks.UrgencyHook
 import           XMonad.Layout.BinarySpacePartition
 import           XMonad.Layout.Gaps
@@ -70,6 +70,7 @@ myManageHook =
   composeAll
     [ className =? "Xfce4-notifyd" --> doIgnore
     , title =? "Cities: Skylines" --> doFloat
+    , title =? "gmrun" --> doCenterFloat
     ] <+>
   manageDocks <+>
   namedScratchpadManageHook scratchpads <+>
