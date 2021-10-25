@@ -5,6 +5,9 @@
 # xrandr --output DVI-1 --mode 1200x1600R
 
 nvidia-settings --load-config-only &
+fcitx-autostart &
+/usr/lib/xfce4/notifyd/xfce4-notifyd &
+pamac-tray &
 
 # set background
 nitrogen --restore & 
@@ -37,6 +40,13 @@ blueman-applet &
 # enabling update manager and ubuntu software center
 if [ -e /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
     /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 & 
+    eval $(shell gnome-keyring-daemon -s) &
+fi
+
+
+# enabling pamac
+if [ -e /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]; then
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
     eval $(shell gnome-keyring-daemon -s) &
 fi
 
