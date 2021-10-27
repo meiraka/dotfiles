@@ -1,4 +1,4 @@
-Config { font = "xft:Noto Sans CJK JP:Bold:size=10:antialias=true"
+Config { font = "xft:Migu 1C:Bold:size=10:antialias=true"
        , bgColor = "#242424"
        , fgColor = "#ffffff"
        , position = TopSize R 90 25
