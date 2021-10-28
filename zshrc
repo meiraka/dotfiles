@@ -175,3 +175,4 @@ zsh-update-prompt
 #
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ~/.zshrc.local

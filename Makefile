@@ -9,7 +9,7 @@ DOT_DST = $(addprefix $(DOT_DST_PREFIX), $(DOT_SRC))
 
 # dotfiles
 
-link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)vimrc $(DOT_DST_PREFIX)vim $(DOT_DST_PREFIX)gitconfig ## create dotfiles link
+link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)vimrc $(DOT_DST_PREFIX)vim $(DOT_DST_PREFIX)gitconfig $(DOT_DST_PREFIX)zshrc.local ## create dotfiles link
 
 clean:  # remove linked files
 	@LIST="$(DOT_DST)";\
@@ -26,6 +26,10 @@ $(DOT_DST): $(DOT_DST_PREFIX)%: %
 
 $(DOT_DST_SUBDIRS):
 	mkdir -p $@
+
+$(DOT_DST_PREFIX)zshrc.local:
+	touch $(DOT_DST_PREFIX)zshrc.local
+	chmod 600 $(DOT_DST_PREFIX)zshrc.local
 
 # Add [include] directive in gitconfig
 ifeq ($(shell grep $(DOT_DST_PREFIX)gitconfig.shared $(DOT_DST_PREFIX)gitconfig),)
