@@ -1,54 +1,45 @@
-.PHONY: clean fetch extract build install
-all: fetch extract
-BASE=https://osdn.net/projects/mix-mplus-ipa/downloads/72511
+.PHONY: clean install all
+all: install
+URL=https://osdn.net/projects/mix-mplus-ipa/downloads/72511
+VERSION=20200307
+MIGU1M_DIR=migu-1m-$(VERSION)
+MIGU1C_DIR=migu-1c-$(VERSION)
+MIGU1P_DIR=migu-1p-$(VERSION)
 
-MIGU1M=migu-1m-20200307
-MIGU1M_REGULAR=$(MIGU1M)/migu-1m-regular.ttf
-MIGU1M_BOLD=$(MIGU1M)/migu-1m-bold.ttf
-MIGU1M_ARCHIVE=$(MIGU1M).zip
-MIGU1M_URL=$(BASE)/$(MIGU1M_ARCHIVE)
+MIGU1M = migu-1m-regular.ttf migu-1m-bold.ttf
+MIGU1C = migu-1c-regular.ttf migu-1c-bold.ttf
+MIGU1P = migu-1p-regular.ttf migu-1p-bold.ttf
 
-MIGU1C=migu-1c-20200307
-MIGU1C_REGULAR=$(MIGU1C)/migu-1c-regular.ttf
-MIGU1C_BOLD=$(MIGU1C)/migu-1c-bold.ttf
-MIGU1C_ARCHIVE=$(MIGU1C).zip
-MIGU1C_URL=$(BASE)/$(MIGU1C_ARCHIVE)
+DIR = $(MIGU1M_DIR) $(MIGU1P_DIR) $(MIGU1C_DIR)
+ARCHIVE = $(addsuffix .zip, $(DIR))
 
-MIGU1P=migu-1p-20200307
-MIGU1P_REGULAR=$(MIGU1P)/migu-1p-regular.ttf
-MIGU1P_BOLD=$(MIGU1P)/migu-1p-bold.ttf
-MIGU1P_ARCHIVE=$(MIGU1P).zip
-MIGU1P_URL=$(BASE)/$(MIGU1P_ARCHIVE)
+$(ARCHIVE):
+	curl -L $(URL)/$@ -o $@
 
-$(MIGU1M_ARCHIVE):
-	curl -L "$(MIGU1M_URL)" -o $(MIGU1M_ARCHIVE)
+$(addprefix $(MIGU1M_DIR)/, $(MIGU1M)): $(MIGU1M_DIR).zip
+	unzip -o $(MIGU1M_DIR)
+	touch $(MIGU1M_DIR)/*
 
-$(MIGU1M_REGULAR) $(MIGU1M_BOLD):| $(MIGU1M_ARCHIVE)
-	unzip -o $(MIGU1M_ARCHIVE)
+$(addprefix $(MIGU1C_DIR)/, $(MIGU1C)): $(MIGU1C_DIR).zip
+	unzip -o $(MIGU1C_DIR)
+	touch $(MIGU1C_DIR)/*
 
-$(MIGU1C_ARCHIVE):
-	curl -L "$(MIGU1C_URL)" -o $(MIGU1C_ARCHIVE)
+$(addprefix $(MIGU1P_DIR)/, $(MIGU1P)): $(MIGU1P_DIR).zip
+	unzip -o $(MIGU1P_DIR)
+	touch $(MIGU1P_DIR)/*
 
-$(MIGU1C_REGULAR) $(MIGU1C_BOLD):| $(MIGU1C_ARCHIVE)
-	unzip -o $(MIGU1C_ARCHIVE)
+TARGET_DIR = $(HOME)/.fonts/
+TARGET=$(addprefix $(TARGET_DIR), $(MIGU1M) $(MIGU1C) $(MIGU1P))
 
-$(MIGU1P_ARCHIVE):
-	curl -L "$(MIGU1P_URL)" -o $(MIGU1P_ARCHIVE)
-
-$(MIGU1P_REGULAR) $(MIGU1P_BOLD):| $(MIGU1P_ARCHIVE)
-	unzip -o $(MIGU1P_ARCHIVE)
+$(addprefix $(TARGET_DIR), $(MIGU1M)): $(TARGET_DIR)%: $(MIGU1M_DIR)/%
+	cp $< $@
+$(addprefix $(TARGET_DIR), $(MIGU1C)): $(TARGET_DIR)%: $(MIGU1C_DIR)/%
+	cp $< $@
+$(addprefix $(TARGET_DIR), $(MIGU1P)): $(TARGET_DIR)%: $(MIGU1P_DIR)/%
+	cp $< $@
 
 clean:
-	rm -rf $(MIGU1M)
-	rm $(MIGU1M_ARCHIVE)
-	rm -rf $(MIGU1C)
-	rm $(MIGU1C_ARCHIVE)
-	rm -rf $(MIGU1P)
-	rm $(MIGU1P_ARCHIVE)
+	rm -rf $(ARCHIVE) $(DIR)
 
-fetch: $(MIGU1M_ARCHIVE) $(MIGU1C_ARCHIVE) $(MIGU1P_ARCHIVE)
-extract: $(MIGU1M_REGULAR) $(MIGU1M_BOLD) $(MIGU1C_REGULAR) $(MIGU1C_BOLD) $(MIGU1P_REGULAR) $(MIGU1P_BOLD)
-
-install:
-	cp -f ./*/*.ttf ~/.fonts/
-	fc-cache -vf
+install: $(TARGET)
+update:
