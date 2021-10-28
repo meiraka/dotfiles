@@ -47,14 +47,17 @@ $(DOT_DST_PREFIX)vim:
 APPS = $(dir $(wildcard local/ports/*/Makefile))
 APPS_NAME = $(patsubst local/ports/%/, %, $(APPS))
 
-.PHONY: app-list update $(APPS_NAME)
+.PHONY: list install update $(APPS_NAME)
 list:  ## show apps list
 	@LIST="$(APPS_NAME)";\
 		for x in $$LIST; do\
 		echo "$$x";\
 		done
 
-update: ## update apps version
+install: ## [app name] install specified apps
+	$(eval SUBTARGET := install)
+
+update: ## [app name] update specified apps version
 	$(eval SUBTARGET := update)
 
 all: $(APPS_NAME) link ## create dotfiles link and install all apps

@@ -1,5 +1,5 @@
-.PHONY: clean
-all: link
+.PHONY: clean install
+install: link
 
 INSTALL_PREFIX?=$(HOME)
 
