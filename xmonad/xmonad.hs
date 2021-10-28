@@ -64,7 +64,7 @@ myStartupHook = do
     spawn "sh ~/.xmonad/autostart.sh"
 
 myBorderWidth = 0
-myTerminal = "sakura"
+myTerminal = "kitty"
 myWorkspaces = ["1","2","3","4","5","6","7","8"]
 myManageHook =
   composeAll
@@ -88,7 +88,7 @@ myLayoutHook = toggleLayouts full (avoidStruts $ (fill ||| thin ||| view))
 
 scratchpads =
   [ NS "terminal"
-      "LD_LIBRARY_PATH=~/lib:$LD_LIBRARY_PATH sakura --name terminalScratchpad"
+      "kitty --name terminalScratchpad"
       (resource =? "terminalScratchpad") large
   , NS "sound"
       "pavucontrol --name soundScratchpad"
