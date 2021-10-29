@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ ! -L "$0" ]; then
+  echo dotfiles is not installed
+  exit 1
+fi
+ROOT=$(cd $(dirname "$(readlink "$0")"); cd ../..; pwd)
+cd ${ROOT}
+cd local/ports
+make $@
