@@ -45,26 +45,5 @@ $(DOT_DST_PREFIX)vimrc:
 $(DOT_DST_PREFIX)vim:
 	ln -nsf $(DOT_DST_PREFIX)config/nvim $(DOT_DST_PREFIX)vim
 
-APPS = $(dir $(wildcard local/ports/*/Makefile))
-APPS_NAME = $(patsubst local/ports/%/, %, $(APPS))
-
-.PHONY: list install update $(APPS_NAME)
-list:  ## show apps list
-	@LIST="$(APPS_NAME)";\
-		for x in $$LIST; do\
-		echo "$$x";\
-		done
-
-install: ## [app name] install specified apps
-	$(eval SUBTARGET := install)
-
-update: ## [app name] update specified apps version
-	$(eval SUBTARGET := update)
-
-all: $(APPS_NAME) link ## create dotfiles link and install all apps
-
-$(APPS_NAME): %: local/ports/%/
-	$(MAKE) -C $< $(SUBTARGET)
-
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
