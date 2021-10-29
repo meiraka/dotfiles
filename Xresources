@@ -23,7 +23,6 @@
 ! Xft
 ! ===
 
-Xft.dpi: 96
 Xft.lcdfilter: lcddefault
 Xft.antialias: true
 Xft.autohint: false
