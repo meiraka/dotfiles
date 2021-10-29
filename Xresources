@@ -29,29 +29,3 @@ Xft.autohint: false
 Xft.hinting: true
 Xft.hintstyle: hintfull
 Xft.rgba: rgb
-
-! =====
-! URxvt
-! =====
-
-URxvt*depth: 32
-URxvt*foreground: #f4f4f4
-URxvt*background: [55]#000000
-! URxvt.transparent: true
-! URxvt*shading: 20
-! URxvt.fading: 0
-! URxvt*inheritPixmap: true
-URxvt.loginShell: true
-URxvt.saveLines: 100000
-URxvt.internalBoarder: 3
-URxvt.lineSpace: 0
-URxvt.allow_bold: true
-URxvt.font: xft:Migu 1M:pixelsize=17:style=bold
-URxvt*letterSpace: -1
-URxvt.scrollBar: false
-URxvt.scrollStyle: rxvt
-URxvt.iso14755: false
-
-URxvt.keysym.Mod4-c:   perl:clipboard:copy
-URxvt.keysym.Mod4-v:   perl:clipboard:paste
-URxvt.perl-ext-common: clipboard
