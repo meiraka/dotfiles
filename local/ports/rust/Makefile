@@ -3,6 +3,7 @@ INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 .PHONY: install update
 install: $(HOME)/.cargo/bin/rustup $(HOME)/.cargo/bin/rls
 
+VERSION=
 INSTALLER=sh.rustup.rs
 
 $(INSTALLER):
@@ -14,7 +15,10 @@ $(HOME)/.cargo/bin/rustup: $(INSTALLER)
 $(HOME)/.cargo/bin/rls: $(HOME)/.cargo/bin/rustup
 	rustup component add rls rust-analysis rust-src
 
+.PHONY: update version versions
 update:
 	rustup update
+version:
+versions:
 
 

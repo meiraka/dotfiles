@@ -43,3 +43,7 @@ clean:
 
 install: $(TARGET)
 update:
+version:
+	@echo $(VERSION)
+versions:
+	@echo $(VERSION)

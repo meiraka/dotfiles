@@ -3,6 +3,7 @@ all: install
 
 INSTALL_DIR=$(HOME)/.local/opt
 
+VERSION=
 OS=$(shell uname -s | tr A-Z a-z)
 ifeq ($(OS), darwin)
 OS=osx
@@ -45,4 +46,7 @@ install: $(INSTALL_LINK)
 list:
 	@echo $(sort $(dir $(wildcard $(INSTALL_DIR)/jdk-*/)))
 
+.PHONY: update version versions
 update:
+version:
+versions:

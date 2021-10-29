@@ -2,14 +2,14 @@
 all: install
 
 VERSION=v2.5.2
-TAG=$(VERSION)
 GITHUB=https://github.com/yuru7/HackGen
-ARCHIVE=HackGen_$(TAG).zip
-WORKDIR=HackGen_$(TAG)
+ARCHIVE=HackGen_$(VERSION).zip
+WORKDIR=HackGen_$(VERSION)
 TARGET_DIR = $(HOME)/.local/share/fonts/
+_:=$(shell if [ -d "$(WORKDIR)/HackGen-Regular.ttf" ]; then touch "$(WORKDIR)/HackGen-Regular.ttf"; fi)
 
 $(ARCHIVE):
-	curl -L https://github.com/yuru7/HackGen/releases/download/$(TAG)/$(ARCHIVE) -o $(ARCHIVE)
+	curl -L https://github.com/yuru7/HackGen/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
 
 $(WORKDIR)/HackGen-Regular.ttf: $(ARCHIVE)
 	unzip $(ARCHIVE)
@@ -22,9 +22,17 @@ $(TARGET_DIR)HackGen-Regular.ttf: $(WORKDIR)/HackGen-Regular.ttf
 
 install: $(TARGET_DIR)HackGen-Regular.ttf
 
-.PHONY: update
+GITHUB_RELEASES=https://api.github.com/repos/yuru7/HackGen/releases
+
+.PHONY: update version versions
 update:
-	$(eval NEW_TAG := $(shell curl https://api.github.com/repos/yuru7/HackGen/releases/latest | jq -r .tag_name))
-	@if [ "$(NEW_TAG)" = "" ]; then echo failed to fetch tag; exit 1; fi
-	@sed -i -e "s/TAG=$(TAG)/TAG=$(NEW_TAG)/" Makefile
+	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_RELEASES) | jq -r .[0].tag_name))
+	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) install
+
+version:
+	@echo $(VERSION)
+
+versions:
+	@curl -s $(GITHUB_RELEASES) | jq -r '.[].tag_name'

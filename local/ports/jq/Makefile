@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-TAG=jq-1.6
+VERSION=jq-1.6
 GITHUB=https://github.com/stedolan/jq
 INSTALL_DIR=$(HOME)/.local
 
@@ -18,10 +18,11 @@ endif
 
 BIN_VERSION=jq-1.6
 BIN=jq
+_:=$(shell if [ -e "$(INSTALL_DIR)/bin/$(BIN_VERSION)" ]; then touch "$(INSTALL_DIR)/bin/$(BIN_VERSION)"; fi)
 
 $(INSTALL_DIR)/bin/$(BIN_VERSION):
 	mkdir -p $(INSTALL_DIR)/bin
-	curl -L $(GITHUB)/releases/download/$(TAG)/$(BIN_ORIG) -o $(INSTALL_DIR)/bin/$(BIN_VERSION)
+	curl -L $(GITHUB)/releases/download/$(VERSION)/$(BIN_ORIG) -o $(INSTALL_DIR)/bin/$(BIN_VERSION)
 	chmod +x $(INSTALL_DIR)/bin/$(BIN_VERSION)
 
 $(INSTALL_DIR)/bin/$(BIN): $(INSTALL_DIR)/bin/$(BIN_VERSION)
@@ -29,9 +30,17 @@ $(INSTALL_DIR)/bin/$(BIN): $(INSTALL_DIR)/bin/$(BIN_VERSION)
 
 install: $(INSTALL_DIR)/bin/$(BIN)
 
+GITHUB_RELEASES = https://api.github.com/repos/stedolan/jq/releases
+
 .PHONY: update
 update:
-	$(eval NEW_TAG := $(shell curl https://api.github.com/repos/stedolan/jq/releases | jq -r .[0].tag_name))
-	@if [ "$(NEW_TAG)" = "" ]; then echo failed to fetch tag; exit 1; fi
-	@sed -i -e "s/TAG=$(TAG)/TAG=$(NEW_TAG)/" Makefile
+	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_RELEASES) | jq -r .[0].tag_name))
+	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) install
+
+version:
+	@echo $(VERSION)
+
+versions:
+	@curl -s $(GITHUB_RELEASES) | jq -r '.[].tag_name'

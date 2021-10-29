@@ -8,7 +8,8 @@ help:
 list:  ## show apps list
 	@LIST="$(APPS)";\
 		for x in $$LIST; do\
-		echo "$$x";\
+		echo -en "$$x\t";\
+		grep -h "^VERSION=" "$$x/Makefile" | sed 's/VERSION=//g';\
 		done
 
 install: ## [app name] install specified apps

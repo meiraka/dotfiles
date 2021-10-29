@@ -29,6 +29,7 @@ ARCHIVE=node-$(VERSION)-$(OS)-$(ARCH).tar.$(ENC)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 INSTALL_PATH=$(INSTALL_DIR)/node-$(VERSION)-$(OS)
 INSTALL_LINK=$(INSTALL_DIR)/node
+_:=$(shell if [ -d "$(INSTALL_PATH)" ]; then touch "$(INSTALL_PATH)"; fi)
 
 $(ARCHIVE):
 	curl -L https://nodejs.org/dist/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
@@ -51,9 +52,15 @@ link: $(INSTALL_LINK)
 src:
 	@git clone git@github.com:nodejs/node.git src
 
-.PHONY: update
+.PHONY: update version versions
 update: src
 	$(eval NEW_VERSION := $(shell cd src && git fetch && git tag | grep -E ^v[0-9]+\.[0-9]+\.[0-9]+$ | sort --version-sort | tail -n 1))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) link
+
+version:
+	@echo $(VERSION)
+
+versions: src
+	@cd src && git tag

@@ -1,6 +1,7 @@
 .PHONY: install
 all: install
 
+VERSION=
 INSTALL_DIR=$(HOME)/.local
 
 BIN=minecraft-launcher
@@ -17,4 +18,7 @@ $(INSTALL_DIR)/bin/$(BIN): minecraft-launcher/$(BIN)
 
 install: $(INSTALL_DIR)/bin/$(BIN)
 
+.PHONY: update version versions
 update:
+version:
+versions:
