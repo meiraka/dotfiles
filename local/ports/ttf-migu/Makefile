@@ -28,7 +28,7 @@ $(addprefix $(MIGU1P_DIR)/, $(MIGU1P)): $(MIGU1P_DIR).zip
 	unzip -o $(MIGU1P_DIR)
 	touch $(MIGU1P_DIR)/*
 
-TARGET_DIR = $(HOME)/.fonts/
+TARGET_DIR = $(HOME)/.local/share/fonts/
 TARGET=$(addprefix $(TARGET_DIR), $(MIGU1M) $(MIGU1C) $(MIGU1P))
 
 $(addprefix $(TARGET_DIR), $(MIGU1M)): $(TARGET_DIR)%: $(MIGU1M_DIR)/%
