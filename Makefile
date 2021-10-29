@@ -22,7 +22,7 @@ clean:  # remove linked files
 		done
 
 $(DOT_DST): $(DOT_DST_PREFIX)%: %
-	-@mv $@ $@bk && echo $@ was moved to $@bk
+	@if [ -f "$@" -o -d "$@" ]; then mv $@ $@bk; echo "$@" was moved to "$@bk"; fi
 	ln -nsf $(abspath $<) $@
 
 $(DOT_DST_SUBDIRS):
