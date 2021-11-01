@@ -77,12 +77,12 @@ myManageHook =
   manageHook defaultConfig <+>
   (isFullscreen --> doFullFloat)
 
-myLayoutHook = toggleLayouts full (avoidStruts $ (fill ||| thin ||| view))
+myLayoutHook = toggleLayouts full (avoidStruts $ (sparse ||| fill ||| thin))
   where
     fill = named "fill" (sp $ gp $ emptyBSP)
     thin = named "thin" (sp $ gp $ Tall 1 (3/100) (5/6))
     full = named "FullScreen" (noBorders Full)
-    view = named "view" (spacing 48 $ gaps [(L, 24), (R, 24)] $ emptyBSP)
+    sparse = named "sparse" (spacing 48 $ gaps [(L, 24), (R, 24)] $ emptyBSP)
     sp = spacing 12
     gp = gaps [(L, 12), (R, 12)]
 
