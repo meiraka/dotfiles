@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -L "$0" ]; then
   echo dotfiles is not installed
@@ -6,52 +6,29 @@ if [ ! -L "$0" ]; then
 fi
 ROOT=$(cd $(dirname "$(readlink "$0")"); cd ../..; pwd)
 
-state() {
-    echo "dotfiles root: ${ROOT}"
-    cd ${ROOT}
-    git status
+cd ${ROOT}
+
+ARGS=()
+ARGS+=${@##${HOME}/.}
+
+# add checks files are exists in git repository.
+add() {
+    first=1
+    for i in $@; do
+        if [ "$first" != "1" ]; then
+            if [ ! -e $i ]; then
+                echo ~/.$i is not under dotfiles repository
+                exit 1
+            fi
+        fi
+        first=0
+    done
 }
 
-update() {
-  cd ${ROOT}
-  git pull origin master
-  make
-}
-
-check() {
-  DST_PREFIX=`echo ~/.`
-  FILE=`echo $1 | sed -e "s@${DST_PREFIX}@@g"`
-  if [ ! -e "$1" ]; then
-    echo not found
-    return
-  fi
-  orig=`readlink "$1"`
-  if [ -e "${ROOT}/${FILE}" ]; then
-    if [ -L "$1" ]; then
-      if [ "${orig}" = "${ROOT}/${FILE}" ]; then
-        echo synced
-      else
-        echo different link
-      fi
-    fi
-    elif [ -L "$1" ]; then
-      echo different link
-    else
-      echo not synced
-  fi
-}
 
 if [ "$#" = 0 ]; then
-  state
-elif [ "$1" = "update" ]; then
-  update
-elif [ "$1" = "check" ]; then
-  if [ "$#" != 2 ]; then
-    echo "req args"
-    exit 1
-  fi
-  check $2
-else
-  echo "unknown option $1"
-  exit 1
+    git
+elif [ "$1" = "add" ]; then
+    add $ARGS
 fi
+git $ARGS
