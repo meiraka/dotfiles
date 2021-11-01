@@ -5,7 +5,7 @@
 # xrandr --output DVI-1 --mode 1200x1600R
 
 nvidia-settings --load-config-only &
-fcitx-autostart &
+fcitx5 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 pamac-tray &
 

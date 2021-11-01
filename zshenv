@@ -15,6 +15,11 @@ export LC_ALL=${LANG}
 if which vim > /dev/null 2>&1; then
     export VISUAL=vim
 fi
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export GLFW_IM_MODULE=ibus kitty
 export EDITOR="$VISUAL"
 export QT_QPA_PLATFORMTHEME=gtk2
 export MPD_HOST="moode.local"
