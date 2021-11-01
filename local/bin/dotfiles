@@ -11,24 +11,44 @@ cd ${ROOT}
 ARGS=()
 ARGS+=${@##${HOME}/.}
 
-# add checks files are exists in git repository.
+# add checks files are exist in git repository.
 add() {
     first=1
     for i in $@; do
         if [ "$first" != "1" ]; then
-            if [ ! -e $i ]; then
-                echo ~/.$i is not under dotfiles repository
+            ORIG="${HOME}/.$i"
+            if [ ! -e "${ORIG}" ]; then
+                echo ${ORIG} does not exist
                 exit 1
             fi
         fi
         first=0
     done
-}
 
+    first=1
+    changed=0
+    for i in $@; do
+        if [ "$first" != "1" ]; then
+            ORIG="${HOME}/.$i"
+            if [ ! -e "$i" ]; then
+                echo copy ${ORIG} to ${ROOT}
+                cp ${ORIG} ${ROOT}/$i
+                changed=1
+            fi
+        fi
+        first=0
+    done
+    if [ "$changed" = "1" ]; then
+        make link
+    fi
+}
 
 if [ "$#" = 0 ]; then
     git
 elif [ "$1" = "add" ]; then
     add $ARGS
+elif [ "$1" = "link" ]; then
+    make link
+    exit 0
 fi
 git $ARGS
