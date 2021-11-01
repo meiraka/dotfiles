@@ -15,4 +15,4 @@ jobs:
     - name: make
       run: make
     - name: test
-      run: ~/.local/bin/dotfiles
+      run: ~/.local/bin/dotfiles status
