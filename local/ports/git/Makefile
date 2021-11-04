@@ -19,15 +19,24 @@ JOBS := 1
 endif
 endif
 
+_:=$(shell if [ -d "$(WORKDIR)/git" ]; then touch "$(WORKDIR)/git"; fi)
+
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/$(ARCHIVE) -o $(ARCHIVE)
 
-$(INSTALL_PREFIX)/bin/git: $(ARCHIVE)
+$(WORKDIR):
 	tar -xf $(ARCHIVE)
+	touch $(WORKDIR)
+
+$(WORKDIR)/git: $(WORKDIR)
 	cd $(WORKDIR); make configure
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 	cd $(WORKDIR); make -j$(JOBS)
+	touch $(WORKDIR)/git
+
+$(INSTALL_PREFIX)/bin/git: $(WORKDIR)/git
 	cd $(WORKDIR); make install
+	touch $(WORKDIR)/git
 	touch $(INSTALL_PREFIX)/bin/git
 
 clean:
