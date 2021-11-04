@@ -5,12 +5,7 @@ APPS = $(filter-out $(IGNORE), $(wildcard *))
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-list:  ## show apps list
-	@LIST="$(APPS)";\
-		for x in $$LIST; do\
-		echo -en "$$x\t";\
-		grep -h "^VERSION=" "$$x/Makefile" | sed 's/VERSION=//g';\
-		done
+list: version all ## show apps list
 
 install: ## [app name] install specified apps
 	@echo -n
@@ -31,4 +26,5 @@ versions: ## [app name] show all versions
 all: $(APPS) ## install all apps
 
 $(APPS): 
-	$(MAKE) -C $@ $(SUBTARGET)
+	@echo -n "$@	"
+	@$(MAKE) --no-print-directory -C $@ $(SUBTARGET)
