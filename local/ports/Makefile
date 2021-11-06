@@ -8,23 +8,23 @@ help:
 list: version all ## show apps list
 
 install: ## [app name] install specified apps
-	@echo -n
+	@:
 	$(eval SUBTARGET := install)
 
 update: ## [app name] update specified apps version
-	@echo -n
+	@:
 	$(eval SUBTARGET := update)
 
 version: ## [app name] show install app version
-	@echo -n
+	@:
 	$(eval SUBTARGET := version)
 
 versions: ## [app name] show all versions
-	@echo -n
+	@:
 	$(eval SUBTARGET := versions)
 
 all: $(APPS) ## install all apps
 
 $(APPS): 
-	@echo -n "$@	"
-	@$(MAKE) --no-print-directory -C $@ $(SUBTARGET)
+	@:
+	$(info $@	 $(shell $(MAKE) --no-print-directory -C $@ $(SUBTARGET)))
