@@ -16,7 +16,7 @@ else
 ARCH=386
 endif
 
-VERSION=go1.17.2
+VERSION=go1.17.3
 
 ARCHIVE=$(VERSION).$(OS)-$(ARCH).tar.gz
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
@@ -51,7 +51,7 @@ update: src
 	$(eval NEW_VERSION := $(shell cd src && git fetch && git tag | grep -E -e '^go[0-9]+\.[0-9]+\.[0-9]+$$' -e '^go[0-9]+\.[0-9]+$$' | sort --version-sort | tail -n 1))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
-	$(MAKE) link
+	$(MAKE) install
 
 version:
 	@echo $(VERSION)
