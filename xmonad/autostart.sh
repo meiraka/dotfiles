@@ -19,7 +19,7 @@ trayer -l --edge top --align left \
     --tint 0x242424 --transparent true --alpha 10 --height 25 &
 
 killall picom
-picom -b &
+picom -b --experimental-backends --xrender-sync-fence &
 
 # file manager daemon
 if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then
