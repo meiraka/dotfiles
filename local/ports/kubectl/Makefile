@@ -5,7 +5,17 @@ VERSION=v1.22.3
 INSTALL_DIR=$(HOME)/.local
 
 OS=$(shell uname -s | tr A-Z a-z)
+_ARCH=$(shell uname -m)
+ifeq ($(_ARCH), armv6l)
+ARCH=armv6l
+else ifeq ($(_ARCH), armv7l)
+# ARMv6 is upwards compatible with ARMv7
+ARCH=armv6l
+else ifeq ($(_ARCH), x86_64)
 ARCH=amd64
+else
+ARCH=386
+endif
 
 BIN_VERSION=kubectl-$(VERSION)
 BIN=kubectl
