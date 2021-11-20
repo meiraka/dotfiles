@@ -85,6 +85,7 @@ myLayoutHook = toggleLayouts full (avoidStruts $ (sparse ||| fill ||| thin ||| f
     full = named "FullScreen" (noBorders Full)
     sparse = named "sparse" (spacing 48 $ gaps [(L, 24), (R, 24)] $ emptyBSP)
     sp = spacing 12
+    spacing n = spacingRaw True (Border n n n n) True (Border n n n n) True
     gp = gaps [(L, 12), (R, 12)]
 
 scratchpads =
