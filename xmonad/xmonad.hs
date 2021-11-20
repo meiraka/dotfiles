@@ -74,7 +74,7 @@ myManageHook =
     ] <+>
   manageDocks <+>
   namedScratchpadManageHook scratchpads <+>
-  manageHook defaultConfig <+>
+  manageHook def <+>
   (isFullscreen --> doFullFloat)
 
 myLayoutHook = toggleLayouts full (avoidStruts $ (sparse ||| fill ||| thin ||| fillNoGap))
@@ -115,7 +115,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((keyModMask,                 xK_f     ), sendMessage ToggleLayout) -- %! Toggle fullscreen mode
   , ((keyModMask,                 xK_t     ), sendMessage NextLayout) -- %! Toggle tab view in fullscreen mode
   , ((keyModMask,                 xK_n     ), refresh) -- %! Resize viewed windows to the correct size
-  , ((keyModMask,                 xK_g     ), goToSelected defaultGSConfig)
+  , ((keyModMask,                 xK_g     ), goToSelected def)
 
   -- move focus up or down the window stack
   , ((keyModMask,                 xK_Tab   ), windows W.focusDown) -- %! Move focus to the next window
