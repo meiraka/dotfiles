@@ -24,7 +24,7 @@ _:=$(shell if [ -d "$(WORKDIR)/git" ]; then touch "$(WORKDIR)/git"; fi)
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/$(ARCHIVE) -o $(ARCHIVE)
 
-$(WORKDIR):
+$(WORKDIR): $(ARCHIVE)
 	tar -xf $(ARCHIVE)
 	touch $(WORKDIR)
 
