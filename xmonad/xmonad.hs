@@ -79,14 +79,13 @@ myManageHook =
 
 myLayoutHook = toggleLayouts full (avoidStruts $ (sparse ||| fill ||| thin ||| fillNoGap))
   where
-    fill = named "fill" (sp $ gp $ emptyBSP)
+    fill = named "fill" (sp $ emptyBSP)
     fillNoGap = named "fillNoGap" (emptyBSP)
-    thin = named "thin" (sp $ gp $ Tall 1 (3/100) (5/6))
+    thin = named "thin" (sp $ Tall 1 (3/100) (5/6))
     full = named "FullScreen" (noBorders Full)
-    sparse = named "sparse" (spacing 48 $ gaps [(L, 24), (R, 24)] $ emptyBSP)
-    sp = spacing 12
-    spacing n = spacingRaw True (Border n n n n) True (Border n n n n) True
-    gp = gaps [(L, 12), (R, 12)]
+    sparse = named "sparse" (spacing 24 48 $ emptyBSP)
+    sp = spacing 12 12
+    spacing m n = spacingRaw False (Border 0 0 m m) True (Border n n n n) True
 
 scratchpads =
   [ NS "terminal"
