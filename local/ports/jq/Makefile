@@ -8,12 +8,13 @@ INSTALL_DIR=$(HOME)/.local
 OS=$(shell uname -s | tr A-Z a-z)
 ifeq ($(OS),darwin)
 BIN_ORIG=jq-osx-amd64
-endif
+else
 _ARCH=$(shell uname -m)
 ifeq ($(_ARCH), x86_64)
 BIN_ORIG=jq-linux64
 else
 BIN_ORIG=jq-linux32
+endif
 endif
 
 BIN_VERSION=jq-1.6
