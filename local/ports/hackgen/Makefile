@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-VERSION=v2.5.2
+VERSION=v2.6.3
 GITHUB=https://github.com/yuru7/HackGen
 ARCHIVE=HackGen_$(VERSION).zip
 WORKDIR=HackGen_$(VERSION)
