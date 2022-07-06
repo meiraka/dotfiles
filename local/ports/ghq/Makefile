@@ -5,7 +5,14 @@ VERSION=v1.3.0
 INSTALL_DIR=$(HOME)/.local
 
 OS=$(shell uname -s | tr A-Z a-z)
+_ARCH=$(shell uname -m)
+ifeq ($(_ARCH), arm64)
+ARCH=arm64
+else ifeq ($(_ARCH), x86_64)
 ARCH=amd64
+else
+ARCH=386
+endif
 
 BIN_VERSION=ghq-$(VERSION)
 BIN=ghq
