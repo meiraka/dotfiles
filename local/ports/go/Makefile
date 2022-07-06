@@ -10,6 +10,8 @@ ARCH=armv6l
 else ifeq ($(_ARCH), armv7l)
 # ARMv6 is upwards compatible with ARMv7
 ARCH=armv6l
+else ifeq ($(_ARCH), arm64)
+ARCH=arm64
 else ifeq ($(_ARCH), x86_64)
 ARCH=amd64
 else
