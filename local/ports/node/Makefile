@@ -12,6 +12,8 @@ endif
 _ARCH=$(shell uname -m)
 ifeq ($(_ARCH), armv7l)
 ARCH=armv7l
+else ifeq ($(_ARCH), arm64)
+ARCH=arm64
 else ifeq ($(_ARCH), x86_64)
 ARCH=x64
 else

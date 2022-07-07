@@ -20,5 +20,3 @@ update:
 	rustup update
 version:
 versions:
-
-
