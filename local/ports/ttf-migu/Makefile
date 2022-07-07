@@ -32,10 +32,13 @@ TARGET_DIR = $(HOME)/.local/share/fonts/
 TARGET=$(addprefix $(TARGET_DIR), $(MIGU1M) $(MIGU1C) $(MIGU1P))
 
 $(addprefix $(TARGET_DIR), $(MIGU1M)): $(TARGET_DIR)%: $(MIGU1M_DIR)/%
+	mkdir -p $(TARGET_DIR)
 	cp $< $@
 $(addprefix $(TARGET_DIR), $(MIGU1C)): $(TARGET_DIR)%: $(MIGU1C_DIR)/%
+	mkdir -p $(TARGET_DIR)
 	cp $< $@
 $(addprefix $(TARGET_DIR), $(MIGU1P)): $(TARGET_DIR)%: $(MIGU1P_DIR)/%
+	mkdir -p $(TARGET_DIR)
 	cp $< $@
 
 clean:
