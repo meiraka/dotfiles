@@ -6,7 +6,7 @@ import           XMonad.Actions.CycleWindows
 import           XMonad.Actions.GridSelect
 import           XMonad.Actions.RotSlaves
 import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.EwmhDesktops   (ewmh, fullscreenEventHook)
+import           XMonad.Hooks.EwmhDesktops   (ewmh, ewmhFullscreen)
 import           XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.ManageDocks
 import           XMonad.Hooks.ManageHelpers  (doFullFloat, isFullscreen, doCenterFloat)
@@ -28,9 +28,8 @@ import qualified XMonad.StackSet             as W
 
 main = do
   xmproc <- spawnPipe "xmobar"
-  xmonad $ ewmh $ docks def
-    { handleEventHook = fullscreenEventHook
-    , manageHook = myManageHook
+  xmonad $ ewmhFullscreen . ewmh $ docks def
+    { manageHook = myManageHook
     , logHook = myLogHook xmproc
     , layoutHook = myLayoutHook
     , workspaces = myWorkspaces
