@@ -18,7 +18,7 @@ else
 ARCH=386
 endif
 
-VERSION=go1.18.3
+VERSION=go1.18.5
 
 ARCHIVE=$(VERSION).$(OS)-$(ARCH).tar.gz
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
