@@ -17,7 +17,7 @@ BIN_ORIG=jq-linux32
 endif
 endif
 
-BIN_VERSION=jq-1.6
+BIN_VERSION=$(VERSION)
 BIN=jq
 _:=$(shell if [ -e "$(INSTALL_DIR)/bin/$(BIN_VERSION)" ]; then touch "$(INSTALL_DIR)/bin/$(BIN_VERSION)"; fi)
 
