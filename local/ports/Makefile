@@ -1,5 +1,8 @@
 IGNORE = Makefile
 APPS = $(filter-out $(IGNORE), $(wildcard *))
+ifneq ("","$(VERSION)")
+OPT_VERSION="VERSION=$(VERSION)"
+endif
 
 .PHONY: help list install update $(APPS)
 help:
@@ -27,4 +30,4 @@ all: $(APPS) ## install all apps
 
 $(APPS): 
 	@:
-	$(info $@	 $(shell $(MAKE) --no-print-directory -C $@ $(SUBTARGET)))
+	$(info $@	 $(shell $(MAKE) $(OPT_VERSION) --no-print-directory -C $@ $(SUBTARGET)))
