@@ -17,12 +17,9 @@ RELEASE_FILE=$(BIN)_$(OS)_$(ARCH)
 
 _:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-$(BIN_VERSION):
-	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(RELEASE_FILE) -o $(BIN_VERSION)
-
-$(TARGET): $(BIN_VERSION)
+$(TARGET):
 	@mkdir -p $(INSTALL_DIR)/bin
-	cp $(BIN_VERSION) $(TARGET)
+	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(RELEASE_FILE) -o $(TARGET)
 	chmod +x $(TARGET)
 
 $(TARGET_LINK): $(TARGET)

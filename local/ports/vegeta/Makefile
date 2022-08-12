@@ -13,21 +13,14 @@ OS=$(shell uname -s | tr A-Z a-z)
 ARCH=$(subst x86_64,amd64,$(shell uname -m))
 TARGET=$(INSTALL_DIR)/bin/$(BIN_VERSION)
 TARGET_LINK=$(INSTALL_DIR)/bin/$(BIN)
-RELEASE_FILE=$(BIN)_$(patsubst v%,%,$(VERSION))_$(OS)_$(ARCH).tar.gz
+ARCHIVE=$(BIN)_$(patsubst v%,%,$(VERSION))_$(OS)_$(ARCH).tar.gz
 
 _:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-$(RELEASE_FILE):
-	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(RELEASE_FILE) -o $(RELEASE_FILE)
-
-$(BIN_VERSION): $(RELEASE_FILE)
-	@rm -f vegeta
-	tar xf $(RELEASE_FILE)
-	mv $(BIN) $(BIN_VERSION)
-
-$(TARGET): $(BIN_VERSION)
-	@mkdir -p $(INSTALL_DIR)/bin
-	cp $(BIN_VERSION) $(TARGET)
+$(TARGET):
+	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
+	tar xf $(ARCHIVE) vegeta
+	mv vegeta $(TARGET)
 	chmod +x $(TARGET)
 
 $(TARGET_LINK): $(TARGET)

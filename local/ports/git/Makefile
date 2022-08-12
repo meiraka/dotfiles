@@ -19,8 +19,6 @@ JOBS := 1
 endif
 endif
 
-_:=$(shell if [ -f "$(WORKDIR)/git" ]; then touch "$(WORKDIR)/git"; fi)
-
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/$(ARCHIVE) -o $(ARCHIVE)
 

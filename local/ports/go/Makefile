@@ -13,10 +13,9 @@ TARGET_LINK=$(INSTALL_DIR)/go
 _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 ARCHIVE=$(VERSION).$(OS)-$(ARCH).tar.gz
-$(ARCHIVE):
-	curl -L https://storage.googleapis.com/golang/$(ARCHIVE) -o $(ARCHIVE)
 
-$(TARGET):| $(ARCHIVE)
+$(TARGET):
+	curl -L https://storage.googleapis.com/golang/$(ARCHIVE) -o $(ARCHIVE)
 	tar -xzf $(ARCHIVE)
 	mkdir -p $(INSTALL_DIR)
 	mv go $(TARGET)

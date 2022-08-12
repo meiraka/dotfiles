@@ -17,10 +17,9 @@ _:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 
 ARCHIVE=kustomize_$(VERSION)_$(OS)_$(ARCH).tar.gz
-$(ARCHIVE):
-	curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
 
-$(TARGET): $(ARCHIVE)
+$(TARGET):
+	curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
 	tar -xf $(ARCHIVE)
 	mv $(BIN) $(TARGET)
 	touch $(TARGET)

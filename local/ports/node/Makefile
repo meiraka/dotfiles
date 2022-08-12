@@ -25,10 +25,8 @@ TARGET=$(INSTALL_DIR)/node-$(VERSION)-$(OS)
 TARGET_LINK=$(INSTALL_DIR)/node
 _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-$(ARCHIVE):
+$(TARGET):
 	curl -L https://nodejs.org/dist/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
-
-$(TARGET):| $(ARCHIVE)
 	tar -xf $(ARCHIVE)
 	mkdir -p $(INSTALL_DIR)
 	mv node-$(VERSION)-$(OS)-$(ARCH) $(TARGET)

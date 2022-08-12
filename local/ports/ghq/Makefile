@@ -14,18 +14,13 @@ TARGET=$(INSTALL_DIR)/bin/$(BIN_VERSION)
 TARGET_LINK=$(INSTALL_DIR)/bin/$(BIN)
 _:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-ghq_$(OS)_$(ARCH)_$(VERSION).zip:
+ARCHIVE=ghq_$(OS)_$(ARCH)_$(VERSION).zip
+
+$(TARGET):
+	curl -L https://github.com/x-motemen/ghq/releases/download/$(VERSION)/ghq_$(OS)_$(ARCH).zip -o $(ARCHIVE)
 	mkdir -p $(INSTALL_DIR)/bin
-	curl -L https://github.com/x-motemen/ghq/releases/download/$(VERSION)/ghq_$(OS)_$(ARCH).zip -o ghq_$(OS)_$(ARCH)_$(VERSION).zip
-
-ghq_$(OS)_$(ARCH)_$(VERSION): ghq_$(OS)_$(ARCH)_$(VERSION).zip
-	rm -rf ghq_$(OS)_$(ARCH)
-	unzip ghq_$(OS)_$(ARCH)_$(VERSION).zip
-	mv ghq_$(OS)_$(ARCH) ghq_$(OS)_$(ARCH)_$(VERSION)
-
-$(TARGET): ghq_$(OS)_$(ARCH)_$(VERSION)
-	cp ghq_$(OS)_$(ARCH)_$(VERSION)/$(BIN) $(INSTALL_DIR)/bin/$(BIN_VERSION)
-	chmod +x $(INSTALL_DIR)/bin/$(BIN_VERSION)
+	unzip -p $(ARCHIVE) ghq_$(OS)_$(ARCH)/$(BIN) > $(TARGET)
+	chmod +x $(TARGET)
 
 $(TARGET_LINK): $(TARGET)
 	ln -nsf $(TARGET) $(TARGET_LINK)

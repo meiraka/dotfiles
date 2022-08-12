@@ -9,12 +9,9 @@ TARGET=HackGen_$(VERSION)/HackGen-Regular.ttf
 TARGET_COPY=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
 
 GITHUB=https://github.com/yuru7/HackGen
-_:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-$(ARCHIVE):
+$(TARGET):
 	curl -L https://github.com/yuru7/HackGen/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
-
-$(TARGET): $(ARCHIVE)
 	unzip $(ARCHIVE)
 	touch $(dir $(TARGET))/*
 

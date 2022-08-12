@@ -22,8 +22,6 @@ JOBS := 1
 endif
 endif
 
-_:=$(shell if [ -f "$(WORKDIR)/src/vim" ]; then touch "$(WORKDIR)/src/vim"; fi)
-
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/$(ARCHIVE) -o $(ARCHIVE)
 
