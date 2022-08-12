@@ -17,7 +17,11 @@ ifeq ($(JOBS),)
 JOBS := 1
 endif
 endif
-_:=$(shell if [ -f "$(WORK_DIR)/tmux" ]; then touch "$(INSTALL_PATH)/tmux"; fi)
+
+TARGET=$(WORKDIR)/tmux
+TARGET_COPY=$(INSTALL_PREFIX)/bin/tmux
+
+_:=$(shell if [ -f "$(TARGET)" ] && ! cmp -s "$(TARGET)" "$(TARGET_COPY)"; then touch "$(TARGET)"; fi)
 
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
@@ -33,12 +37,12 @@ fetch: $(ARCHIVE)
 extract: $(WORKDIR)
 build-dep: apt
 
-$(WORKDIR)/tmux: $(WORKDIR)
+$(TARGET): $(WORKDIR)
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 	make -C $(WORKDIR) -j$(JOBS)
 	touch $(WORKDIR)/tmux
 
-$(INSTALL_PREFIX)/bin/tmux: $(WORKDIR)/tmux
+$(TARGET_COPY): $(TARGET)
 	cd $(WORKDIR); make install
 
 install: $(INSTALL_PREFIX)/bin/tmux

@@ -15,6 +15,9 @@ CONFIG_LOG=$(WORKDIR)/src/auto/config.log
 ARCHIVE=$(VERSION).tar.gz
 WORKDIR=$(REPO)-$(patsubst v%,%,$(VERSION))
 
+TARGET=$(WORKDIR)/src/vim
+TARGET_COPY=$(INSTALL_PREFIX)/bin/vim
+
 ifeq ($(JOBS),)
 JOBS := $(shell grep -c ^processor /proc/cpuinfo 2>/dev/null)
 ifeq ($(JOBS),)
@@ -31,17 +34,17 @@ $(WORKDIR):| $(ARCHIVE)
 $(CONFIG_LOG):| $(WORKDIR)
 	cd $(WORKDIR); ./configure $(CONFIGURE_ARGS)
 
-$(WORKDIR)/src/vim: $(CONFIG_LOG)
+$(TARGET): $(CONFIG_LOG)
 	cd $(WORKDIR); make -j$(JOBS)
 
 clean:
 	rm -rf $(ARCHIVE)
 	rm -rf $(WORKDIR)
 
-$(INSTALL_PREFIX)/bin/vim: $(WORKDIR)/src/vim
+$(TARGET_COPY): $(TARGET)
 	cd $(WORKDIR); make install
 
-install: $(INSTALL_PREFIX)/bin/vim
+install: $(TARGET_COPY)
 
 GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
 

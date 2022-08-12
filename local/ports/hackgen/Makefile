@@ -8,6 +8,8 @@ ARCHIVE=HackGen_$(VERSION).zip
 TARGET=HackGen_$(VERSION)/HackGen-Regular.ttf
 TARGET_COPY=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
 
+_:=$(shell if [ -f "$(TARGET)" ] && ! cmp -s "$(TARGET)" "$(TARGET_COPY)"; then touch "$(TARGET)"; fi)
+
 GITHUB=https://github.com/yuru7/HackGen
 
 $(TARGET):
