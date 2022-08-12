@@ -10,26 +10,25 @@ ifeq ($(OS),darwin)
 BIN_ORIG=jq-osx-amd64
 else
 _ARCH=$(shell uname -m)
-ifeq ($(_ARCH), x86_64)
 BIN_ORIG=jq-linux64
-else
-BIN_ORIG=jq-linux32
-endif
 endif
 
 BIN_VERSION=$(VERSION)
 BIN=jq
-_:=$(shell if [ -e "$(INSTALL_DIR)/bin/$(BIN_VERSION)" ]; then touch "$(INSTALL_DIR)/bin/$(BIN_VERSION)"; fi)
 
-$(INSTALL_DIR)/bin/$(BIN_VERSION):
-	mkdir -p $(INSTALL_DIR)/bin
-	curl -L $(GITHUB)/releases/download/$(VERSION)/$(BIN_ORIG) -o $(INSTALL_DIR)/bin/$(BIN_VERSION)
-	chmod +x $(INSTALL_DIR)/bin/$(BIN_VERSION)
+TARGET=$(INSTALL_DIR)/bin/$(BIN_VERSION)
+TARGET_LINK=$(INSTALL_DIR)/bin/$(BIN)
+_:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-$(INSTALL_DIR)/bin/$(BIN): $(INSTALL_DIR)/bin/$(BIN_VERSION)
-	ln -nsf $(INSTALL_DIR)/bin/$(BIN_VERSION) $(INSTALL_DIR)/bin/$(BIN)
+$(TARGET):
+	mkdir -p $(dir $(TARGET))
+	curl -L $(GITHUB)/releases/download/$(VERSION)/$(BIN_ORIG) -o $(TARGET)
+	chmod +x $(TARGET)
 
-install: $(INSTALL_DIR)/bin/$(BIN)
+$(TARGET_LINK): $(TARGET)
+	ln -nsf $(TARGET) $(TARGET_LINK)
+
+install: $(TARGET_LINK)
 
 GITHUB_RELEASES = https://api.github.com/repos/stedolan/jq/releases
 

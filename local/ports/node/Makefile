@@ -1,7 +1,9 @@
 .PHONY: clean install
 install: link
 
+VERSION=v18.7.0
 INSTALL_PREFIX?=$(HOME)
+INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
 OS=$(shell uname -s | tr A-Z a-z)
 ifeq ($(OS), darwin)
@@ -9,47 +11,37 @@ ENC=gz
 else
 ENC=xz
 endif
-_ARCH=$(shell uname -m)
-ifeq ($(_ARCH), armv7l)
-ARCH=armv7l
-else ifeq ($(_ARCH), arm64)
-ARCH=arm64
-else ifeq ($(_ARCH), x86_64)
-ARCH=x64
-else
-ARCH=x86
-endif
+
+ARCH=$(subst x86_64,x64,$(shell uname -m))
 
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-armv7l.tar.xz
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz
 # https://nodejs.org/dist/v12.14.1/node-v12.14.1-linux-x64.tar.xz
 
 
-VERSION=v18.7.0
 
 ARCHIVE=node-$(VERSION)-$(OS)-$(ARCH).tar.$(ENC)
-INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
-INSTALL_PATH=$(INSTALL_DIR)/node-$(VERSION)-$(OS)
-INSTALL_LINK=$(INSTALL_DIR)/node
-_:=$(shell if [ -d "$(INSTALL_PATH)" ]; then touch "$(INSTALL_PATH)"; fi)
+TARGET=$(INSTALL_DIR)/node-$(VERSION)-$(OS)
+TARGET_LINK=$(INSTALL_DIR)/node
+_:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 $(ARCHIVE):
 	curl -L https://nodejs.org/dist/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
 
-$(INSTALL_PATH):| $(ARCHIVE)
+$(TARGET):| $(ARCHIVE)
 	tar -xf $(ARCHIVE)
 	mkdir -p $(INSTALL_DIR)
-	mv node-$(VERSION)-$(OS)-$(ARCH) $(INSTALL_PATH)
+	mv node-$(VERSION)-$(OS)-$(ARCH) $(TARGET)
 
 clean:
 	rm $(ARCHIVE)
 
-$(INSTALL_LINK): $(INSTALL_PATH)
-	@touch $(INSTALL_LINK)
-	@rm $(INSTALL_LINK)
-	ln -si $(INSTALL_PATH) $(INSTALL_LINK)
+$(TARGET_LINK): $(TARGET)
+	@touch $(TARGET_LINK)
+	@rm $(TARGET_LINK)
+	ln -si $(TARGET) $(TARGET_LINK)
 
-link: $(INSTALL_LINK)
+link: $(TARGET_LINK)
 
 src:
 	@git clone git@github.com:nodejs/node.git src

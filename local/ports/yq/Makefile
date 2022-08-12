@@ -10,19 +10,12 @@ BIN=yq
 BIN_VERSION=$(BIN)-$(VERSION)
 
 OS=$(shell uname -s | tr A-Z a-z)
-_ARCH=$(shell uname -m)
-ifeq ($(_ARCH), arm64)
-ARCH=arm64
-else ifeq ($(_ARCH), x86_64)
-ARCH=amd64
-else
-ARCH=386
-endif
+ARCH=$(subst x86_64,amd64,$(shell uname -m))
 TARGET=$(INSTALL_DIR)/bin/$(BIN_VERSION)
 TARGET_LINK=$(INSTALL_DIR)/bin/$(BIN)
 RELEASE_FILE=$(BIN)_$(OS)_$(ARCH)
 
-_:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
+_:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 $(BIN_VERSION):
 	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(RELEASE_FILE) -o $(BIN_VERSION)

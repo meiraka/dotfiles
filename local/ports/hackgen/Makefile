@@ -2,25 +2,28 @@
 all: install
 
 VERSION=v2.6.3
-GITHUB=https://github.com/yuru7/HackGen
+INSTALL_DIR = $(HOME)/.local
+
 ARCHIVE=HackGen_$(VERSION).zip
-WORKDIR=HackGen_$(VERSION)
-TARGET_DIR = $(HOME)/.local/share/fonts/
-_:=$(shell if [ -d "$(WORKDIR)/HackGen-Regular.ttf" ]; then touch "$(WORKDIR)/HackGen-Regular.ttf"; fi)
+TARGET=HackGen_$(VERSION)/HackGen-Regular.ttf
+TARGET_COPY=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
+
+GITHUB=https://github.com/yuru7/HackGen
+_:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 $(ARCHIVE):
 	curl -L https://github.com/yuru7/HackGen/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
 
-$(WORKDIR)/HackGen-Regular.ttf: $(ARCHIVE)
+$(TARGET): $(ARCHIVE)
 	unzip $(ARCHIVE)
-	touch $(WORKDIR)/*
+	touch $(dir $(TARGET))/*
 
-$(TARGET_DIR)HackGen-Regular.ttf: $(WORKDIR)/HackGen-Regular.ttf
-	mkdir -p $(TARGET_DIR)
-	cp -p -f $(WORKDIR)/*.ttf $(TARGET_DIR)
+$(TARGET_COPY): $(TARGET)
+	mkdir -p $(dir $(TARGET_COPY))
+	cp -p -f $(dir $(TARGET))/*.ttf $(dir $(TARGET_COPY))
 	-fc-cache -vf
 
-install: $(TARGET_DIR)HackGen-Regular.ttf
+install: $(TARGET_COPY)
 
 GITHUB_RELEASES=https://api.github.com/repos/yuru7/HackGen/releases
 

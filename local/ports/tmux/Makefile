@@ -17,7 +17,7 @@ ifeq ($(JOBS),)
 JOBS := 1
 endif
 endif
-_:=$(shell if [ -d "$(WORK_DIR)/tmux" ]; then touch "$(INSTALL_PATH)/tmux"; fi)
+_:=$(shell if [ -f "$(WORK_DIR)/tmux" ]; then touch "$(INSTALL_PATH)/tmux"; fi)
 
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)

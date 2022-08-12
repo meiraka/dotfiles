@@ -5,21 +5,14 @@ VERSION=v1.3.0
 INSTALL_DIR=$(HOME)/.local
 
 OS=$(shell uname -s | tr A-Z a-z)
-_ARCH=$(shell uname -m)
-ifeq ($(_ARCH), arm64)
-ARCH=arm64
-else ifeq ($(_ARCH), x86_64)
-ARCH=amd64
-else
-ARCH=386
-endif
+ARCH=$(subst x86_64,amd64,$(shell uname -m))
 
 BIN_VERSION=ghq-$(VERSION)
 BIN=ghq
 
 TARGET=$(INSTALL_DIR)/bin/$(BIN_VERSION)
 TARGET_LINK=$(INSTALL_DIR)/bin/$(BIN)
-_:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
+_:=$(shell if [ -f "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 ghq_$(OS)_$(ARCH)_$(VERSION).zip:
 	mkdir -p $(INSTALL_DIR)/bin
@@ -37,7 +30,7 @@ $(TARGET): ghq_$(OS)_$(ARCH)_$(VERSION)
 $(TARGET_LINK): $(TARGET)
 	ln -nsf $(TARGET) $(TARGET_LINK)
 
-install: $(INSTALL_DIR)/bin/$(BIN)
+install: $(TARGET_LINK)
 
 GITHUB_RELEASES=https://api.github.com/repos/x-motemen/ghq/releases
 
