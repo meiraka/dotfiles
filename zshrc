@@ -1,3 +1,5 @@
+autoload -Uz compinit
+compinit
 #
 # alias
 #
@@ -175,4 +177,5 @@ zsh-update-prompt
 #
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.local/bin/kubectl ] && source <(~/.local/bin/kubectl completion zsh)
 source ~/.zshrc.local
