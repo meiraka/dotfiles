@@ -11,44 +11,53 @@ cd ${ROOT}
 ARGS=()
 ARGS+=${@##${HOME}/.}
 
-# add checks files are exist in git repository.
-add() {
-    first=1
-    for i in $@; do
-        if [ "$first" != "1" ]; then
-            ORIG="${HOME}/.$i"
-            if [ ! -e "${ORIG}" ]; then
-                echo ${ORIG} does not exist
-                exit 1
-            fi
-        fi
-        first=0
-    done
+HELP="commands:"
 
+HELP=$HELP"
+\tlink
+\t\tsetup dotfiles link"
+link() {
+    make link
+}
+
+HELP=$HELP"
+\tcopy FILE...
+\t\tcopies FILE to dotfiles repository"
+copy() {
     first=1
     changed=0
     for i in $@; do
         if [ "$first" != "1" ]; then
             ORIG="${HOME}/.$i"
-            if [ ! -e "$i" ]; then
-                echo copy ${ORIG} to ${ROOT}
-                cp ${ORIG} ${ROOT}/$i
+            if [ ! -e "$i" ] && [ -e "${ORIG}" ]; then
+                echo move ${ORIG} to ${ROOT}/$i
+                mv ${ORIG} ${ROOT}/$i
                 changed=1
             fi
         fi
         first=0
     done
     if [ "$changed" = "1" ]; then
+        echo update link
         make link
     fi
 }
 
+HELP=$HELP"
+\thelp
+\t\tshow this help"
+help() {
+    echo -e "$HELP"
+    exit 1
+}
+
 if [ "$#" = 0 ]; then
-    git
-elif [ "$1" = "add" ]; then
-    add $ARGS
-elif [ "$1" = "link" ]; then
-    make link
-    exit 0
+    help
+else
+    if [ "$(type -t $1)" == "function" ]; then
+        $1 $ARGS
+    else
+        git $ARGS
+    fi
+
 fi
-git $ARGS
