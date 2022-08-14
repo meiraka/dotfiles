@@ -31,4 +31,4 @@ all: $(APPS) ## install all apps
 
 $(APPS): 
 	@:
-	$(info $@	 $(shell $(MAKE) $(OPT_VERSION) --no-print-directory -C $@ $(SUBTARGET)))
+	@$(MAKE) $(OPT_VERSION) --no-print-directory -C $@ $(SUBTARGET) | awk '{printf "\033[36m%-20s\033[0m %s\n", "$@", $$0}'
