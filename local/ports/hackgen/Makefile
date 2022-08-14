@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-VERSION=v2.6.3
+VERSION=v2.7.0
 INSTALL_DIR = $(HOME)/.local
 
 ARCHIVE=HackGen_$(VERSION).zip
