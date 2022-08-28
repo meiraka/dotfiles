@@ -100,76 +100,13 @@ setopt transient_rprompt
 setopt print_exit_value
 setopt prompt_subst
 
-function zsh-update-prompt {
-    function colorcode {
-        if [ "$1" = "reset" ]
-        then
-            echo '%{\e[m%}'
-        else
-            # generate color code
-            code=-1
-            style=38
-            if [ "$1" = "bg" ]
-            then
-                (( style = 48 ))
-            fi
-            if [ "$2" = "6rgb" ]
-            then
-                (( code = 16 + $3 * 6 * 6 + $4 * 6 + $5 ))
-                echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
-            elif [ "$2" = "25gray" ]
-            then
-                (( code = 231 + $3 ))
-                (( style = 5 ))
-                echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
-            elif [ "$2" = "24hex" ]
-            then
-                (( rv = `printf '%d\n' 0x\`echo $3 | cut -b 1,2\`` ))
-                (( gv = `printf '%d\n' 0x\`echo $3 | cut -b 3,4\`` ))
-                (( bv = `printf '%d\n' 0x\`echo $3 | cut -b 5,6\`` ))
-                echo '%{\e['"${style}"';2;'"${rv}"';'"${gv}"';'"${bv}"'m%}'
-            else
-                echo unknown type $2
-            fi
-            # set bg or fg
-        fi
-    }
-
-    function vcsinfo {
-        if git status > /dev/null 2> /dev/null; then
-            VCS_TEXT="git"
-            VCS_REMOTE_TEXT=`git config --list | grep "origin.url" | cut -d"=" -f 2`
-            VCS_BRANCH_TEXT=`git branch | grep "\*" | sed "s/\* //"`
-        fi
-        if [ "${VCS_TEXT}" = "" ]; then
-        else
-            echo "${VCS_REMOTE_TEXT} ${VCS_BRANCH_TEXT}"
-        fi
-    }
-
-    PROMPT="`colorcode fg 24hex 993745`"'> '"`colorcode reset`"
-    case $KEYMAP in
-        vicmd)
-            PROMPT="`colorcode fg 24hex 94998a`"'> '"`colorcode reset`"
-        ;;
-        main|viins)
-            PROMPT="`colorcode fg 24hex 7f0906`"'> '"`colorcode reset`"
-        ;;  
-    esac
-    PROMPT2=". "
-    RPROMPT="`colorcode fg 24hex 81553d`""`vcsinfo`""`colorcode reset`"
-    SPROMPT="%F{$COLOR_BG_LPROMPT}%{$suggest%}(＠ﾟ△ﾟ%)ノ < もしかして %B%r%b かな? [そう!(y), 違う!(n),a,e] > "
-}
-
+source ~/.zshprompt
 function zle-line-init zle-keymap-select {
     zsh-update-prompt
     zle reset-prompt
 }
-
-
 zle -N zle-line-init
 zle -N zle-keymap-select
-
 zsh-update-prompt
 
 #
@@ -179,3 +116,26 @@ zsh-update-prompt
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.local/bin/kubectl ] && source <(~/.local/bin/kubectl completion zsh)
 source ~/.zshrc.local
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+#
+# plugins
+#
+
+# Additional completion
+zinit light zsh-users/zsh-completions
+# move to git base dir
+zinit light mollifier/cd-gitroot
+alias cdu=cd-gitroot

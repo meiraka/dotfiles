@@ -1,0 +1,75 @@
+function colorcode {
+    if [ "$1" = "reset" ]
+    then
+        echo '%{\e[m%}'
+    else
+        # generate color code
+        code=-1
+        style=38
+        if [ "$1" = "bg" ]
+        then
+            (( style = 48 ))
+        fi
+        if [ "$2" = "6rgb" ]
+        then
+            (( code = 16 + $3 * 6 * 6 + $4 * 6 + $5 ))
+            echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
+        elif [ "$2" = "25gray" ]
+        then
+            (( code = 231 + $3 ))
+            (( style = 5 ))
+            echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
+        elif [ "$2" = "24hex" ]
+        then
+            (( rv = $(printf '%d\n' 0x$(echo $3 | cut -b 1,2)) ))
+            (( gv = $(printf '%d\n' 0x$(echo $3 | cut -b 3,4)) ))
+            (( bv = $(printf '%d\n' 0x$(echo $3 | cut -b 5,6)) ))
+            echo '%{\e['"${style}"';2;'"${rv}"';'"${gv}"';'"${bv}"'m%}'
+        else
+            echo unknown type $2
+        fi
+        # set bg or fg
+    fi
+}
+
+arrow="❱ "
+red=$(colorcode fg 24hex cd0089)
+green=$(colorcode fg 24hex 00cccb)
+yellow=$(colorcode fg 24hex ffdd33)
+gray=$(colorcode fg 24hex aaaaaa)
+reset=$(colorcode reset)
+function zsh-update-prompt {
+    case $KEYMAP in
+        vicmd)
+            PROMPT="${yellow}${arrow}${reset}"
+        ;;
+        visual|main)
+            PROMPT="${green}${arrow}${reset}"
+        ;;
+        *)
+            PROMPT="${red}${arrow}${reset}"
+        ;;
+    esac
+    PROMPT2=". "
+    RPROMPT="$(vcsinfo)"
+    SPROMPT="%F{$COLOR_BG_LPROMPT}%{$suggest%}%B%r%b [y, n, a, e] > ${reset}"
+}
+
+function vcsinfo {
+    if git status > /dev/null 2> /dev/null; then
+        VCS_TEXT="git"
+        VCS_REPO_TEXT=$(git config --get remote.origin.url)
+        VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
+    fi
+    if [ "${VCS_TEXT}" = "" ]; then
+    else
+        case "${VCS_BRANCH_TEXT}" in
+            main|master)
+                echo "${gray}${VCS_REPO_TEXT} ${yellow}${VCS_BRANCH_TEXT}${reset}"
+            ;;
+            *)
+                echo "${gray}${VCS_REPO_TEXT} ${green}${VCS_BRANCH_TEXT}${reset}"
+            ;;
+        esac
+    fi
+}
