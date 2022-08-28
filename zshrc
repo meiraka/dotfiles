@@ -16,7 +16,7 @@ fi
 alias v=vim
 alias va=valgrind
 
-eval $(dircolors -b ~/.dircolors/le_petit_chaperonrouge) > /dev/null 2> /dev/null
+eval $(dircolors -b ~/.dircolors/melt 2> /dev/null)
 
 if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
