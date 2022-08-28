@@ -101,14 +101,6 @@ setopt print_exit_value
 setopt prompt_subst
 
 source ~/.zshprompt
-function zle-line-init zle-keymap-select {
-    zsh-update-prompt
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
-zsh-update-prompt
-
 #
 # scripts
 #

@@ -48,7 +48,7 @@ TERM xterm*
 RESET 0 # reset to "normal" color
 NORMAL 00;38;2;221;221;221 # no color code at all
 DIR 01;34 # directory
-LINK 01;38;2;119;51;255# symbolic link. (If you set this to 'target' instead of a
+LINK 01;38;2;119;51;255 # symbolic link. (If you set this to 'target' instead of a
  # numerical value, the color is as for the file pointed to.)
 MULTIHARDLINK 00 # regular file with more than one link
 FIFO 40;33 # pipe
@@ -241,10 +241,12 @@ EXEC 01;38;2;0;204;203
 .xml 00;38;2;255;221;51
 .ini 00;38;2;255;221;51
 *config 00;38;2;255;221;51
+.env 00;38;2;255;221;51
 # package system
 *Makefile 00;38;2;255;221;51
 *go.mod 00;38;2;255;221;51
 *go.sum 00;38;2;255;221;51
+*build.zig 00;38;2;255;221;51
 *requirements.txt 00;38;2;255;221;51
 *setup.py 00;38;2;255;221;51
 *setup.cfg 00;38;2;255;221;51
