@@ -4,8 +4,8 @@ function colorcode {
         echo '%{\e[m%}'
     else
         # generate color code
-        code=-1
-        style=38
+        local code=-1
+        local style=38
         if [ "$1" = "bg" ]
         then
             (( style = 48 ))
@@ -32,57 +32,59 @@ function colorcode {
     fi
 }
 
-arrow="❱ "
-red=$(colorcode fg 24hex cd0089)
-green=$(colorcode fg 24hex 00cccb)
-yellow=$(colorcode fg 24hex ffdd33)
-gray=$(colorcode fg 24hex aaaaaa)
-reset=$(colorcode reset)
+prompt_arrow="❱ "
+prompt_red=$(colorcode fg 24hex cd0089)
+prompt_green=$(colorcode fg 24hex 00cccb)
+prompt_yellow=$(colorcode fg 24hex ffdd33)
+prompt_gray=$(colorcode fg 24hex aaaaaa)
+prompt_reset=$(colorcode reset)
+
 function zsh-update-prompt {
     case $KEYMAP in
         vicmd)
-            PROMPT="${yellow}${arrow}${reset}"
+            PROMPT="${prompt_yellow}${prompt_arrow}${prompt_reset}"
         ;;
         visual|main)
-            PROMPT="${green}${arrow}${reset}"
+            PROMPT="${prompt_green}${prompt_arrow}${prompt_reset}"
         ;;
         *)
-            PROMPT="${red}${arrow}${reset}"
+            PROMPT="${prompt_red}${prompt_arrow}${prompt_reset}"
         ;;
     esac
     PROMPT2=". "
     RPROMPT="$(vcsinfo) $(kubeinfo)"
-    SPROMPT="%F{$COLOR_BG_LPROMPT}%{$suggest%}%B%r%b [y, n, a, e] > ${reset}"
+    SPROMPT="${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}"
 }
 
 function vcsinfo {
     if git status > /dev/null 2> /dev/null; then
-        VCS_TEXT="git"
-        VCS_REPO_TEXT=$(git config --get remote.origin.url)
-        VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
+        local VCS_TEXT="git"
+        local VCS_REPO_TEXT=$(git config --get remote.origin.url)
+        local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
     fi
     if [ "${VCS_TEXT}" = "" ]; then
     else
         case "${VCS_BRANCH_TEXT}" in
             main|master)
-                echo "${gray}${VCS_REPO_TEXT} ${yellow}${VCS_BRANCH_TEXT}${reset}"
+                echo "${prompt_gray}${VCS_REPO_TEXT} ${prompt_yellow}${VCS_BRANCH_TEXT}${prompt_reset}"
             ;;
             *)
-                echo "${gray}${VCS_REPO_TEXT} ${green}${VCS_BRANCH_TEXT}${reset}"
+                echo "${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
             ;;
         esac
     fi
 }
 
 function kubeinfo {
+    local context ns
     if context=$(kubectl config current-context 2>/dev/null); then
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
         [[ -z "$ns" ]] && ns="(default)"
     fi
     if [[ "${context}" = "p*" ]]; then
-        echo "${red}${context}${ns}${reset}"
+        echo "${prompt_yellow}${context}${ns}${prompt_reset}"
     else
-        echo "${green}${context}${ns}${reset}"
+        echo "${prompt_green}${context}${ns}${prompt_reset}"
     fi
 }
 
