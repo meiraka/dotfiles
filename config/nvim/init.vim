@@ -37,8 +37,6 @@ Plug 'mattn/vim-goimports'
 Plug 'meiraka/vim-google-cpp-style-indent'
 " Lang: Haskell
 Plug 'kana/vim-filetype-haskell'
-" Lang: Vim
-Plug 'vim-jp/vimdoc-ja'
 " Lang: Scala
 Plug 'derekwyatt/vim-scala'
 " Lang: Ansible
