@@ -51,7 +51,7 @@ function zsh-update-prompt {
         ;;
     esac
     PROMPT2=". "
-    RPROMPT="$(vcsinfo)"
+    RPROMPT="$(vcsinfo) $(kubeinfo)"
     SPROMPT="%F{$COLOR_BG_LPROMPT}%{$suggest%}%B%r%b [y, n, a, e] > ${reset}"
 }
 
@@ -71,5 +71,17 @@ function vcsinfo {
                 echo "${gray}${VCS_REPO_TEXT} ${green}${VCS_BRANCH_TEXT}${reset}"
             ;;
         esac
+    fi
+}
+
+function kubeinfo {
+    if context=$(kubectl config current-context 2>/dev/null); then
+        ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
+        [[ -z "$ns" ]] && ns="(default)"
+    fi
+    if [[ "${context}" = "p*" ]]; then
+        echo "${red}${context}${ns}${reset}"
+    else
+        echo "${green}${context}${ns}${reset}"
     fi
 }
