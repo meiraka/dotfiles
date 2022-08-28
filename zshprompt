@@ -1,4 +1,4 @@
-function colorcode {
+function prompt_color {
     if [ "$1" = "reset" ]
     then
         echo '%{\e[m%}'
@@ -10,36 +10,60 @@ function colorcode {
         then
             (( style = 48 ))
         fi
-        if [ "$2" = "6rgb" ]
-        then
-            (( code = 16 + $3 * 6 * 6 + $4 * 6 + $5 ))
-            echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
-        elif [ "$2" = "25gray" ]
-        then
-            (( code = 231 + $3 ))
-            (( style = 5 ))
-            echo '%{\e[0;'"${style}"';5;'"${code}"'m%}'
-        elif [ "$2" = "24hex" ]
-        then
-            (( rv = $(printf '%d\n' 0x$(echo $3 | cut -b 1,2)) ))
-            (( gv = $(printf '%d\n' 0x$(echo $3 | cut -b 3,4)) ))
-            (( bv = $(printf '%d\n' 0x$(echo $3 | cut -b 5,6)) ))
-            echo '%{\e['"${style}"';2;'"${rv}"';'"${gv}"';'"${bv}"'m%}'
-        else
-            echo unknown type $2
-        fi
-        # set bg or fg
+        (( rv = $(printf '%d\n' 0x$(echo $2 | cut -b 2,3)) ))
+        (( gv = $(printf '%d\n' 0x$(echo $2 | cut -b 4,5)) ))
+        (( bv = $(printf '%d\n' 0x$(echo $2 | cut -b 6,7)) ))
+        echo '%{\e['"${style}"';2;'"${rv}"';'"${gv}"';'"${bv}"'m%}'
     fi
 }
 
 prompt_arrow="❱ "
-prompt_red=$(colorcode fg 24hex cd0089)
-prompt_green=$(colorcode fg 24hex 00cccb)
-prompt_yellow=$(colorcode fg 24hex ffdd33)
-prompt_gray=$(colorcode fg 24hex aaaaaa)
-prompt_reset=$(colorcode reset)
+prompt_red=$(prompt_color fg '#cd0089')
+prompt_green=$(prompt_color fg '#00cccb')
+prompt_yellow=$(prompt_color fg '#ffdd33')
+prompt_gray=$(prompt_color fg '#aaaaaa')
+prompt_reset=$(prompt_color reset)
 
-function zsh-update-prompt {
+PROMPT2=". "
+RPROMPT='${PROMPT_VCS_INFO} ${PROMPT_KUBE_INFO}'
+SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd prompt_vcs_info
+function prompt_vcs_info() {
+    if git status > /dev/null 2> /dev/null; then
+        local VCS_TEXT="git"
+        local VCS_REPO_TEXT=$(git config --get remote.origin.url)
+        local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
+    fi
+    if [ "${VCS_TEXT}" = "" ]; then
+    else
+        case "${VCS_BRANCH_TEXT}" in
+            main|master)
+                PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_yellow}${VCS_BRANCH_TEXT}${prompt_reset}"
+            ;;
+            *)
+                PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
+            ;;
+        esac
+    fi
+}
+
+add-zsh-hook precmd prompt_kube_info
+function prompt_kube_info() {
+    local context ns
+    if context=$(kubectl config current-context 2>/dev/null); then
+        ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
+        [[ -z "$ns" ]] && ns="(default)"
+    fi
+    if [[ "${context}" = "p*" ]]; then
+        PROMPT_KUBE_INFO="${prompt_yellow}${context}${ns}${prompt_reset}"
+    else
+        PROMPT_KUBE_INFO="${prompt_green}${context}${ns}${prompt_reset}"
+    fi
+}
+
+function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
             PROMPT="${prompt_yellow}${prompt_arrow}${prompt_reset}"
@@ -51,47 +75,7 @@ function zsh-update-prompt {
             PROMPT="${prompt_red}${prompt_arrow}${prompt_reset}"
         ;;
     esac
-    PROMPT2=". "
-    RPROMPT="$(vcsinfo) $(kubeinfo)"
-    SPROMPT="${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}"
-}
-
-function vcsinfo {
-    if git status > /dev/null 2> /dev/null; then
-        local VCS_TEXT="git"
-        local VCS_REPO_TEXT=$(git config --get remote.origin.url)
-        local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
-    fi
-    if [ "${VCS_TEXT}" = "" ]; then
-    else
-        case "${VCS_BRANCH_TEXT}" in
-            main|master)
-                echo "${prompt_gray}${VCS_REPO_TEXT} ${prompt_yellow}${VCS_BRANCH_TEXT}${prompt_reset}"
-            ;;
-            *)
-                echo "${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
-            ;;
-        esac
-    fi
-}
-
-function kubeinfo {
-    local context ns
-    if context=$(kubectl config current-context 2>/dev/null); then
-        ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
-        [[ -z "$ns" ]] && ns="(default)"
-    fi
-    if [[ "${context}" = "p*" ]]; then
-        echo "${prompt_yellow}${context}${ns}${prompt_reset}"
-    else
-        echo "${prompt_green}${context}${ns}${prompt_reset}"
-    fi
-}
-
-function zle-line-init zle-keymap-select {
-    zsh-update-prompt
     zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
-zsh-update-prompt
