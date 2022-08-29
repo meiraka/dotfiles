@@ -1,9 +1,8 @@
 export TERM="xterm-256color"
 export PATH=~/.local/bin:/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/opt/go/bin:~/.local/opt/node/bin:./node_modules/.bin:~/.local/opt/jdk/bin:~/.local/opt/zig
-export LD_LIBRARY_PATH=$HOME/lib:$HOME/local/lib:$HOME/.local/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=$HOME/.local/lib:/opt/homebrew/lib:$LIBRARY_PATH
 export JAVA_HOME=~/.local/opt/jdk
-export _LIBUSER=y
-export CPATH=/home/$_LIBUSER/include:$CPATH
+export CPATH=$HOME/.local/include:/opt/homebrew/include:$CPATH
 export GOROOT=~/.local/opt/go
 export GOPATH=~/
 export GO111MODULE=on

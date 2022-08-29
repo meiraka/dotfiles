@@ -6,17 +6,22 @@ compinit
 alias x=exit
 alias reload="source ~/.zshrc"
 if [ `uname` = Darwin ]; then
-  #BSD ls
-  alias ls="ls -G"
+  if which gls >/dev/null 2>&1; then
+    # GNU ls
+    alias ls="gls --color=auto"
+    eval $(gdircolors -b ~/.dircolors/melt 2> /dev/null)
+  else
+    #BSD ls
+    alias ls="ls -G"
+  fi
 else
   #GNU ls
   alias ls="ls --color=auto"
+  eval $(dircolors -b ~/.dircolors/melt 2> /dev/null)
 fi
 
 alias v=vim
 alias va=valgrind
-
-eval $(dircolors -b ~/.dircolors/melt 2> /dev/null)
 
 if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
