@@ -56,11 +56,7 @@ function prompt_kube_info() {
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
         [[ -z "$ns" ]] && ns="(default)"
     fi
-    if [[ "${context}" = "p*" ]]; then
-        PROMPT_KUBE_INFO="${prompt_yellow}${context}${ns}${prompt_reset}"
-    else
-        PROMPT_KUBE_INFO="${prompt_green}${context}${ns}${prompt_reset}"
-    fi
+    PROMPT_KUBE_INFO="${prompt_green}${context}:${ns}${prompt_reset}"
 }
 
 function zle-line-init zle-keymap-select {
