@@ -18,9 +18,9 @@ function prompt_color {
 }
 
 prompt_arrow="❱ "
-prompt_red=$(prompt_color fg '#cd0089')
-prompt_green=$(prompt_color fg '#00cccb')
-prompt_yellow=$(prompt_color fg '#ffdd33')
+prompt_red=$(prompt_color fg '#e27878')
+prompt_green=$(prompt_color fg '#89b8c2')
+prompt_yellow=$(prompt_color fg '#e2a478')
 prompt_gray=$(prompt_color fg '#aaaaaa')
 prompt_reset=$(prompt_color reset)
 
@@ -55,8 +55,10 @@ function prompt_kube_info() {
     if context=$(kubectl config current-context 2>/dev/null); then
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
         [[ -z "$ns" ]] && ns="(default)"
+        PROMPT_KUBE_INFO="${prompt_green}${context}:${ns}${prompt_reset}"
+    else
+        PROMPT_KUBE_INFO=""
     fi
-    PROMPT_KUBE_INFO="${prompt_green}${context}:${ns}${prompt_reset}"
 }
 
 function zle-line-init zle-keymap-select {

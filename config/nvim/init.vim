@@ -10,8 +10,9 @@ endif
 
 call plug#begin('~/.config/nvim/bundle')
 Plug 'meiraka/le_petit_chaperonrouge.vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'frankier/neovim-colors-solarized-truecolor-only'
+" Plug 'nanotech/jellybeans.vim'
+" Plug 'frankier/neovim-colors-solarized-truecolor-only'
+Plug 'cocopon/iceberg.vim'
 Plug 'nathanaelkane/vim-indent-guides'  " indent view
 Plug 'tpope/vim-surround'  " surroundings cs
 Plug 'tpope/vim-fugitive'  " git
@@ -80,8 +81,9 @@ if has('nvim')
   set scrollback=100000
 endif
 set wildmode=list:longest,full
-let g:jellybeans_overrides = {'background': {'ctermbg': 'none', '256ctermbg': 'none', 'guibg': 'none' }}
-colorscheme jellybeans
+" let g:jellybeans_overrides = {'background': {'ctermbg': 'none', '256ctermbg': 'none', 'guibg': 'none' }}
+colorscheme iceberg
+hi! Normal guibg=NONE
 
 set number
 set cursorline

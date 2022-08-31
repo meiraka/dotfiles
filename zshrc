@@ -9,7 +9,7 @@ if [ `uname` = Darwin ]; then
   if which gls >/dev/null 2>&1; then
     # GNU ls
     alias ls="gls --color=auto"
-    eval $(gdircolors -b ~/.dircolors/melt 2> /dev/null)
+    eval $(gdircolors -b ~/.dircolors/iceberg 2> /dev/null)
   else
     #BSD ls
     alias ls="ls -G"
@@ -17,7 +17,7 @@ if [ `uname` = Darwin ]; then
 else
   #GNU ls
   alias ls="ls --color=auto"
-  eval $(dircolors -b ~/.dircolors/melt 2> /dev/null)
+  eval $(dircolors -b ~/.dircolors/iceberg 2> /dev/null)
 fi
 
 alias v=vim
