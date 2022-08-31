@@ -1,7 +1,7 @@
 .PHONY: clean install
 install: link
 
-VERSION=v18.7.0
+VERSION=v18.8.0
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
