@@ -24,7 +24,5 @@ export QT_QPA_PLATFORMTHEME=qt5ct
 export MPD_HOST="moode.local"
 export FZF_DEFAULT_OPTS='
   --height 50%
-  --no-bold
-  --color fg:#c0a0a0,bg:#362016,hl:#94998a,fg+:#c0a0a0,bg+:#402a20,hl+:#94998a
-  --color info:#c10138,prompt:#9f424b,spinner:208,pointer:#7f0906,marker:#993745,header:#81553d
+  --color=bg+:#1e2132,spinner:#84a0c6,hl:#6b7089,fg:#c6c8d1,header:#6b7089,info:#b4be82,pointer:#84a0c6,marker:#84a0c6,fg+:#c6c8d1,prompt:#84a0c6,hl+:#84a0c6
 '
