@@ -121,9 +121,8 @@ let mapleader = "\<Space>"
 :map <Leader>b :Buffers<CR>
 
 
-function! Termcolors() abort
+function! SyncTermColors() abort
     :let target = "~/.config/kitty/kitty.conf"
-    echo g:terminal_ansi_colors
     if !bufexists(target)
         execute 'badd' target
     endif
@@ -154,4 +153,12 @@ function! Termcolors() abort
     execute 'buffer' '+%s/^color13\ \\+#.\\+/color13\ '.g:terminal_ansi_colors[13].'/g' target
     execute 'buffer' '+%s/^color14\ \\+#.\\+/color14\ '.g:terminal_ansi_colors[14].'/g' target
     execute 'buffer' '+%s/^color15\ \\+#.\\+/color15\ '.g:terminal_ansi_colors[15].'/g' target
+endfunction
+
+function! SyncFZFColors() abort
+    :let target = "~/.zshenv"
+    if !bufexists(target)
+        execute 'badd' target
+    endif
+    execute 'buffer' '+%s/^export\ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS.\\+/export\ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS'.fnameescape(fzf#wrap()["options"]).'"/g' target
 endfunction
