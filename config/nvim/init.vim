@@ -174,8 +174,34 @@ function! SyncDirColors() abort
         execute 'badd' target
     endif
     execute 'buffer' '+%delete' target
+    :let id = bufname(target)
     :let terms = ['Eterm', 'ansi', 'color-xterm', 'con132x25', 'con132x30', 'con132x43', 'con132x60', 'con80x25', 'con80x28', 'con80x30', 'con80x43', 'con80x50', 'con80x60', 'cons25', 'console', 'cygwin', 'dtterm', 'eterm-color', 'gnome', 'gnome-256color', 'hurd', 'jfbterm', 'konsole', 'kterm', 'linux', 'linux-c', 'mach-color', 'mach-gnu-color', 'mlterm', 'putty', 'putty-256color', 'rxvt', 'rxvt-256color', 'rxvt-cygwin', 'rxvt-cygwin-native', 'rxvt-unicode', 'rxvt-unicode-256color', 'rxvt-unicode256', 'screen', 'screen-256color', 'screen-256color-bce', 'screen-bce', 'screen-w', 'screen.Eterm', 'screen.rxvt', 'screen.linux', 'st', 'st-256color', 'terminator', 'vt100', 'xterm', 'xterm-16color', 'xterm-256color', 'xterm-88color', 'xterm-color', 'xterm-debian']
     for term in terms
-        execute 'buffer' "+append(line('$'),'TERM\ ".term."')" target
+        call appendbufline(id, '$', ['TERM '.term])
     endfor
+    call appendbufline(id, '$', ['RESET   0'])
+    call appendbufline(id, '$', ['DIR     00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Directory")),"fg#"),';')])
+    call appendbufline(id, '$', ['STICKY  01;38;2;'.RGB(synIDattr(synIDtrans(hlID("Directory")),"fg#"),';')])
+    call appendbufline(id, '$', ['NORMAL  00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Normal")),"fg#"),';')])
+    call appendbufline(id, '$', ['LINK    04;38;2;'.RGB(synIDattr(synIDtrans(hlID("Normal")),"fg#"),';')])
+    call appendbufline(id, '$', ['ORPHAN  04;48;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"bg#"),';').';38;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"fg#"),';')])
+    call appendbufline(id, '$', ['MISSING 04;48;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"bg#"),';').';38;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"fg#"),';')])
+    call appendbufline(id, '$', ['EXEC    00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Function")), "fg#"), ';')])
+    call appendbufline(id, '$', ['SETUID  01;38;2;'.RGB(synIDattr(synIDtrans(hlID("Function")), "fg#"), ';')])
+    call appendbufline(id, '$', ['SETGID  01;38;2;'.RGB(synIDattr(synIDtrans(hlID("Function")), "fg#"), ';')])
+    call appendbufline(id, '$', ['FIFO    04;38;2;'.RGB(synIDattr(synIDtrans(hlID("Special")), "fg#"), ';')])
+    call appendbufline(id, '$', ['SOCK    04;38;2;'.RGB(synIDattr(synIDtrans(hlID("Special")), "fg#"), ';')])
+    for n in ['*TODO', '*README.md', '*README.rst', '*README']
+        call appendbufline(id, '$', [n.'    00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Question")), "fg#"), ';')])
+    endfor
+    for n in ['.go', '.py', '.c', '.cc', '.cpp', '.hs', '.h', '.hh', '.hpp', '.java', '.hs']
+        call appendbufline(id, '$', [n.'    00;38;2;'.RGB(synIDattr(synIDtrans(hlID("String")), "fg#"), ';')])
+    endfor
+    for n in ['.pyc', '.o', '.d', '.hi']
+        call appendbufline(id,'$',[n.' 00;48;2;'.RGB(synIDattr(synIDtrans(hlID("Comment")),"bg#"),';').';38;2;'.RGB(synIDattr(synIDtrans(hlID("Comment")),"fg#"),';')])
+    endfor
+endfunction
+
+function! RGB(hex, joiner) abort
+    return str2nr(a:hex[1:2], 16).a:joiner.str2nr(a:hex[3:4], 16).a:joiner.str2nr(a:hex[5:6], 16)
 endfunction
