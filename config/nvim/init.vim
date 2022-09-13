@@ -179,29 +179,48 @@ function! SyncDirColors() abort
     for term in terms
         call appendbufline(id, '$', ['TERM '.term])
     endfor
-    call appendbufline(id, '$', ['RESET   0'])
-    call appendbufline(id, '$', ['DIR     00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Directory")),"fg#"),';')])
-    call appendbufline(id, '$', ['STICKY  01;38;2;'.RGB(synIDattr(synIDtrans(hlID("Directory")),"fg#"),';')])
-    call appendbufline(id, '$', ['NORMAL  00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Normal")),"fg#"),';')])
-    call appendbufline(id, '$', ['LINK    04;38;2;'.RGB(synIDattr(synIDtrans(hlID("Normal")),"fg#"),';')])
-    call appendbufline(id, '$', ['ORPHAN  04;48;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"bg#"),';').';38;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"fg#"),';')])
-    call appendbufline(id, '$', ['MISSING 04;48;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"bg#"),';').';38;2;'.RGB(synIDattr(synIDtrans(hlID("ErrorMsg")),"fg#"),';')])
-    call appendbufline(id, '$', ['EXEC    00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Function")), "fg#"), ';')])
-    call appendbufline(id, '$', ['SETUID  01;38;2;'.RGB(synIDattr(synIDtrans(hlID("Function")), "fg#"), ';')])
-    call appendbufline(id, '$', ['SETGID  01;38;2;'.RGB(synIDattr(synIDtrans(hlID("Function")), "fg#"), ';')])
-    call appendbufline(id, '$', ['FIFO    04;38;2;'.RGB(synIDattr(synIDtrans(hlID("Special")), "fg#"), ';')])
-    call appendbufline(id, '$', ['SOCK    04;38;2;'.RGB(synIDattr(synIDtrans(hlID("Special")), "fg#"), ';')])
+    call appendbufline(id, '$', ['RESET 0'])
+    call appendbufline(id, '$', [s:DirColor('DIR',                   '00', 'Directory')])
+    call appendbufline(id, '$', [s:DirColor('STICKY',                '01', 'Directory')])
+    call appendbufline(id, '$', [s:DirColor('STICKY_OTHER_WRITABLE', '04', 'Directory')])
+    call appendbufline(id, '$', [s:DirColor('NORMAL',                '00', 'Normal')])
+    call appendbufline(id, '$', [s:DirColor('LINK',                  '04', 'Normal')])
+    call appendbufline(id, '$', [s:DirColor('ORPHAN',                '04', 'ErrorMsg')])
+    call appendbufline(id, '$', [s:DirColor('MISSING',               '04', 'ErrorMsg')])
+    call appendbufline(id, '$', [s:DirColor('EXEC',                  '00', 'Function')])
+    call appendbufline(id, '$', [s:DirColor('SETUID',                '01', 'Function')])
+    call appendbufline(id, '$', [s:DirColor('SETGID',                '01', 'Function')])
+    call appendbufline(id, '$', [s:DirColor('FIFO',                  '04', 'Special')])
+    call appendbufline(id, '$', [s:DirColor('SOCK',                  '04', 'Special')])
+    call appendbufline(id, '$', [s:DirColor('CHAR',                  '04', 'DiffChange')])
+    call appendbufline(id, '$', [s:DirColor('BLOCK',                 '04', 'DiffAdd')])
     for n in ['*TODO', '*README.md', '*README.rst', '*README']
-        call appendbufline(id, '$', [n.'    00;38;2;'.RGB(synIDattr(synIDtrans(hlID("Question")), "fg#"), ';')])
+        call appendbufline(id, '$', [s:DirColor(n,                   '00', 'Question')])
     endfor
     for n in ['.go', '.py', '.c', '.cc', '.cpp', '.hs', '.h', '.hh', '.hpp', '.java', '.hs']
-        call appendbufline(id, '$', [n.'    00;38;2;'.RGB(synIDattr(synIDtrans(hlID("String")), "fg#"), ';')])
+        call appendbufline(id, '$', [s:DirColor(n,                   '00', 'String')])
     endfor
     for n in ['.pyc', '.o', '.d', '.hi']
-        call appendbufline(id,'$',[n.' 00;48;2;'.RGB(synIDattr(synIDtrans(hlID("Comment")),"bg#"),';').';38;2;'.RGB(synIDattr(synIDtrans(hlID("Comment")),"fg#"),';')])
+        call appendbufline(id, '$', [s:DirColor(n,                   '00', 'Comment')])
     endfor
 endfunction
 
-function! RGB(hex, joiner) abort
+function! s:DirColor(name, mode, label) abort
+    :let fg = synIDattr(synIDtrans(hlID(a:label)),"fg#")
+    :let bg = synIDattr(synIDtrans(hlID(a:label)),"bg#")
+    if empty(bg) && empty(fg)
+        throw 'dircolor: no color for '.label
+    endif
+    :let ret = a:name.' '.a:mode
+    if !empty(bg)
+        :let ret = ret.";48;2;".s:RGB(bg, ';')
+    endif
+    if !empty(fg)
+        :let ret = ret.";38;2;".s:RGB(fg, ';')
+    endif
+    return ret
+endfunction
+
+function! s:RGB(hex, joiner) abort
     return str2nr(a:hex[1:2], 16).a:joiner.str2nr(a:hex[3:4], 16).a:joiner.str2nr(a:hex[5:6], 16)
 endfunction
