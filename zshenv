@@ -25,4 +25,4 @@ export MPD_HOST="moode.local"
 export FZF_DEFAULT_OPTS='
   --height 50%
 '
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS'--color=bg+:#1e2132,bg:#161821,spinner:#84a0c6,hl:#6b7089,fg:#c6c8d1,header:#6b7089,info:#b4be82,pointer:#84a0c6,marker:#84a0c6,fg+:#c6c8d1,prompt:#84a0c6,hl+:#84a0c6'  --expect=ctrl-v,ctrl-x,ctrl-t"
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS '--color=bg+:#1e2132,bg:#161821,spinner:#84a0c6,hl:#6b7089,fg:#c6c8d1,header:#6b7089,info:#b4be82,pointer:#84a0c6,marker:#84a0c6,fg+:#c6c8d1,prompt:#84a0c6,hl+:#84a0c6'"

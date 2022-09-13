@@ -160,5 +160,22 @@ function! SyncFZFColors() abort
     if !bufexists(target)
         execute 'badd' target
     endif
-    execute 'buffer' '+%s/^export\ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS.\\+/export\ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS'.fnameescape(fzf#wrap()["options"]).'"/g' target
+    :let opts = split(fzf#wrap()["options"], " ")
+    for opt in opts
+        if stridx(opt, "--color") > 0
+            execute 'buffer' '+%s/^export\ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS.\\+/export\ FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS\ '.fnameescape(opt).'"/g' target
+        endif
+    endfor
+endfunction
+
+function! SyncDirColors() abort
+    :let target = "~/.dir_colors"
+    if !bufexists(target)
+        execute 'badd' target
+    endif
+    execute 'buffer' '+%delete' target
+    :let terms = ['Eterm', 'ansi', 'color-xterm', 'con132x25', 'con132x30', 'con132x43', 'con132x60', 'con80x25', 'con80x28', 'con80x30', 'con80x43', 'con80x50', 'con80x60', 'cons25', 'console', 'cygwin', 'dtterm', 'eterm-color', 'gnome', 'gnome-256color', 'hurd', 'jfbterm', 'konsole', 'kterm', 'linux', 'linux-c', 'mach-color', 'mach-gnu-color', 'mlterm', 'putty', 'putty-256color', 'rxvt', 'rxvt-256color', 'rxvt-cygwin', 'rxvt-cygwin-native', 'rxvt-unicode', 'rxvt-unicode-256color', 'rxvt-unicode256', 'screen', 'screen-256color', 'screen-256color-bce', 'screen-bce', 'screen-w', 'screen.Eterm', 'screen.rxvt', 'screen.linux', 'st', 'st-256color', 'terminator', 'vt100', 'xterm', 'xterm-16color', 'xterm-256color', 'xterm-88color', 'xterm-color', 'xterm-debian']
+    for term in terms
+        execute 'buffer' "+append(line('$'),'TERM\ ".term."')" target
+    endfor
 endfunction
