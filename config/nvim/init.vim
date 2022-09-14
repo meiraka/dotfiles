@@ -12,8 +12,9 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'meiraka/le_petit_chaperonrouge.vim'
 " Plug 'nanotech/jellybeans.vim'
 " Plug 'frankier/neovim-colors-solarized-truecolor-only'
-Plug 'cocopon/iceberg.vim'
+" Plug 'cocopon/iceberg.vim'
 " Plug '4513ECHO/vim-colors-hatsunemiku'
+Plug 'gruvbox-community/gruvbox'
 Plug 'nathanaelkane/vim-indent-guides'  " indent view
 Plug 'tpope/vim-surround'  " surroundings cs
 Plug 'tpope/vim-fugitive'  " git
@@ -98,7 +99,7 @@ if has('nvim')
 endif
 set wildmode=list:longest,full
 " let g:jellybeans_overrides = {'background': {'ctermbg': 'none', '256ctermbg': 'none', 'guibg': 'none' }}
-colorscheme iceberg
+colorscheme gruvbox
 " hi! Normal guibg=NONE
 
 set number
@@ -120,39 +121,47 @@ let mapleader = "\<Space>"
 :map <Leader>f :Files<CR>
 :map <Leader>b :Buffers<CR>
 
+function! SyncColors() abort
+    vs
+    call SyncFZFColors()
+    sp
+    call SyncDirColors()
+    vs
+    call SyncTermColors()
+endfunction
 
 function! SyncTermColors() abort
     :let target = "~/.config/kitty/kitty.conf"
     if !bufexists(target)
         execute 'badd' target
     endif
-    execute 'buffer' '+%s/^foreground\ \\+#.\\+/foreground\ '.synIDattr(synIDtrans(hlID("Normal")), "fg#").'/g' target
-    execute 'buffer' '+%s/^background\ \\+#.\\+/background\ '.synIDattr(synIDtrans(hlID("Normal")), "bg#").'/g' target
-    execute 'buffer' '+%s/^selection_foreground\ \\+#.\\+/selection_foreground\ '.synIDattr(synIDtrans(hlID("Search")), "fg#").'/g' target
-    execute 'buffer' '+%s/^selection_background\ \\+#.\\+/selection_background\ '.synIDattr(synIDtrans(hlID("Search")), "bg#").'/g' target
-    execute 'buffer' '+%s/^cursor\ \\+#.\\+/cursor\ '.synIDattr(synIDtrans(hlID("Cursor")), "bg#").'/g' target
-    execute 'buffer' '+%s/^active_tab_foreground\ \\+#.\\+/active_tab_foreground\ '.synIDattr(synIDtrans(hlID("TabLineSel")), "fg#").'/g' target
-    execute 'buffer' '+%s/^active_tab_background\ \\+#.\\+/active_tab_background\ '.synIDattr(synIDtrans(hlID("TabLineSel")), "bg#").'/g' target
-    execute 'buffer' '+%s/^inactive_tab_foreground\ \\+#.\\+/inactive_tab_foreground\ '.synIDattr(synIDtrans(hlID("TabLineFill")), "fg#").'/g' target
-    execute 'buffer' '+%s/^inactive_tab_background\ \\+#.\\+/inactive_tab_background\ '.synIDattr(synIDtrans(hlID("TabLineFill")), "bg#").'/g' target
-    execute 'buffer' '+%s/^tab_bar_background\ \\+#.\\+/tab_bar_background\ '.synIDattr(synIDtrans(hlID("TabLine")), "bg#").'/g' target
+    execute 'buffer' '+%s/^foreground\ \\+/foreground\ '.synIDattr(synIDtrans(hlID("Normal")), "fg#").'/g' target
+    execute 'buffer' '+%s/^background\ \\+/background\ '.synIDattr(synIDtrans(hlID("Normal")), "bg#").'/g' target
+    execute 'buffer' '+%s/^selection_foreground\ \\+/selection_foreground\ '.synIDattr(synIDtrans(hlID("Search")), "fg#").'/g' target
+    execute 'buffer' '+%s/^selection_background\ \\+/selection_background\ '.synIDattr(synIDtrans(hlID("Search")), "bg#").'/g' target
+    execute 'buffer' '+%s/^cursor\ \\+/cursor\ '.synIDattr(synIDtrans(hlID("Cursor")), "bg#").'/g' target
+    execute 'buffer' '+%s/^active_tab_foreground\ \\+/active_tab_foreground\ '.synIDattr(synIDtrans(hlID("TabLineSel")), "fg#").'/g' target
+    execute 'buffer' '+%s/^active_tab_background\ \\+/active_tab_background\ '.synIDattr(synIDtrans(hlID("TabLineSel")), "bg#").'/g' target
+    execute 'buffer' '+%s/^inactive_tab_foreground\ \\+/inactive_tab_foreground\ '.synIDattr(synIDtrans(hlID("TabLineFill")), "fg#").'/g' target
+    execute 'buffer' '+%s/^inactive_tab_background\ \\+/inactive_tab_background\ '.synIDattr(synIDtrans(hlID("TabLineFill")), "bg#").'/g' target
+    execute 'buffer' '+%s/^tab_bar_background\ \\+/tab_bar_background\ '.synIDattr(synIDtrans(hlID("TabLine")), "bg#").'/g' target
 
-    execute 'buffer' '+%s/^color0\ \\+#.\\+/color0\ '.g:terminal_ansi_colors[0].'/g' target
-    execute 'buffer' '+%s/^color1\ \\+#.\\+/color1\ '.g:terminal_ansi_colors[1].'/g' target
-    execute 'buffer' '+%s/^color2\ \\+#.\\+/color2\ '.g:terminal_ansi_colors[2].'/g' target
-    execute 'buffer' '+%s/^color3\ \\+#.\\+/color3\ '.g:terminal_ansi_colors[3].'/g' target
-    execute 'buffer' '+%s/^color4\ \\+#.\\+/color4\ '.g:terminal_ansi_colors[4].'/g' target
-    execute 'buffer' '+%s/^color5\ \\+#.\\+/color5\ '.g:terminal_ansi_colors[5].'/g' target
-    execute 'buffer' '+%s/^color6\ \\+#.\\+/color6\ '.g:terminal_ansi_colors[6].'/g' target
-    execute 'buffer' '+%s/^color7\ \\+#.\\+/color7\ '.g:terminal_ansi_colors[7].'/g' target
-    execute 'buffer' '+%s/^color8\ \\+#.\\+/color8\ '.g:terminal_ansi_colors[8].'/g' target
-    execute 'buffer' '+%s/^color9\ \\+#.\\+/color9\ '.g:terminal_ansi_colors[9].'/g' target
-    execute 'buffer' '+%s/^color10\ \\+#.\\+/color10\ '.g:terminal_ansi_colors[10].'/g' target
-    execute 'buffer' '+%s/^color11\ \\+#.\\+/color11\ '.g:terminal_ansi_colors[11].'/g' target
-    execute 'buffer' '+%s/^color12\ \\+#.\\+/color12\ '.g:terminal_ansi_colors[12].'/g' target
-    execute 'buffer' '+%s/^color13\ \\+#.\\+/color13\ '.g:terminal_ansi_colors[13].'/g' target
-    execute 'buffer' '+%s/^color14\ \\+#.\\+/color14\ '.g:terminal_ansi_colors[14].'/g' target
-    execute 'buffer' '+%s/^color15\ \\+#.\\+/color15\ '.g:terminal_ansi_colors[15].'/g' target
+    execute 'buffer' '+%s/^color0\ \\+/color0\ '.g:terminal_ansi_colors[0].'/g' target
+    execute 'buffer' '+%s/^color1\ \\+/color1\ '.g:terminal_ansi_colors[1].'/g' target
+    execute 'buffer' '+%s/^color2\ \\+/color2\ '.g:terminal_ansi_colors[2].'/g' target
+    execute 'buffer' '+%s/^color3\ \\+/color3\ '.g:terminal_ansi_colors[3].'/g' target
+    execute 'buffer' '+%s/^color4\ \\+/color4\ '.g:terminal_ansi_colors[4].'/g' target
+    execute 'buffer' '+%s/^color5\ \\+/color5\ '.g:terminal_ansi_colors[5].'/g' target
+    execute 'buffer' '+%s/^color6\ \\+/color6\ '.g:terminal_ansi_colors[6].'/g' target
+    execute 'buffer' '+%s/^color7\ \\+/color7\ '.g:terminal_ansi_colors[7].'/g' target
+    execute 'buffer' '+%s/^color8\ \\+/color8\ '.g:terminal_ansi_colors[8].'/g' target
+    execute 'buffer' '+%s/^color9\ \\+/color9\ '.g:terminal_ansi_colors[9].'/g' target
+    execute 'buffer' '+%s/^color10\ \\+/color10\ '.g:terminal_ansi_colors[10].'/g' target
+    execute 'buffer' '+%s/^color11\ \\+/color11\ '.g:terminal_ansi_colors[11].'/g' target
+    execute 'buffer' '+%s/^color12\ \\+/color12\ '.g:terminal_ansi_colors[12].'/g' target
+    execute 'buffer' '+%s/^color13\ \\+/color13\ '.g:terminal_ansi_colors[13].'/g' target
+    execute 'buffer' '+%s/^color14\ \\+/color14\ '.g:terminal_ansi_colors[14].'/g' target
+    execute 'buffer' '+%s/^color15\ \\+/color15\ '.g:terminal_ansi_colors[15].'/g' target
 endfunction
 
 function! SyncFZFColors() abort
@@ -174,7 +183,7 @@ function! SyncDirColors() abort
         execute 'badd' target
     endif
     execute 'buffer' '+%delete' target
-    :let id = bufname(target)
+    :let id = bufnr(target)
     :let terms = ['Eterm', 'ansi', 'color-xterm', 'con132x25', 'con132x30', 'con132x43', 'con132x60', 'con80x25', 'con80x28', 'con80x30', 'con80x43', 'con80x50', 'con80x60', 'cons25', 'console', 'cygwin', 'dtterm', 'eterm-color', 'gnome', 'gnome-256color', 'hurd', 'jfbterm', 'konsole', 'kterm', 'linux', 'linux-c', 'mach-color', 'mach-gnu-color', 'mlterm', 'putty', 'putty-256color', 'rxvt', 'rxvt-256color', 'rxvt-cygwin', 'rxvt-cygwin-native', 'rxvt-unicode', 'rxvt-unicode-256color', 'rxvt-unicode256', 'screen', 'screen-256color', 'screen-256color-bce', 'screen-bce', 'screen-w', 'screen.Eterm', 'screen.rxvt', 'screen.linux', 'st', 'st-256color', 'terminator', 'vt100', 'xterm', 'xterm-16color', 'xterm-256color', 'xterm-88color', 'xterm-color', 'xterm-debian']
     for term in terms
         call appendbufline(id, '$', ['TERM '.term])
