@@ -1,8 +1,7 @@
 vim9script
 
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
 
@@ -19,20 +18,21 @@ Plug 'tpope/vim-surround'  # surroundings cs
 Plug 'tpope/vim-fugitive'  # git
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+g:fzf_colors = {
+    'fg':      ['fg', 'Normal'],
+    'bg':      ['bg', 'Normal'],
+    'hl':      ['fg', 'Comment'],
+    'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+    'hl+':     ['fg', 'Statement'],
+    'info':    ['fg', 'PreProc'],
+    'border':  ['fg', 'Ignore'],
+    'prompt':  ['fg', 'Conditional'],
+    'pointer': ['fg', 'Exception'],
+    'marker':  ['fg', 'Keyword'],
+    'spinner': ['fg', 'Label'],
+    'header':  ['fg', 'Comment'],
+}
 Plug 'simeji/winresizer' # window resize
 # LSP
 Plug 'prabirshrestha/async.vim'
