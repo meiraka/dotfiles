@@ -18,11 +18,14 @@ function prompt_color {
 }
 
 prompt_arrow="❱ "
-prompt_red=$(prompt_color fg '#e27878')
-prompt_green=$(prompt_color fg '#89b8c2')
-prompt_yellow=$(prompt_color fg '#e2a478')
+#prompt_red=$(prompt_color fg '#e27878')
+#prompt_green=$(prompt_color fg '#89b8c2')
+#prompt_yellow=$(prompt_color fg '#e2a478')
 prompt_gray=$(prompt_color fg '#aaaaaa')
 prompt_reset=$(prompt_color reset)
+prompt_red=$(echo '%{\e[0;31m%}')
+prompt_green=$(echo '%{\e[0;32m%}')
+prompt_yellow=$(echo '%{\e[0;33m%}')
 
 PROMPT2=". "
 RPROMPT='${PROMPT_VCS_INFO} ${PROMPT_KUBE_INFO}'
