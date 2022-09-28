@@ -8,11 +8,11 @@ endif
 
 plug#begin('~/.config/nvim/bundle')
 Plug 'meiraka/le_petit_chaperonrouge.vim'
-# Plug 'nanotech/jellybeans.vim'
-# Plug 'frankier/neovim-colors-solarized-truecolor-only'
-# Plug 'cocopon/iceberg.vim'
-# Plug '4513ECHO/vim-colors-hatsunemiku'
-# Plug 'gruvbox-community/gruvbox'
+Plug 'nanotech/jellybeans.vim'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
+Plug 'cocopon/iceberg.vim'
+Plug '4513ECHO/vim-colors-hatsunemiku'
+Plug 'gruvbox-community/gruvbox'
 Plug 'AlessandroYorba/Alduin'
 Plug 'nathanaelkane/vim-indent-guides'  # indent view
 Plug 'tpope/vim-surround'  # surroundings cs
@@ -98,8 +98,7 @@ if has('nvim')
 endif
 set wildmode=list:longest,full
 # g:jellybeans_overrides = {'background': {'ctermbg': 'none', '256ctermbg': 'none', 'guibg': 'none' }}
-# colorscheme gruvbox
-colorscheme alduin
+colorscheme gruvbox
 # hi! Normal guibg=NONE
 
 set number
