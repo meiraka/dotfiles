@@ -38,7 +38,7 @@ function prompt_vcs_info() {
         local VCS_TEXT="git"
         local VCS_REPO_TEXT=$(git config --get remote.origin.url)
         local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
-        local VCS_DEFAULT_BRANCH=$(git rev-parse --abbrev-ref origin/HEAD | cut -c8-)
+        local VCS_DEFAULT_BRANCH=$(git rev-parse --abbrev-ref origin/HEAD 2> /dev/null | cut -c8-)
     fi
     if [ "${VCS_TEXT}" = "" ]; then
     else
