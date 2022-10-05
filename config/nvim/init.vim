@@ -101,6 +101,8 @@ set wildmode=list:longest,full
 colorscheme gruvbox
 # hi! Normal guibg=NONE
 
+set foldmethod=indent
+set nofoldenable
 set number
 set cursorline
 set hlsearch
