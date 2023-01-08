@@ -77,7 +77,7 @@ def OnVimEnter()
   endif
 enddef
 
-autocmd VimEnter * OnVimEnter()
+# autocmd VimEnter * OnVimEnter()
 
 autocmd QuickFixCmdPost [^l]* cwindow
 autocmd QuickFixCmdPost    l* lwindow
