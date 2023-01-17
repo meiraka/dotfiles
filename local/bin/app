@@ -7,4 +7,9 @@ fi
 ROOT=$(cd $(dirname "$(readlink "$0")"); cd ../..; pwd)
 cd ${ROOT}
 cd local/ports
+if [ "$#" -eq 0 ]  || [ "$1" = "help" ]; then
+    echo "usage:"
+    echo -e "\t$(basename $0) <commands> [arguments]"
+    echo
+fi
 make $@
