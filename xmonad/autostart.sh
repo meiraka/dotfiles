@@ -13,10 +13,10 @@ pamac-tray &
 nitrogen --restore & 
 
 # tray
-killall trayer
-trayer -l --edge top --align left \
-    --expand true --widthtype percent --width 10% \
-    --tint 0x242424 --transparent true --alpha 10 --height 25 &
+# killall trayer
+# trayer -l --edge top --align left \
+#     --expand true --widthtype percent --width 10% \
+#     --tint 0x242424 --transparent true --alpha 10 --height 25 &
 
 killall picom
 picom -b --xrender-sync-fence &
