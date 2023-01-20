@@ -6,6 +6,7 @@
 
 nvidia-settings --load-config-only &
 fcitx5 &
+killall xfce4-notifyd
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 pamac-tray &
 
