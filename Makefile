@@ -39,11 +39,5 @@ endif
 $(DOT_DST_PREFIX)gitconfig:
 	git config --global include.path $(DOT_DST_PREFIX)gitconfig.shared
 
-# link neovim config to vim
-$(DOT_DST_PREFIX)vimrc:
-	ln -nsf $(DOT_DST_PREFIX)config/nvim/init.vim $(DOT_DST_PREFIX)vimrc
-$(DOT_DST_PREFIX)vim:
-	ln -nsf $(DOT_DST_PREFIX)config/nvim $(DOT_DST_PREFIX)vim
-
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

@@ -1,6 +1,8 @@
 config/gtk-3.0/bookmarks
 config/nvim/autoload
 config/nvim/bundle
+vim/autoload
+vim/bundle
 *.o
 *.hi
 .netrwhist
