@@ -53,7 +53,7 @@ myLogHook statusbar =
         ppHidden = \x -> xmobarColor "#aaaaaa" "" " ● ",
         ppHiddenNoWindows = \x -> xmobarColor "#aaaaaa" "" " ● ",
         ppTitle = xmobarColor "#ffffff" "" . shorten 80,
-        ppSep = "  ",
+        ppSep = " ",
         ppLayout = \x -> xmobarColor "#ffffff" "" ""
       }
   where
@@ -103,6 +103,11 @@ scratchpads =
       (resource =? "soundScratchpad")
       middle,
     NS
+      "wallpaper"
+      "nitrogen"
+      (resource =? "nitrogen")
+      middle,
+    NS
       "bluetooth"
       "blueman-manager"
       (className =? "Blueman-manager")
@@ -122,6 +127,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       ((keyModMask, xK_space), namedScratchpadAction scratchpads "terminal"), -- %! Toggle terminal
       ((keyModMask .|. shiftMask, xK_s), namedScratchpadAction scratchpads "sound"), -- %! Toggle sound control
       ((keyModMask .|. shiftMask, xK_b), namedScratchpadAction scratchpads "bluetooth"), -- %! Toggle bluetooth control
+      ((keyModMask .|. shiftMask, xK_w), namedScratchpadAction scratchpads "wallpaper"), -- %! Toggle wallpaper
       ((keyModMask, xK_w), kill), -- %! Close the focused window
       ((keyModMask, xK_f), sendMessage ToggleLayout), -- %! Toggle fullscreen mode
       ((keyModMask, xK_t), sendMessage NextLayout), -- %! Toggle tab view in fullscreen mode
