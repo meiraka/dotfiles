@@ -1,6 +1,6 @@
 Config { font = "xft:Migu 1C:Bold:size=10:antialias=true"
-       , bgColor = "#242424"
-       , fgColor = "#ffffff"
+       , bgColor = "#282828"
+       , fgColor = "#fbf1c7"
        , position = TopSize C 100 30
        , lowerOnStart = True
        , commands = [ Run Date "%a %b %_d %Y %H:%M:%S " "date" 10

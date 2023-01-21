@@ -49,10 +49,10 @@ myLogHook statusbar =
   dynamicLogWithPP $
     xmobarPP
       { ppOutput = hPutStrLn statusbar,
-        ppCurrent = \x -> xmobarColor "#ffffff" "" " ● ",
-        ppHidden = \x -> xmobarColor "#aaaaaa" "" " ● ",
-        ppHiddenNoWindows = \x -> xmobarColor "#aaaaaa" "" " ● ",
-        ppTitle = xmobarColor "#ffffff" "" . shorten 80,
+        ppCurrent = \x -> xmobarColor "#fbf1c7" "" " ● ",
+        ppHidden = \x -> xmobarColor "#a89984" "" " ● ",
+        ppHiddenNoWindows = \x -> xmobarColor "#a89984" "" " ● ",
+        ppTitle = xmobarColor "#fbf1c7" "" . shorten 80,
         ppSep = " ",
         ppLayout = \x -> xmobarColor "#ffffff" "" ""
       }
@@ -61,13 +61,13 @@ myLogHook statusbar =
 
 myNormalBorderColor = "#282828"
 
-myFocusedBorderColor = "#3c3836"
+myFocusedBorderColor = "#fbf1c7"
+
+myBorderWidth = 3
 
 myStartupHook :: X ()
 myStartupHook = do
   spawn "sh ~/.xmonad/autostart.sh"
-
-myBorderWidth = 6
 
 myTerminal = "kitty"
 
