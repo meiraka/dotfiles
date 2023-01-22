@@ -1,8 +1,8 @@
 local ensure_packer = function()
     local fn = vim.fn
-    local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
         vim.cmd [[packadd packer.nvim]]
         return true
     end
@@ -22,10 +22,10 @@ return require('packer').startup(function(use)
     use { 'hrsh7th/cmp-nvim-lsp' }
     use { 'ellisonleao/gruvbox.nvim' }
     use { 'nvim-treesitter/nvim-treesitter',
-           run = function()
-               local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-               ts_update()
-           end,
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
     }
     use { 'akinsho/toggleterm.nvim', tag = '*' }
     require("toggleterm").setup()
@@ -35,7 +35,7 @@ return require('packer').startup(function(use)
             capabilities = require('cmp_nvim_lsp').default_capabilities(),
             settings = {
                 -- suppress neovim's undefined global `vim`
-                Lua = { diagnostics = {globals = {'vim'}} },
+                Lua = { diagnostics = { globals = { 'vim' } } },
             },
         }
         require('lspconfig')[server].setup(opts)
@@ -50,7 +50,7 @@ return require('packer').startup(function(use)
     })
     local cmp = require("cmp");
     cmp.setup({
-        sources = {{ name = "nvim_lsp" }},
+        sources = { { name = "nvim_lsp" } },
         mapping = cmp.mapping.preset.insert({
             ["<C-p>"] = cmp.mapping.select_prev_item(),
             ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -60,7 +60,7 @@ return require('packer').startup(function(use)
         }),
     })
     vim.g.mapleader = " "
-    vim.keymap.set('n', '<leader>h',  vim.lsp.buf.hover)
+    vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
     vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
 
@@ -95,4 +95,3 @@ set expandtab
         require('packer').sync()
     end
 end)
-
