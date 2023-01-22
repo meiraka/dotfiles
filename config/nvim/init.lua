@@ -28,6 +28,14 @@ return require('packer').startup(function(use)
         end,
     }
     use { 'akinsho/toggleterm.nvim', tag = '*' }
+    use({ "folke/noice.nvim",
+        config = function() require("noice").setup({}) end,
+        requires = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        }
+    })
+
     require("toggleterm").setup()
     require('mason').setup()
     require('mason-lspconfig').setup_handlers({ function(server)
@@ -42,7 +50,7 @@ return require('packer').startup(function(use)
     end
     })
     require('nvim-treesitter.configs').setup({
-        ensure_installed = { 'go', 'css', 'yaml' },
+        ensure_installed = { 'go', 'css', 'yaml', 'regex', 'bash', 'markdown', 'markdown_inline' },
         highlight = {
             enable = true,
             disable = { 'lua', 'javascript' },
