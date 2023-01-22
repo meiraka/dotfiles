@@ -4,7 +4,7 @@ compinit
 # alias
 #
 alias x=exit
-alias nv=nvim
+alias vim=nvim
 alias reload="source ~/.zshrc"
 if [ `uname` = Darwin ]; then
   if which gls >/dev/null 2>&1; then
