@@ -39,3 +39,7 @@ version:
 
 versions:
 	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
+
+clean:
+	rm -rf *.tar.gz
+	rm -rf neovim-*
