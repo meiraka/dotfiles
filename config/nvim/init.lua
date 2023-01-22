@@ -71,7 +71,7 @@ return require('packer').startup(function(use)
     vim.cmd([[
 colorscheme gruvbox
 command LspDefinition lua vim.lsp.buf.definition()
-command LspFormatting lua vim.lsp.buf.formatting()
+command LspFormat lua vim.lsp.buf.format { async = true }
 command LspReferences lua vim.lsp.buf.references()
 command LspCodeAction lua vim.lsp.buf.code_action()
 set laststatus=0
