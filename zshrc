@@ -6,6 +6,9 @@ compinit
 alias x=exit
 alias vim=nvim
 alias reload="source ~/.zshrc"
+function dc() {
+    devcontainer $1 --workspace-folder . ${@:2}
+}
 if [ `uname` = Darwin ]; then
   if which gls >/dev/null 2>&1; then
     # GNU ls
