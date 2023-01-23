@@ -84,7 +84,7 @@ myManageHook =
     <+> manageHook def
     <+> (isFullscreen --> doFullFloat)
 
-myLayoutHook = toggleLayouts full (avoidStruts (sparse ||| fillNoGap))
+myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (avoidStruts (sparse ||| fillNoGap))
   where
     full = named "FullScreen" (noBorders Full)
     sparse = named "sparse" (spacing 48 24 emptyBSP)
