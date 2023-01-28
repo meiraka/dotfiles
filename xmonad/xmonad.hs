@@ -26,35 +26,35 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe)
 
 main = do
-  xmproc <- spawnPipe "xmobar"
+  xmproc <- spawnPipe "xmobar --alpha 0"
   xmonad $
     ewmhFullscreen . ewmh $
       docks
         def
-          { manageHook = myManageHook,
-            logHook = myLogHook xmproc,
-            layoutHook = myLayoutHook,
-            workspaces = myWorkspaces,
-            terminal = myTerminal,
-            borderWidth = myBorderWidth,
-            normalBorderColor = myNormalBorderColor,
-            focusedBorderColor = myFocusedBorderColor,
-            focusFollowsMouse = False,
-            startupHook = myStartupHook,
-            keys = myKeys,
-            mouseBindings = myMouseBindings
+          { manageHook = myManageHook
+          , logHook = myLogHook xmproc
+          , layoutHook = myLayoutHook
+          , workspaces = myWorkspaces
+          , terminal = myTerminal
+          , borderWidth = myBorderWidth
+          , normalBorderColor = myNormalBorderColor
+          , focusedBorderColor = myFocusedBorderColor
+          , focusFollowsMouse = False
+          , startupHook = myStartupHook
+          , keys = myKeys
+          , mouseBindings = myMouseBindings
           }
 
 myLogHook statusbar =
   dynamicLogWithPP $
     xmobarPP
-      { ppOutput = hPutStrLn statusbar,
-        ppCurrent = \x -> xmobarColor "#fbf1c7" "" " ● ",
-        ppHidden = \x -> xmobarColor "#a89984" "" " ● ",
-        ppHiddenNoWindows = \x -> xmobarColor "#a89984" "" " ● ",
-        ppTitle = xmobarColor "#fbf1c7" "" . shorten 80,
-        ppSep = " ",
-        ppLayout = \x -> xmobarColor "#ffffff" "" ""
+      { ppOutput = hPutStrLn statusbar
+      , ppCurrent = \x -> xmobarColor "#fbf1c7" "" " ● "
+      , ppHidden = \x -> xmobarColor "#a89984" "" " ● "
+      , ppHiddenNoWindows = \x -> xmobarColor "#a89984" "" " ● "
+      , ppTitle = xmobarColor "#fbf1c7" "" . shorten 100
+      , ppSep = " "
+      , ppLayout = \x -> xmobarColor "#ffffff" "" ""
       }
   where
     noScratchPad ws = if ws == "NSP" then "" else ws
@@ -84,7 +84,7 @@ myManageHook =
     <+> manageHook def
     <+> (isFullscreen --> doFullFloat)
 
-myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (avoidStruts (sparse ||| fillNoGap))
+myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap )
   where
     full = named "FullScreen" (noBorders Full)
     sparse = named "sparse" (spacing 48 24 emptyBSP)

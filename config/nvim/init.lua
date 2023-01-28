@@ -35,6 +35,10 @@ return require('packer').startup(function(use)
                 })
             end
             })
+            require('lspconfig').hls.setup({
+                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+                filetypes = { 'haskell', 'lhaskell', 'cabal' },
+            })
             local cmp = require("cmp");
             cmp.setup({
                 sources = { { name = "nvim_lsp" } },
