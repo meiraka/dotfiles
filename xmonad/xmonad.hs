@@ -26,13 +26,11 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe)
 
 main = do
-  xmproc <- spawnPipe "xmobar --alpha 0"
   xmonad $
     ewmhFullscreen . ewmh $
       docks
         def
           { manageHook = myManageHook
-          , logHook = myLogHook xmproc
           , layoutHook = myLayoutHook
           , workspaces = myWorkspaces
           , terminal = myTerminal
@@ -45,23 +43,9 @@ main = do
           , mouseBindings = myMouseBindings
           }
 
-myLogHook statusbar =
-  dynamicLogWithPP $
-    xmobarPP
-      { ppOutput = hPutStrLn statusbar
-      , ppCurrent = \x -> xmobarColor "#fbf1c7" "" " ● "
-      , ppHidden = \x -> xmobarColor "#a89984" "" " ● "
-      , ppHiddenNoWindows = \x -> xmobarColor "#a89984" "" " ● "
-      , ppTitle = xmobarColor "#fbf1c7" "" . shorten 100
-      , ppSep = " "
-      , ppLayout = \x -> xmobarColor "#ffffff" "" ""
-      }
-  where
-    noScratchPad ws = if ws == "NSP" then "" else ws
-
 myNormalBorderColor = "#282828"
 
-myFocusedBorderColor = "#fbf1c7"
+myFocusedBorderColor = "#e0e0e0"
 
 myBorderWidth = 3
 
@@ -75,9 +59,8 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 myManageHook =
   composeAll
-    [ className =? "Xfce4-notifyd" --> doIgnore,
-      title =? "Cities: Skylines" --> doFloat,
-      title =? "gmrun" --> doCenterFloat
+    [  title =? "gmrun" --> doCenterFloat
+    ,  className =? "Xfce4-notifyd" --> doIgnore
     ]
     <+> manageDocks
     <+> namedScratchpadManageHook scratchpads

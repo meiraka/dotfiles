@@ -4,6 +4,8 @@
 # xrandr --addmode DVI-1 1200x1600R
 # xrandr --output DVI-1 --mode 1200x1600R
 
+killall polybar
+polybar &
 nvidia-settings --load-config-only &
 fcitx5 &
 killall xfce4-notifyd
