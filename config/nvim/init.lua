@@ -69,6 +69,9 @@ return require('packer').startup(function(use)
         end
     }
     use { 'akinsho/toggleterm.nvim', tag = '*', config = function() require("toggleterm").setup() end }
+    use { 'klen/nvim-test', config = function() require('nvim-test').setup {
+        term = 'toggleterm',
+    } end }
     -- use({ "folke/noice.nvim",
     --     requires = {
     --         "MunifTanjim/nui.nvim",
@@ -80,6 +83,7 @@ return require('packer').startup(function(use)
     -- })
 
     vim.g.mapleader = " "
+    vim.keymap.set('n', '<leader>t', '<cmd>TestNearest<cr>')
     vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
     vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
