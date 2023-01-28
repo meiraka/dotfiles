@@ -69,15 +69,15 @@ return require('packer').startup(function(use)
         end
     }
     use { 'akinsho/toggleterm.nvim', tag = '*', config = function() require("toggleterm").setup() end }
-    use({ "folke/noice.nvim",
-        requires = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-        },
-        config = function()
-            require("noice").setup({})
-        end,
-    })
+    -- use({ "folke/noice.nvim",
+    --     requires = {
+    --         "MunifTanjim/nui.nvim",
+    --         "rcarriga/nvim-notify",
+    --     },
+    --     config = function()
+    --         require("noice").setup({})
+    --     end,
+    -- })
 
     vim.g.mapleader = " "
     vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
