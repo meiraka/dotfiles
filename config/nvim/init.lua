@@ -52,6 +52,7 @@ return require('packer').startup(function(use)
             })
         end
     }
+    use { 'tpope/vim-fugitive' }
     use { 'ellisonleao/gruvbox.nvim', config = function() vim.cmd('colorscheme gruvbox') end }
     use { 'nvim-treesitter/nvim-treesitter',
         run = function()
