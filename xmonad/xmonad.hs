@@ -1,23 +1,15 @@
-import qualified Data.List
 import qualified Data.Map as M
 import System.Exit
 import System.IO
 import Text.Printf
 import XMonad
-import XMonad.Actions.CycleWindows
 import XMonad.Actions.GridSelect
 import XMonad.Actions.RotSlaves
-import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
-import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isFullscreen)
-import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.BinarySpacePartition
-import XMonad.Layout.Gaps
-import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
-import XMonad.Layout.OneBig
 import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
 import qualified XMonad.StackSet as W
@@ -58,9 +50,9 @@ myTerminal = "kitty"
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 myManageHook =
-  composeAll
-    [  title =? "gmrun" --> doCenterFloat
-    ,  className =? "Xfce4-notifyd" --> doIgnore
+  composeOne
+    [  title =? "gmrun" -?> doCenterFloat
+    ,  className =? "Xfce4-notifyd" -?> doIgnore
     ]
     <+> manageDocks
     <+> namedScratchpadManageHook scratchpads
@@ -69,15 +61,15 @@ myManageHook =
 
 myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap )
   where
-    full = named "FullScreen" (noBorders Full)
-    sparse = named "sparse" (spacing 48 24 emptyBSP)
-    fillNoGap = named "fillNoGap" emptyBSP
+    full = noBorders Full
+    sparse = spacing 48 24 emptyBSP
+    fillNoGap = emptyBSP
     spacing m n = spacingRaw False (Border m m m m) True (Border n n n n) True
 
 scratchpads =
   [ NS
       "terminal"
-      "kitty --name terminalScratchpad"
+      "kitty --title terminal --name terminalScratchpad"
       (resource =? "terminalScratchpad")
       large,
     NS
@@ -137,6 +129,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       ((keyModMask, xK_comma), sendMessage (IncMasterN 1)), -- %! Increment the number of windows in the master area
       ((keyModMask, xK_period), sendMessage (IncMasterN (-1))), -- %! Deincrement the number of windows in the master area
 
+      ((keyModMask, xK_n), spawn "killall xfce4-notifyd || /usr/lib/xfce4/notifyd/xfce4-notifyd & sleep 0.2 && notify-send Notification on"), -- %! toggle notification
       -- quit, or restart
       ((keyModMask .|. shiftMask, xK_q), io exitSuccess), -- %! Quit xmonad
       ((keyModMask .|. shiftMask, xK_r), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
