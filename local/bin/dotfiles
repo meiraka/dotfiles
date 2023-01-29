@@ -44,6 +44,21 @@ copy() {
 }
 
 HELP=$HELP"
+\tpwd
+\t\tshow dotfiles repository path"
+pwd() {
+    echo ${ROOT}
+}
+
+HELP=$HELP"
+\tcmd COMMAND...
+\t\texec command in dotfiles repository"
+cmd() {
+    $@
+}
+
+
+HELP=$HELP"
 \thelp
 \t\tshow this help"
 help() {
