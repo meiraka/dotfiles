@@ -34,13 +34,14 @@ SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_vcs_info
 function prompt_vcs_info() {
-    if git status > /dev/null 2> /dev/null; then
+    if [ -d ".git" ]; then
         local VCS_TEXT="git"
         local VCS_REPO_TEXT=$(git config --get remote.origin.url)
         local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
         local VCS_DEFAULT_BRANCH=$(git rev-parse --abbrev-ref origin/HEAD 2> /dev/null | cut -c8-)
     fi
     if [ "${VCS_TEXT}" = "" ]; then
+        PROMPT_VCS_INFO=""
     else
         if [ "${VCS_BRANCH_TEXT}" = "${VCS_DEFAULT_BRANCH}" ]; then
             PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_yellow}${VCS_BRANCH_TEXT}${prompt_reset}"
