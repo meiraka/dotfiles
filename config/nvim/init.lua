@@ -52,6 +52,7 @@ return require('packer').startup(function(use)
             })
         end
     }
+    use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use { 'tpope/vim-fugitive' }
     use { 'ellisonleao/gruvbox.nvim', config = function() vim.cmd('colorscheme gruvbox') end }
     use { 'nvim-treesitter/nvim-treesitter',
@@ -69,10 +70,15 @@ return require('packer').startup(function(use)
             })
         end
     }
-    use { 'akinsho/toggleterm.nvim', tag = '*', config = function() require("toggleterm").setup() end }
+    use { 'akinsho/toggleterm.nvim', tag = '*', config = function() require("toggleterm").setup({
+            insert_mappings = true,
+            terminal_mappings = true,
+        })
+    end }
     use { 'klen/nvim-test', config = function() require('nvim-test').setup {
-        term = 'toggleterm',
-    } end }
+            term = 'toggleterm',
+        }
+    end }
     -- use({ "folke/noice.nvim",
     --     requires = {
     --         "MunifTanjim/nui.nvim",
