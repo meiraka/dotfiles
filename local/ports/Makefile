@@ -4,7 +4,7 @@ ifneq ("","$(VERSION)")
 OPT_VERSION="VERSION=$(VERSION)"
 endif
 
-.PHONY: help list install update $(APPS)
+.PHONY: help list install update clean $(APPS)
 help:
 	@echo commands:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = " ## "}; {cmd=sub(":[^#]+#?","",$$1)}; {printf "\033[36m%-40s\033[0m %s\n", $$cmd, $$2}'
@@ -25,7 +25,11 @@ version: # PACKAGE... ## show install app version
 
 versions: # PACKAGE... ## show available versions
 	@:
-	$(eval SUBTARGET... := versions)
+	$(eval SUBTARGET := versions)
+
+clean: # PACKAGE... ## cleanup build files
+	@:
+	$(eval SUBTARGET := clean)
 
 all: $(APPS) ## install all apps
 
