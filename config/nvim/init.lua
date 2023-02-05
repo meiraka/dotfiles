@@ -52,6 +52,22 @@ return require('packer').startup(function(use)
             })
         end
     }
+    use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons' }, config = function()
+        vim.opt.laststatus = 3
+        require('lualine').setup({
+            options = {
+                globalstatus = true,
+                theme = 'gruvbox',
+            },
+            sections = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'filetype' },
+                lualine_x = { 'branch' } ,
+                lualine_y = { 'diff' } ,
+                lualine_z = { 'diagnostics' } ,
+            },
+        })
+    end }
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use { 'tpope/vim-fugitive' }
     use { 'ellisonleao/gruvbox.nvim', config = function() vim.cmd('colorscheme gruvbox') end }
