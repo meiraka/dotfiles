@@ -22,6 +22,8 @@ return require('packer').startup(function(use)
             { 'williamboman/mason-lspconfig.nvim' },
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-vsnip' },
+            { 'hrsh7th/vim-vsnip' },
         },
         config = function()
             require('mason').setup()
@@ -41,7 +43,11 @@ return require('packer').startup(function(use)
             })
             local cmp = require("cmp");
             cmp.setup({
-                sources = { { name = "nvim_lsp" } },
+                snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
+                sources = {
+                    { name = "nvim_lsp" },
+                    { name = 'vsnip' },
+                },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
                     ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -62,9 +68,9 @@ return require('packer').startup(function(use)
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = { 'filetype' },
-                lualine_x = { 'branch' } ,
-                lualine_y = { 'diff' } ,
-                lualine_z = { 'diagnostics' } ,
+                lualine_x = { 'branch' },
+                lualine_y = { 'diff' },
+                lualine_z = { 'diagnostics' },
             },
         })
     end }
