@@ -1,30 +1,34 @@
-.PHONY: install
-all: install
-
-VERSION=v2.7.1
+.PHONY: all install
+USER=yuru7
+REPO=HackGen
+VERSION=v2.8.0
 INSTALL_DIR = $(HOME)/.local
 
-ARCHIVE=HackGen_$(VERSION).zip
-TARGET=HackGen_$(VERSION)/HackGen-Regular.ttf
-TARGET_COPY=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
+ARCHIVES=HackGen_NF_$(VERSION).zip HackGen_$(VERSION).zip
+SRC=HackGen_$(VERSION)/HackGen-Regular.ttf HackGen_NF_$(VERSION)/HackGenConsoleNF-Regular.ttf
+TARGET=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
 
-_:=$(shell if [ -f "$(TARGET)" ] && ! cmp -s "$(TARGET)" "$(TARGET_COPY)"; then touch "$(TARGET)"; fi)
-
-GITHUB=https://github.com/yuru7/HackGen
-
-$(TARGET):
-	curl -L https://github.com/yuru7/HackGen/releases/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
-	unzip $(ARCHIVE)
-	touch $(dir $(TARGET))/*
-
-$(TARGET_COPY): $(TARGET)
-	mkdir -p $(dir $(TARGET_COPY))
-	cp -p -f $(dir $(TARGET))/*.ttf $(dir $(TARGET_COPY))
+all: install
+install: $(TARGET)
+$(TARGET): $(SRC)
+	cp HackGen_NF_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
+	cp HackGen_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
 	-fc-cache -vf
 
-install: $(TARGET_COPY)
+.PHONY: extract
+extract: $(SRC)
+$(SRC): $(ARCHIVES)
+	unzip -o ${@D}.zip
+	touch ${@D}/*
 
-GITHUB_RELEASES=https://api.github.com/repos/yuru7/HackGen/releases
+###
+
+.PHONY: fetch
+fetch: $(ARCHIVES)
+$(ARCHIVES):
+	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$@ -o $@
+
+GITHUB_RELEASES=https://api.github.com/repos/$(USER)/$(REPO)/releases
 
 .PHONY: update version versions
 update:
