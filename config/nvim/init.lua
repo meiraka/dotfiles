@@ -58,7 +58,8 @@ return require('packer').startup(function(use)
             })
         end
     }
-    use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons' }, config = function()
+    use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons' }, config = function()
+        require('nvim-web-devicons').setup({})
         vim.opt.laststatus = 3
         require('lualine').setup({
             options = {
