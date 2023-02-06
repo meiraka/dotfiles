@@ -93,15 +93,30 @@ return require('packer').startup(function(use)
             })
         end
     }
-    use { 'akinsho/toggleterm.nvim', tag = '*', config = function() require("toggleterm").setup({
+    use { 'akinsho/toggleterm.nvim', tag = '*', config = function()
+        require("toggleterm").setup({
             insert_mappings = true,
             terminal_mappings = true,
         })
     end }
-    use { 'klen/nvim-test', config = function() require('nvim-test').setup {
+    use { 'klen/nvim-test', config = function()
+        require('nvim-test').setup({
             term = 'toggleterm',
-        }
+        })
     end }
+    use { 'nvim-telescope/telescope.nvim',
+        requires = {
+            'nvim-telescope/telescope-file-browser.nvim',
+            'nvim-lua/plenary.nvim',
+        },
+        config = function()
+            require('telescope').setup({
+                hijack_netrw = true,
+            })
+            require('telescope').load_extension 'file_browser'
+        end
+    }
+
     -- use({ "folke/noice.nvim",
     --     requires = {
     --         "MunifTanjim/nui.nvim",
@@ -117,10 +132,10 @@ return require('packer').startup(function(use)
     vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
     vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
+    vim.keymap.set('n', '<leader>f', '<cmd>Telescope file_browser<cr>')
 
     vim.keymap.set('n', '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
     vim.keymap.set('n', 'ff', '<cmd>Files<cr>')
-    vim.keymap.set('n', 'fb', '<cmd>Buffers<cr>')
     vim.opt.mouse = nil
     vim.cmd([[
 command LspDefinition lua vim.lsp.buf.definition()
