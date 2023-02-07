@@ -81,7 +81,7 @@ return require('packer').startup(function(use)
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use { 'tpope/vim-fugitive' }
     use { 'ellisonleao/gruvbox.nvim', config = function() vim.cmd('colorscheme gruvbox') end }
-    use { 'nvim-treesitter/nvim-treesitter',
+    use { 'nvim-treesitter/nvim-treesitter', tag = '*',
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
@@ -113,6 +113,11 @@ return require('packer').startup(function(use)
             'nvim-lua/plenary.nvim',
         },
         config = function()
+            if vim.fn.executable('rg') == 0 then
+                if vim.fn.executable('cargo') == 1 then
+                    vim.fn.jobstart('cargo install ripgrep')
+                end
+            end
             require('telescope').setup({
                 hijack_netrw = true,
             })
@@ -136,6 +141,7 @@ return require('packer').startup(function(use)
     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
     vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
     vim.keymap.set('n', '<leader>f', '<cmd>Telescope file_browser<cr>')
+    vim.keymap.set('n', '<leader>g', '<cmd>Telescope live_grep<cr>')
 
     vim.keymap.set('n', '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
     vim.keymap.set('n', 'ff', '<cmd>Files<cr>')
