@@ -61,6 +61,9 @@ return require('packer').startup(function(use)
     use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons' }, config = function()
         require('nvim-web-devicons').setup({})
         vim.opt.laststatus = 3
+        local repo = function()
+            return string.sub(vim.fn.system('git config --get remote.origin.url'), 1, -2)
+        end
         require('lualine').setup({
             options = {
                 globalstatus = true,
@@ -69,8 +72,8 @@ return require('packer').startup(function(use)
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = { 'filetype' },
-                lualine_x = { 'branch' },
-                lualine_y = { 'diff' },
+                lualine_x = { repo },
+                lualine_y = { 'branch', 'diff' },
                 lualine_z = { 'diagnostics' },
             },
         })
