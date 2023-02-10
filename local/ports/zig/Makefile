@@ -1,7 +1,7 @@
 .PHONY: clean install
 all: install
 
-VERSION=0.9.1
+VERSION=0.10.1
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 

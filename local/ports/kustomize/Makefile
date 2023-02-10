@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-TAG=kustomize/v4.5.7
+TAG=kustomize/v5.0.0
 VERSION=$(TAG:kustomize/%=%)
 INSTALL_DIR=$(HOME)/.local
 
