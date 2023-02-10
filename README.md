@@ -4,7 +4,7 @@
 * Shell: Zsh
 * Terminal: Kitty
 * Window Manager: Xmonad
-* Panel: Xmobar trayer
+* Panel: Polybar
 * Compositor: Picom
 
 ## Install
