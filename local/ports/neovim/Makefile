@@ -12,6 +12,7 @@ WORKDIR=$(REPO)-$(patsubst v%,%,$(VERSION))
 TARGET=$(WORKDIR)/build/bin/nvim
 TARGET_COPY=$(INSTALL_PREFIX)/bin/nvim
 GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
+_:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
 $(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/archive/refs/tags/$(ARCHIVE) -o $(ARCHIVE)
@@ -23,7 +24,7 @@ $(TARGET): $(WORKDIR)
 	cd $(WORKDIR); make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$(INSTALL_PREFIX)"
 
 $(TARGET_COPY): $(TARGET)
-	cd $(WORKDIR); make install
+	cp $(TARGET) $(TARGET_COPY)
 
 install: $(TARGET_COPY)
 
