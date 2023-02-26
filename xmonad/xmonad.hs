@@ -1,9 +1,7 @@
 import qualified Data.Map as M
 import System.Exit
 import System.IO
-import Text.Printf
 import XMonad
-import XMonad.Actions.GridSelect
 import XMonad.Actions.RotSlaves
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks
@@ -13,26 +11,24 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
 import qualified XMonad.StackSet as W
-import XMonad.Util.EZConfig
 import XMonad.Util.NamedScratchpad
-import XMonad.Util.Run (spawnPipe)
 
 main = do
   xmonad $
     ewmhFullscreen . ewmh $
       docks
         def
-          { manageHook = myManageHook
-          , layoutHook = myLayoutHook
-          , workspaces = myWorkspaces
-          , terminal = myTerminal
-          , borderWidth = myBorderWidth
-          , normalBorderColor = myNormalBorderColor
-          , focusedBorderColor = myFocusedBorderColor
-          , focusFollowsMouse = False
-          , startupHook = myStartupHook
-          , keys = myKeys
-          , mouseBindings = myMouseBindings
+          { manageHook = myManageHook,
+            layoutHook = myLayoutHook,
+            workspaces = myWorkspaces,
+            terminal = myTerminal,
+            borderWidth = myBorderWidth,
+            normalBorderColor = myNormalBorderColor,
+            focusedBorderColor = myFocusedBorderColor,
+            focusFollowsMouse = False,
+            startupHook = myStartupHook,
+            keys = myKeys,
+            mouseBindings = myMouseBindings
           }
 
 myNormalBorderColor = "#282828"
@@ -45,21 +41,22 @@ myStartupHook :: X ()
 myStartupHook = do
   spawn "sh ~/.xmonad/autostart.sh"
 
-myTerminal = "kitty"
+myTerminal = "wezterm"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 myManageHook =
   composeOne
-    [  title =? "gmrun" -?> doCenterFloat
-    ,  className =? "Xfce4-notifyd" -?> doIgnore
+    [ title =? "gmrun" -?> doCenterFloat,
+      className =? "Xfce4-notifyd" -?> doIgnore,
+      isDialog -?> customFloating $ W.RationalRect (4 / 20) (4 / 20) (12 / 20) (12 / 20)
     ]
     <+> manageDocks
     <+> namedScratchpadManageHook scratchpads
     <+> manageHook def
     <+> (isFullscreen --> doFullFloat)
 
-myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap )
+myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap)
   where
     full = noBorders Full
     sparse = spacing 48 24 emptyBSP
@@ -69,8 +66,8 @@ myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoi
 scratchpads =
   [ NS
       "terminal"
-      "kitty --title terminal --name terminalScratchpad"
-      (resource =? "terminalScratchpad")
+      "wezterm start --class terminalScratchpad"
+      (className =? "terminalScratchpad")
       large,
     NS
       "sound"
@@ -107,7 +104,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       ((keyModMask, xK_f), sendMessage ToggleLayout), -- %! Toggle fullscreen mode
       ((keyModMask, xK_t), sendMessage NextLayout), -- %! Toggle tab view in fullscreen mode
       ((keyModMask, xK_n), refresh), -- %! Resize viewed windows to the correct size
-      ((keyModMask, xK_g), goToSelected def),
       -- move focus up or down the window stack
       ((keyModMask, xK_Tab), windows W.focusDown), -- %! Move focus to the next window
       ((keyModMask .|. shiftMask, xK_Tab), windows W.focusUp), -- %! Move focus to the previous window
@@ -128,7 +124,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       -- increase or decrease number of windows in the master area
       ((keyModMask, xK_comma), sendMessage (IncMasterN 1)), -- %! Increment the number of windows in the master area
       ((keyModMask, xK_period), sendMessage (IncMasterN (-1))), -- %! Deincrement the number of windows in the master area
-
       ((keyModMask, xK_n), spawn "killall xfce4-notifyd || /usr/lib/xfce4/notifyd/xfce4-notifyd & sleep 0.2 && notify-send Notification on"), -- %! toggle notification
       -- quit, or restart
       ((keyModMask .|. shiftMask, xK_q), io exitSuccess), -- %! Quit xmonad
