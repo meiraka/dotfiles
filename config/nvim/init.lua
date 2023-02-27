@@ -80,7 +80,13 @@ return require('packer').startup(function(use)
     end }
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use { 'tpope/vim-fugitive' }
-    use { 'ellisonleao/gruvbox.nvim', config = function() vim.cmd('colorscheme gruvbox') end }
+    use { 'ellisonleao/gruvbox.nvim', config = function()
+        require("gruvbox").setup({
+            italic = false,
+            transparent_mode = true,
+        })
+        vim.cmd('colorscheme gruvbox')
+    end }
     use { 'nvim-treesitter/nvim-treesitter', tag = '*',
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
@@ -125,15 +131,15 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- use({ "folke/noice.nvim",
-    --     requires = {
-    --         "MunifTanjim/nui.nvim",
-    --         "rcarriga/nvim-notify",
-    --     },
-    --     config = function()
-    --         require("noice").setup({})
-    --     end,
-    -- })
+    use({ "folke/noice.nvim",
+        requires = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("noice").setup({})
+        end,
+    })
 
     vim.g.mapleader = " "
     vim.keymap.set('n', '<leader>t', '<cmd>TestNearest<cr>')
