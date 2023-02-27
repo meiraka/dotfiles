@@ -9,8 +9,9 @@ VERSION=v0.8.3
 
 ARCHIVE=$(VERSION).tar.gz
 WORKDIR=$(REPO)-$(patsubst v%,%,$(VERSION))
-TARGET=$(WORKDIR)/build/bin/nvim
-TARGET_COPY=$(INSTALL_PREFIX)/bin/nvim
+BIN=$(WORKDIR)/build/bin/nvim
+TARGET=$(INSTALL_PREFIX)/bin/nvim-$(VERSION)
+TARGET_LINK=$(INSTALL_PREFIX)/bin/nvim
 GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
 _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
@@ -20,13 +21,17 @@ $(ARCHIVE):
 $(WORKDIR):| $(ARCHIVE)
 	tar -xf $(ARCHIVE)
 
-$(TARGET): $(WORKDIR)
+$(BIN): $(WORKDIR)
 	cd $(WORKDIR); make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$(INSTALL_PREFIX)"
 
-$(TARGET_COPY): $(TARGET)
-	cp $(TARGET) $(TARGET_COPY)
+$(TARGET): $(BIN)
+	cp $(BIN) $(TARGET)
 
-install: $(TARGET_COPY)
+$(TARGET_LINK): $(TARGET)
+	@-rm $(TARGET_LINK)
+	ln -si $(TARGET) $(TARGET_LINK)
+
+install: $(TARGET_LINK)
 
 .PHONY: update version versions
 update:
