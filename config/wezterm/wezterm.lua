@@ -14,6 +14,9 @@ local myKeys = {
     { key = "-", mods = "SUPER", action = act.DecreaseFontSize },
     { key = "+", mods = "SUPER", action = act.IncreaseFontSize },
     { key = "0", mods = "SUPER", action = act.ResetFontSize },
+    { key = "h", mods = "LEADER", action = act.SplitHorizontal({}) },
+    { key = "v", mods = "LEADER", action = act.SplitVertical({}) },
+    { key = "Space", mods = "LEADER", action = act.PaneSelect({}) },
 }
 for i = 1, myWorkspaces do
     table.insert(myKeys, {
