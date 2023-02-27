@@ -1,8 +1,8 @@
 # Dotfiles
 
-* Editor: Vim (vim9)
+* Editor: Neovim
 * Shell: Zsh
-* Terminal: Kitty
+* Terminal: WezTerm
 * Window Manager: Xmonad
 * Panel: Polybar
 * Compositor: Picom
