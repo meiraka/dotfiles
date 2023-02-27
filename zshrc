@@ -9,19 +9,23 @@ alias reload="source ~/.zshrc"
 function dc() {
     devcontainer $1 --workspace-folder . ${@:2}
 }
-if [ `uname` = Darwin ]; then
-  if which gls >/dev/null 2>&1; then
-    # GNU ls
-    alias ls="gls --color=auto"
-    eval $(gdircolors -b ~/.dir_colors 2> /dev/null)
-  else
-    #BSD ls
-    alias ls="ls -G"
-  fi
+if which lsd > /dev/null 2> /dev/null; then
+  alias ls=lsd
 else
-  #GNU ls
-  alias ls="ls --color=auto"
-  eval $(dircolors -b ~/.dir_colors 2> /dev/null)
+  if [ `uname` = Darwin ]; then
+    if which gls >/dev/null 2>&1; then
+      # GNU ls
+      alias ls="gls --color=auto"
+      eval $(gdircolors -b ~/.dir_colors 2> /dev/null)
+    else
+      #BSD ls
+      alias ls="ls -G"
+    fi
+  else
+    #GNU ls
+    alias ls="ls --color=auto"
+    eval $(dircolors -b ~/.dir_colors 2> /dev/null)
+  fi
 fi
 
 alias v=vim
