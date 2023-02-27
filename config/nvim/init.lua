@@ -60,13 +60,15 @@ return require('packer').startup(function(use)
     }
     use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons' }, config = function()
         require('nvim-web-devicons').setup({})
-        vim.opt.laststatus = 3
+        -- laststatus = 3 errors with noice
+        -- vim.opt.laststatus = 3
+        vim.opt.laststatus = 2
         local repo = function()
             return string.sub(vim.fn.system('git config --get remote.origin.url'), 1, -2)
         end
         require('lualine').setup({
             options = {
-                globalstatus = true,
+                -- globalstatus = true,
                 theme = 'gruvbox',
             },
             sections = {
@@ -141,6 +143,7 @@ return require('packer').startup(function(use)
         end,
     })
 
+
     vim.g.mapleader = " "
     vim.keymap.set('n', '<leader>t', '<cmd>TestNearest<cr>')
     vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
@@ -157,7 +160,6 @@ command LspDefinition lua vim.lsp.buf.definition()
 command LspFormat lua vim.lsp.buf.format { async = true }
 command LspReferences lua vim.lsp.buf.references()
 command LspCodeAction lua vim.lsp.buf.code_action()
-set laststatus=0
 set wildmode=list:longest,full
 set termguicolors
 set foldmethod=indent
