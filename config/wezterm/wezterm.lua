@@ -39,24 +39,25 @@ local pseudoAlpha = function(fg, bg, a)
 end
 
 local colors = wezterm.color.get_builtin_schemes()["Gruvbox dark, medium (base16)"]
--- local inactive = pseudoAlpha(colors.foreground, colors.background, 0.3)
-local notexists = pseudoAlpha(colors.foreground, colors.background, 0.2)
+local inactive = pseudoAlpha(colors.foreground, colors.background, 0.3)
 colors.tab_bar = { background = alpha(colors.background, 0.95) }
 wezterm.on('update-status', function(window, _)
-    -- local wsExists = {}
-    -- for _, l in ipairs(mux.get_workspace_names()) do wsExists[l] = true end
+    local wsExists = {}
+    for _, l in ipairs(mux.get_workspace_names()) do wsExists[l] = true end
     local fmt = {}
     table.insert(fmt, { Background = { Color = alpha(colors.background, 0.95) } })
     for i = 1, numWS do
         local ws = tostring(i)
         if ws == window:active_workspace() then
             table.insert(fmt, { Foreground = { Color = colors.foreground } })
-            -- elseif wsExists[ws] then
-            --     table.insert(fmt, { Foreground = { Color = inactive } })
+            table.insert(fmt, { Text = " ●" })
+        elseif wsExists[ws] then
+            table.insert(fmt, { Foreground = { Color = inactive } })
+            table.insert(fmt, { Text = " ●" })
         else
-            table.insert(fmt, { Foreground = { Color = notexists } })
+            table.insert(fmt, { Foreground = { Color = inactive } })
+            table.insert(fmt, { Text = " ○" })
         end
-        table.insert(fmt, { Text = " ●" })
     end
     table.insert(fmt, { Text = " " })
 
