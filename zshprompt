@@ -28,7 +28,7 @@ prompt_green=$(echo '%{\e[0;32m%}')
 prompt_yellow=$(echo '%{\e[0;33m%}')
 
 PROMPT2=". "
-RPROMPT='${PROMPT_VCS_INFO} ${PROMPT_KUBE_INFO}'
+RPROMPT='${PROMPT_VCS_INFO}'
 SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
 
 autoload -Uz add-zsh-hook
@@ -48,18 +48,6 @@ function prompt_vcs_info() {
         else
             PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
         fi
-    fi
-}
-
-add-zsh-hook precmd prompt_kube_info
-function prompt_kube_info() {
-    local context ns
-    if context=$(kubectl config current-context 2>/dev/null); then
-        ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
-        [[ -z "$ns" ]] && ns="(default)"
-        PROMPT_KUBE_INFO="${prompt_green}${context}:${ns}${prompt_reset}"
-    else
-        PROMPT_KUBE_INFO=""
     fi
 }
 
