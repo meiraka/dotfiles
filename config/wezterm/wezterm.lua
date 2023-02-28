@@ -40,8 +40,9 @@ end
 
 wezterm.on("gui-startup", function()
     -- setup and activate first workspace
-    mux.spawn_window({ workspace = "1" })
+    local _, _, window = mux.spawn_window({ workspace = "1" })
     mux.set_active_workspace("1")
+    window:gui_window():maximize()
 end)
 
 wezterm.on('update-status', function(window, _)
