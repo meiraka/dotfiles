@@ -5,9 +5,9 @@ local color = require("color")
 local powerline = require("powerline")
 
 local myFont = wezterm.font_with_fallback({
-        "HackGen Console NFJ",
-        "Symbols Nerd Font Mono",
-    })
+    "HackGen Console NFJ",
+    "Symbols Nerd Font Mono",
+})
 local myColors = wezterm.color.get_builtin_schemes()["Gruvbox dark, medium (base16)"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
@@ -18,6 +18,7 @@ local myWorkspaces = 8
 
 local myLeader = { key = 'f', mods = 'CTRL', timeout_milliseconds = 1000 }
 local myKeys = {
+    { key = "L", mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
     { key = "w", mods = "SUPER", action = act.CloseCurrentTab({ confirm = true }) },
     { key = "c", mods = "SUPER", action = act.CopyTo("ClipboardAndPrimarySelection") },
     { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
@@ -73,32 +74,37 @@ wezterm.on('update-status', function(window, _)
 
     local right = {}
 
-    -- kube context
-    local success, k8s_context, _ = wezterm.run_child_process({ 'zsh', '-c',
-        'kubectl config current-context' })
-    if success then
-        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
-        table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
-        table.insert(right, { Text = '󱃾' .. ' '})
-        table.insert(right, { Foreground = { Color = myColors.foreground } })
-        table.insert(right, { Text = k8s_context .. ' ' })
-        local _, namespace, _ = wezterm.run_child_process({ 'zsh', '-c',
-            'kubectl config view -o jsonpath={.contexts[?(@.name==' .. k8s_context .. ')].context.namespace}' })
+    do
+        -- kube context
+        local found, _, _ = wezterm.run_child_process({ 'which', 'kubectl' })
+        if not found then
+            return
+        end
+        local success, k8s_context, _ = wezterm.run_child_process({ 'kubectl', 'config', 'current-context' })
         if success then
-            if namespace == "" then namespace = "default" end
-            powerline.right_hard(right, myColors.background)
+            powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
+            table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
+            table.insert(right, { Text = '󱃾' .. ' ' })
             table.insert(right, { Foreground = { Color = myColors.foreground } })
-            table.insert(right, { Text = namespace .. ' ' })
+            table.insert(right, { Text = k8s_context .. ' ' })
+            local _, namespace, _ = wezterm.run_child_process({ 'kubectl', 'config', 'view', '-o',
+                'jsonpath={.contexts[?(@.name==' .. k8s_context .. ')].context.namespace}' })
+            if success then
+                if namespace == "" then namespace = "default" end
+                powerline.right_hard(right, myColors.background)
+                table.insert(right, { Foreground = { Color = myColors.foreground } })
+                table.insert(right, { Text = namespace .. ' ' })
+            end
         end
     end
-    window:set_right_status(wezterm.format(right))
-end)
 
+    window:set_right_status(wezterm.format(right))
+    print(wezterm.run_child_process({ "echo", "$PATH" }))
+end)
 
 return {
     audible_bell = "Disabled",
     enable_tab_bar = true,
-    -- color_scheme = "Gruvbox dark, medium (base16)",
     colors = myColors,
     font = myFont,
     font_size = 12.0,
