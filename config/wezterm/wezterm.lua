@@ -14,6 +14,7 @@ local myWorkspaces = 8
 
 local myLeader = { key = 'f', mods = 'CTRL', timeout_milliseconds = 1000 }
 local myKeys = {
+    { key = "w", mods = "SUPER", action = act.CloseCurrentTab({ confirm = true }) },
     { key = "c", mods = "SUPER", action = act.CopyTo("ClipboardAndPrimarySelection") },
     { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
     { key = "-", mods = "SUPER", action = act.DecreaseFontSize },
