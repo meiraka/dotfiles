@@ -98,6 +98,7 @@ return {
         }),
         font_size = 12.0,
         active_titlebar_bg = myColors.background,
+        inactive_titlebar_bg = myColors.background,
     },
     window_padding = { left = '0.5cell', right = 0, top = '0.25cell', bottom = 0 },
     inactive_pane_hsb = {
