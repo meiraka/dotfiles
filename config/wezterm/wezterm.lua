@@ -4,6 +4,10 @@ local mux = wezterm.mux
 local color = require("color")
 local powerline = require("powerline")
 
+local myFont = wezterm.font_with_fallback({
+        "HackGen Console NFJ",
+        "Symbols Nerd Font Mono",
+    })
 local myColors = wezterm.color.get_builtin_schemes()["Gruvbox dark, medium (base16)"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
@@ -77,7 +81,7 @@ wezterm.on('update-status', function(window, _)
         table.insert(right, { Text = '󱃾' .. ' '})
         table.insert(right, { Foreground = { Color = myColors.foreground } })
         table.insert(right, { Text = k8s_context .. ' ' })
-        local success, namespace, _ = wezterm.run_child_process({ 'zsh', '-c',
+        local _, namespace, _ = wezterm.run_child_process({ 'zsh', '-c',
             'kubectl config view -o jsonpath={.contexts[?(@.name==' .. k8s_context .. ')].context.namespace}' })
         if success then
             if namespace == "" then namespace = "default" end
@@ -95,10 +99,7 @@ return {
     enable_tab_bar = true,
     -- color_scheme = "Gruvbox dark, medium (base16)",
     colors = myColors,
-    font = wezterm.font_with_fallback({
-        "HackGen Console NF",
-        "Symbols Nerd Font Mono",
-    }),
+    font = myFont,
     font_size = 12.0,
     disable_default_key_bindings = true,
     leader = myLeader,
@@ -110,10 +111,7 @@ return {
     window_background_opacity = 1,
     window_decorations = "RESIZE",
     window_frame = {
-        font = wezterm.font_with_fallback({
-            "HackGen Console NFJ",
-            "Symbols Nerd Font Mono",
-        }),
+        font = myFont,
         font_size = 12.0,
         active_titlebar_bg = myColors.background,
         inactive_titlebar_bg = myColors.background,
