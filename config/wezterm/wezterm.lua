@@ -85,6 +85,9 @@ wezterm.on('update-status', function(window, _)
             table.insert(right, { Text = ' ' .. namespace })
         end
     end
+    if next(right) ~= nil then
+        table.insert(right, { Text = ' ' })
+    end
     window:set_right_status(wezterm.format(right))
 end)
 
