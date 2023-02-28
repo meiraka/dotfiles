@@ -90,7 +90,7 @@ return {
     text_background_opacity = 1,
     use_fancy_tab_bar = true,
     window_background_opacity = 1,
-    window_decorations = "NONE",
+    window_decorations = "RESIZE",
     window_frame = {
         font = wezterm.font_with_fallback({
             "HackGen Console NFJ",
