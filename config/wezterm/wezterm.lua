@@ -2,6 +2,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local mux = wezterm.mux
 local color = require("color")
+local powerline = require("powerline")
 
 local myColors = wezterm.color.get_builtin_schemes()["Gruvbox dark, medium (base16)"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
@@ -61,16 +62,29 @@ wezterm.on('update-status', function(window, _)
         end
     end
     table.insert(fmt, { Text = " " })
-
     window:set_left_status(wezterm.format(fmt))
-    if wezterm.target_triple ~= "x86_64-unknown-linux-gnu" then
-        window:set_right_status(wezterm.format({
-            { Foreground = { Color = myColors.foreground } },
-            { Text = wezterm.strftime("%a %b %d %Y %H:%M:%S") },
-        }))
-    else
-        window:set_right_status("")
+
+
+    local right = {}
+
+    -- kube context
+    local success, k8s_context, _ = wezterm.run_child_process({ 'kubectl', 'config', 'current-context' })
+    if success then
+        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
+        table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
+        table.insert(right, { Text = ' ' .. '󱃾' })
+        table.insert(right, { Foreground = { Color = myColors.foreground } })
+        table.insert(right, { Text = ' ' .. k8s_context })
+        local success, namespace, _ = wezterm.run_child_process({ 'kubectl', 'config', 'view', '-o',
+            'jsonpath={.contexts[?(@.name==' .. k8s_context .. ')].context.namespace}' })
+        if success then
+            if namespace == "" then namespace = "default" end
+            powerline.right_hard(right, myColors.background)
+            table.insert(right, { Foreground = { Color = myColors.foreground } })
+            table.insert(right, { Text = ' ' .. namespace })
+        end
     end
+    window:set_right_status(wezterm.format(right))
 end)
 
 
@@ -81,6 +95,7 @@ return {
     colors = myColors,
     font = wezterm.font_with_fallback({
         "HackGen Console NFJ",
+        "Inconsolata",
     }),
     font_size = 12.0,
     disable_default_key_bindings = true,
@@ -89,7 +104,7 @@ return {
     show_new_tab_button_in_tab_bar = false,
     show_tabs_in_tab_bar = false,
     text_background_opacity = 1,
-    use_fancy_tab_bar = true,
+    use_fancy_tab_bar = false,
     window_background_opacity = 1,
     window_decorations = "RESIZE",
     window_frame = {
