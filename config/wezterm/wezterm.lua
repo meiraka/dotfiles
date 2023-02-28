@@ -65,6 +65,7 @@ wezterm.on('update-status', function(window, _)
     window:set_left_status(wezterm.format(fmt))
     if wezterm.target_triple ~= "x86_64-unknown-linux-gnu" then
         window:set_right_status(wezterm.format({
+            { Foreground = { Color = myColors.foreground } },
             { Text = wezterm.strftime("%a %b %d %Y %H:%M:%S") },
         }))
     else
