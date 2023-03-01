@@ -10,8 +10,7 @@ TARGET=$(INSTALL_DIR)/share/fonts/Symbols-1000-em\ Nerd\ Font\ Complete\ Mono.tt
 all: install
 install: $(TARGET)
 $(TARGET): $(ARCHIVES)
-	rm *.ttf
-	unzip $(ARCHIVES) *.ttf
+	unzip -o $(ARCHIVES) *.ttf
 	cp *.ttf $(INSTALL_DIR)/share/fonts/
 	-fc-cache -vf
 
