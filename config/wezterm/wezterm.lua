@@ -46,7 +46,7 @@ wezterm.on("gui-startup", function()
     window:gui_window():maximize()
 end)
 
-wezterm.on('update-status', function(window, _)
+wezterm.on('update-status', function(window, pane)
     -- workspace indicator
     local wsExists = {}
     for _, l in ipairs(mux.get_workspace_names()) do wsExists[l] = true end
@@ -71,35 +71,54 @@ wezterm.on('update-status', function(window, _)
     table.insert(fmt, { Text = " " })
     window:set_left_status(wezterm.format(fmt))
 
-
     local right = {}
 
-    do
-        -- kube context
-        local found, _, _ = wezterm.run_child_process({ 'which', 'kubectl' })
-        if not found then
-            return
+    -- vcs info from zshprompt
+    local vcs = pane:get_user_vars().VCS
+    if vcs ~= nil and vcs ~= "" then
+        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
+        local repo = pane:get_user_vars().VCS_REPO
+
+        if string.find(repo, "github.com") then
+            table.insert(right, { Foreground = { Color = "#FFFFF" } })
+            table.insert(right, { Text = wezterm.nerdfonts.dev_github_badge .. ' ' })
+        else
+            table.insert(right, { Foreground = { Color = "#F1502F" } })
+            table.insert(right, { Text = wezterm.nerdfonts.dev_git .. ' ' })
         end
-        local success, k8s_context, _ = wezterm.run_child_process({ 'kubectl', 'config', 'current-context' })
-        if success then
-            powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
-            table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
-            table.insert(right, { Text = '󱃾' .. ' ' })
-            table.insert(right, { Foreground = { Color = myColors.foreground } })
-            table.insert(right, { Text = k8s_context .. ' ' })
-            local _, namespace, _ = wezterm.run_child_process({ 'kubectl', 'config', 'view', '-o',
-                'jsonpath={.contexts[?(@.name==' .. k8s_context .. ')].context.namespace}' })
-            if success then
-                if namespace == "" then namespace = "default" end
-                powerline.right_hard(right, myColors.background)
-                table.insert(right, { Foreground = { Color = myColors.foreground } })
-                table.insert(right, { Text = namespace .. ' ' })
-            end
+        table.insert(right, { Foreground = { Color = myColors.foreground } })
+        table.insert(right, { Text = repo .. ' ' })
+        powerline.right_soft(right, myColors.background)
+
+        local branch = pane:get_user_vars().VCS_BRANCH
+        local default_branch = pane:get_user_vars().VCS_DEFAULT_BRANCH
+        if branch == default_branch then -- main branch
+            table.insert(right, { Foreground = { Color = myColors.ansi[4] } })
+            table.insert(right, { Text = wezterm.nerdfonts.dev_git_merge .. ' ' })
+        else
+            table.insert(right, { Foreground = { Color = myColors.ansi[7] } })
+            table.insert(right, { Text = wezterm.nerdfonts.dev_git_branch .. ' ' })
         end
+        table.insert(right, { Foreground = { Color = myColors.foreground } })
+        table.insert(right, { Text = branch .. ' ' })
     end
 
+    -- kube context from zshprompt
+    local context = pane:get_user_vars().K8S_CONTEXT
+    if context ~= nil and context ~= "" then
+        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.7))
+        table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
+        table.insert(right, { Text = '󱃾' .. ' ' })
+        table.insert(right, { Foreground = { Color = myColors.foreground } })
+        table.insert(right, { Text = context .. ' ' })
+        local namespace = pane:get_user_vars().K8S_NAMESPACE
+        if namespace ~= nil and namespace ~= "" then
+            powerline.right_soft(right, myColors.background)
+            table.insert(right, { Foreground = { Color = myColors.foreground } })
+            table.insert(right, { Text = namespace .. ' ' })
+        end
+    end
     window:set_right_status(wezterm.format(right))
-    print(wezterm.run_child_process({ "echo", "$PATH" }))
 end)
 
 return {

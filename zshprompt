@@ -17,6 +17,10 @@ function prompt_color {
     fi
 }
 
+function set_user_var() {
+   printf "\033]1337;SetUserVar=%s=%s\007" $1 `echo -n $2 | base64`
+}
+
 prompt_arrow="❱ "
 #prompt_red=$(prompt_color fg '#e27878')
 #prompt_green=$(prompt_color fg '#89b8c2')
@@ -28,13 +32,13 @@ prompt_green=$(echo '%{\e[0;32m%}')
 prompt_yellow=$(echo '%{\e[0;33m%}')
 
 PROMPT2=". "
-RPROMPT='${PROMPT_VCS_INFO}'
+RPROMPT=''
 SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_vcs_info
 function prompt_vcs_info() {
-    if [ -d ".git" ]; then
+    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
         local VCS_TEXT="git"
         local VCS_REPO_TEXT=$(git config --get remote.origin.url)
         local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
@@ -42,12 +46,36 @@ function prompt_vcs_info() {
     fi
     if [ "${VCS_TEXT}" = "" ]; then
         PROMPT_VCS_INFO=""
+        set_user_var VCS ""
+        set_user_var VCS_REPO ""
+        set_user_var VCS_BRANCH ""
+        set_user_var VCS_DEFAULT_BRANCH ""
     else
+        set_user_var VCS "${VCS_TEXT}"
+        set_user_var VCS_REPO "${VCS_REPO_TEXT}"
+        set_user_var VCS_BRANCH "${VCS_BRANCH_TEXT}"
+        set_user_var VCS_DEFAULT_BRANCH "${VCS_DEFAULT_BRANCH}"
         if [ "${VCS_BRANCH_TEXT}" = "${VCS_DEFAULT_BRANCH}" ]; then
             PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_yellow}${VCS_BRANCH_TEXT}${prompt_reset}"
         else
             PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
         fi
+    fi
+}
+
+add-zsh-hook precmd prompt_kube_info
+function prompt_kube_info() {
+    local context ns
+    if context=$(kubectl config current-context 2>/dev/null); then
+        ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
+        [[ -z "$ns" ]] && ns="(default)"
+        PROMPT_KUBE_INFO="${prompt_green}${context}:${ns}${prompt_reset}"
+        set_user_var KUBE_CONTEXT "${context}"
+        set_user_var KUBE_NAMESPACE "${ns}"
+    else
+        PROMPT_KUBE_INFO=""
+        set_user_var KUBE_CONTEXT ""
+        set_user_var KUBE_NAMESPACE ""
     fi
 }
 

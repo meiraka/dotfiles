@@ -63,9 +63,6 @@ return require('packer').startup(function(use)
         -- laststatus = 3 errors with noice
         -- vim.opt.laststatus = 3
         vim.opt.laststatus = 2
-        local repo = function()
-            return string.sub(vim.fn.system('git config --get remote.origin.url'), 1, -2)
-        end
         require('lualine').setup({
             options = {
                 -- globalstatus = true,
@@ -74,8 +71,8 @@ return require('packer').startup(function(use)
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = { 'filetype' },
-                lualine_x = { repo },
-                lualine_y = { 'branch', 'diff' },
+                lualine_x = { 'diff' },
+                lualine_y = {},
                 lualine_z = { 'diagnostics' },
             },
         })
