@@ -134,6 +134,7 @@ return {
     show_tabs_in_tab_bar = false,
     text_background_opacity = 1,
     use_fancy_tab_bar = false,
+    use_ime = true,
     window_background_opacity = 1,
     window_decorations = "RESIZE",
     window_frame = {
