@@ -104,14 +104,14 @@ wezterm.on('update-status', function(window, pane)
     end
 
     -- kube context from zshprompt
-    local context = pane:get_user_vars().K8S_CONTEXT
+    local context = pane:get_user_vars().KUBE_CONTEXT
     if context ~= nil and context ~= "" then
         powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.7))
         table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
         table.insert(right, { Text = '󱃾' .. ' ' })
         table.insert(right, { Foreground = { Color = myColors.foreground } })
         table.insert(right, { Text = context .. ' ' })
-        local namespace = pane:get_user_vars().K8S_NAMESPACE
+        local namespace = pane:get_user_vars().KUBE_NAMESPACE
         if namespace ~= nil and namespace ~= "" then
             powerline.right_soft(right, myColors.background)
             table.insert(right, { Foreground = { Color = myColors.foreground } })
