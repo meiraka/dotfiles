@@ -33,7 +33,7 @@ $(DOT_DST_PREFIX)zshrc.local:
 	chmod 600 $(DOT_DST_PREFIX)zshrc.local
 
 # Add [include] directive in gitconfig
-ifeq ($(shell grep $(DOT_DST_PREFIX)gitconfig.shared $(DOT_DST_PREFIX)gitconfig),)
+ifeq ($(shell grep $(DOT_DST_PREFIX)gitconfig.shared $(DOT_DST_PREFIX)gitconfig 2> /dev/null),)
 .PHONY: $(DOT_DST_PREFIX)gitconfig
 endif
 $(DOT_DST_PREFIX)gitconfig:
