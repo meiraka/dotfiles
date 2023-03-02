@@ -7,7 +7,11 @@ alias x=exit
 alias vim=nvim
 alias reload="source ~/.zshrc"
 function dc() {
-    devcontainer $1 --workspace-folder . ${@:2}
+    if [ "$1" = "up" ]; then
+      devcontainer up --workspace-folder . --dotfiles-repository  https://github.com/meiraka/dotfiles.git "${@:2}"
+    else
+      devcontainer "$1" --workspace-folder . "${@:2}"
+    fi
 }
 if which lsd > /dev/null 2> /dev/null; then
   alias ls=lsd
