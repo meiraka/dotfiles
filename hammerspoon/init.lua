@@ -3,11 +3,11 @@ hs.hotkey.bind({"cmd"}, "space", function()
     if term == nil then
         hs.application.launchOrFocus("/Applications/WezTerm.app")
         local term = hs.application.get("WezTerm")
-        term:mainWindow():maximize()
+        term:mainWindow():setFullScreen(true)
     elseif term:isFrontmost() then
         term:hide()
     else
         hs.application.launchOrFocus("/Applications/WezTerm.app")
-        term:mainWindow():maximize()
+        term:mainWindow():setFullScreen(true)
     end
 end)
