@@ -27,6 +27,7 @@ local myKeys = {
     { key = "h", mods = "LEADER", action = act.SplitHorizontal({}) },
     { key = "v", mods = "LEADER", action = act.SplitVertical({}) },
     { key = "Space", mods = "LEADER", action = act.PaneSelect({}) },
+    { key = "t", mods = "ALT", action = act.EmitEvent("toggle-tabbar") },
 }
 for i = 1, myWorkspaces do
     table.insert(myKeys, {
@@ -120,6 +121,16 @@ wezterm.on('update-status', function(window, pane)
         end
     end
     window:set_right_status(wezterm.format(right))
+end)
+
+wezterm.on("toggle-tabbar", function(window, _)
+    local overrides = window:get_config_overrides() or {}
+    if not overrides.enable_tab_bar then
+        overrides.enable_tab_bar = true
+    else
+        overrides.enable_tab_bar = false
+    end
+    window:set_config_overrides(overrides)
 end)
 
 return {
