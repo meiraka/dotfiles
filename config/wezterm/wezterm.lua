@@ -42,7 +42,7 @@ wezterm.on("gui-startup", function()
     -- setup and activate first workspace
     local _, _, window = mux.spawn_window({ workspace = "1" })
     mux.set_active_workspace("1")
-    if string.find(wezterm.target_triple, "apple-darwin") then
+    if string.find(wezterm.target_triple, "apple%-darwin") then
         window:gui_window():toggle_fullscreen()
     end
 end)
