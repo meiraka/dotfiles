@@ -15,7 +15,6 @@ myColors.tab_bar = {
     inactive_tab_edge = inactive,
 }
 local myWorkspaces = 8
-
 local myLeader = { key = 'f', mods = 'CTRL', timeout_milliseconds = 1000 }
 local myKeys = {
     { key = "L", mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
@@ -43,7 +42,9 @@ wezterm.on("gui-startup", function()
     -- setup and activate first workspace
     local _, _, window = mux.spawn_window({ workspace = "1" })
     mux.set_active_workspace("1")
-    window:gui_window():maximize()
+    if string.find(wezterm.target_triple, "apple-darwin") then
+        window:gui_window():toggle_fullscreen()
+    end
 end)
 
 wezterm.on('update-status', function(window, pane)
@@ -136,7 +137,7 @@ return {
     use_fancy_tab_bar = false,
     use_ime = true,
     window_background_opacity = 1,
-    window_decorations = "RESIZE",
+    window_decorations = "NONE",
     window_frame = {
         font = myFont,
         font_size = 12.0,
