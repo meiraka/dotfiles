@@ -66,7 +66,7 @@ myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoi
 scratchpads =
   [ NS
       "terminal"
-      "wezterm start --class terminalScratchpad"
+      "wezterm --config enable_tab_bar=true start --class terminalScratchpad"
       (className =? "terminalScratchpad")
       large,
     NS
