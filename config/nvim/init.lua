@@ -13,6 +13,12 @@ local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
     use { 'wbthomason/packer.nvim' }
+    use { 'ellisonleao/gruvbox.nvim', config = function()
+        require("gruvbox").setup({
+            italic = false,
+        })
+        vim.cmd('colorscheme gruvbox')
+    end }
     use { 'junegunn/fzf', run = ':call fzf#install()' }
     use { 'junegunn/fzf.vim' }
     use { 'mattn/vim-goimports' }
@@ -79,12 +85,6 @@ return require('packer').startup(function(use)
     end }
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     use { 'tpope/vim-fugitive' }
-    use { 'ellisonleao/gruvbox.nvim', config = function()
-        require("gruvbox").setup({
-            italic = false,
-        })
-        vim.cmd('colorscheme gruvbox')
-    end }
     use { 'nvim-treesitter/nvim-treesitter', tag = '*',
         run = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
