@@ -27,6 +27,7 @@ local myKeys = {
     { key = "h", mods = "LEADER", action = act.SplitHorizontal({}) },
     { key = "v", mods = "LEADER", action = act.SplitVertical({}) },
     { key = "Space", mods = "LEADER", action = act.PaneSelect({}) },
+    { key = "f", mods = "LEADER", action = act.ToggleFullScreen },
     { key = "t", mods = "ALT", action = act.EmitEvent("toggle-tabbar") },
 }
 for i = 1, myWorkspaces do
@@ -43,8 +44,12 @@ wezterm.on("gui-startup", function()
     -- setup and activate first workspace
     local _, _, window = mux.spawn_window({ workspace = "1" })
     mux.set_active_workspace("1")
+    -- enables tab_bar and fullscreen in mac
     if string.find(wezterm.target_triple, "apple%-darwin") then
         window:gui_window():toggle_fullscreen()
+        local overrides = window:gui_window():get_config_overrides() or {}
+        overrides.enable_tab_bar = true
+        window:set_config_overrides(overrides)
     end
 end)
 
@@ -120,6 +125,13 @@ wezterm.on('update-status', function(window, pane)
             table.insert(right, { Text = namespace .. ' ' })
         end
     end
+
+    -- clock
+    if window:get_dimensions().is_full_screen then
+        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.2))
+        table.insert(right, { Foreground = { Color = myColors.background } })
+        table.insert(right, { Text = wezterm.strftime('%a %b %d %Y %H:%M:%S') .. ' ' })
+    end
     window:set_right_status(wezterm.format(right))
 end)
 
@@ -135,7 +147,7 @@ end)
 
 return {
     audible_bell = "Disabled",
-    enable_tab_bar = true,
+    enable_tab_bar = false,
     colors = myColors,
     font = myFont,
     font_size = 12.0,
