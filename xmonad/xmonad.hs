@@ -76,7 +76,7 @@ scratchpads =
       middle,
     NS
       "wallpaper"
-      "nitrogen"
+      "nitrogen ~/.wallpaper"
       (resource =? "nitrogen")
       middle,
     NS

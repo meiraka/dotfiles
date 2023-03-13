@@ -13,11 +13,21 @@ local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
     use { 'wbthomason/packer.nvim' }
-    use { 'ellisonleao/gruvbox.nvim', config = function()
-        require("gruvbox").setup({
-            italic = false,
+    -- use { 'ellisonleao/gruvbox.nvim', config = function()
+    --     require("gruvbox").setup({
+    --         italic = false,
+    --     })
+    --     vim.cmd('colorscheme gruvbox')
+    -- end }
+    use { 'folke/tokyonight.nvim', config = function()
+        require("tokyonight").setup({
+            style = 'night',
+            styles = {
+                comments = { italic = false },
+                keywords = { italic = false },
+            },
         })
-        vim.cmd('colorscheme gruvbox')
+        vim.cmd('colorscheme tokyonight')
     end }
     use { 'junegunn/fzf', run = ':call fzf#install()' }
     use { 'junegunn/fzf.vim' }
@@ -72,7 +82,8 @@ return require('packer').startup(function(use)
         require('lualine').setup({
             options = {
                 -- globalstatus = true,
-                theme = 'gruvbox',
+                -- theme = 'gruvbox',
+                theme = 'tokyonight',
             },
             sections = {
                 lualine_a = { 'mode' },
