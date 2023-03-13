@@ -49,7 +49,7 @@ wezterm.on("gui-startup", function()
         window:gui_window():toggle_fullscreen()
         local overrides = window:gui_window():get_config_overrides() or {}
         overrides.enable_tab_bar = true
-        window:set_config_overrides(overrides)
+        window:gui_window():set_config_overrides(overrides)
     end
 end)
 
