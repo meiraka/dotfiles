@@ -19,15 +19,11 @@ return require('packer').startup(function(use)
     --     })
     --     vim.cmd('colorscheme gruvbox')
     -- end }
-    use { 'folke/tokyonight.nvim', config = function()
-        require("tokyonight").setup({
-            style = 'night',
-            styles = {
-                comments = { italic = false },
-                keywords = { italic = false },
-            },
+    use { 'catppuccin/nvim', as = 'catppuccin', config = function()
+        require('catppuccin').setup({
+            flavour = 'mocha',
         })
-        vim.cmd('colorscheme tokyonight')
+    vim.cmd('colorscheme catppuccin')
     end }
     use { 'junegunn/fzf', run = ':call fzf#install()' }
     use { 'junegunn/fzf.vim' }
@@ -83,7 +79,7 @@ return require('packer').startup(function(use)
             options = {
                 -- globalstatus = true,
                 -- theme = 'gruvbox',
-                theme = 'tokyonight',
+                theme = 'catppuccin',
             },
             sections = {
                 lualine_a = { 'mode' },

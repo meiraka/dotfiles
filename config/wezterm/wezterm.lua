@@ -8,7 +8,7 @@ local myFont = wezterm.font_with_fallback({
     "HackGen Console NFJ",
     "Symbols Nerd Font Mono",
 })
-local myColors = wezterm.color.get_builtin_schemes()["tokyonight"]
+local myColors = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
     background = color.alpha(myColors.background, 0),
