@@ -15,8 +15,12 @@ $(HOME)/.cargo/bin/rustup: $(INSTALLER)
 $(HOME)/.cargo/bin/rls: $(HOME)/.cargo/bin/rustup
 	rustup component add rls rust-analysis rust-src
 
-.PHONY: update version versions
+.PHONY: update version versions installed
 update:
 	rustup update
 version:
+	@echo none
 versions:
+	@echo none
+installed:
+	@if [ -f "$(HOME)/.cargo/bin/rustup" ]; then echo none; else echo; fi

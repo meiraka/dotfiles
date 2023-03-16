@@ -45,3 +45,7 @@ version:
 
 versions: src
 	@cd src && git tag
+
+INSTALLED=$(notdir $(shell readlink $(TARGET_LINK)))
+installed:
+	@echo $(INSTALLED)

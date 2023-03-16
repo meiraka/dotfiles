@@ -46,3 +46,7 @@ version:
 
 versions:
 	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
+
+INSTALLED=$(subst zig-,,$(notdir $(shell readlink $(TARGET_LINK))))
+installed:
+	@echo $(INSTALLED)

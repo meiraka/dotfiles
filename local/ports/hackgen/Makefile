@@ -13,6 +13,7 @@ install: $(TARGET)
 $(TARGET): $(SRC)
 	cp HackGen_NF_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
 	cp HackGen_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
+	echo "$(VERSION)" > INSTALLED
 	-fc-cache -vf
 
 .PHONY: extract
@@ -42,3 +43,7 @@ version:
 
 versions:
 	@curl -s $(GITHUB_RELEASES) | jq -r '.[].tag_name'
+
+.PHONY: installed
+installed:
+	@cat INSTALLED 2> /dev/null || echo

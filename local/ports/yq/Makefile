@@ -44,3 +44,7 @@ versions:
 
 uninstall:
 	rm -f $(TARGET_LINK) $(TARGET)
+
+INSTALLED=$(subst $(BIN)-,,$(notdir $(shell readlink $(TARGET_LINK))))
+installed:
+	@echo $(INSTALLED)

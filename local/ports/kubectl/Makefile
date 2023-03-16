@@ -36,3 +36,7 @@ version:
 
 versions:
 	@echo $(VERSION)
+
+INSTALLED=$(subst kubectl-,,$(notdir $(shell readlink $(TARGET_LINK))))
+installed:
+	@echo $(INSTALLED)

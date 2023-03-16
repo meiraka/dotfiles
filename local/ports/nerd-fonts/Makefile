@@ -12,6 +12,7 @@ install: $(TARGET)
 $(TARGET): $(ARCHIVES)
 	unzip -o $(ARCHIVES) *.ttf
 	cp *.ttf $(INSTALL_DIR)/share/fonts/
+	echo "$(VERSION)" > INSTALLED
 	-fc-cache -vf
 
 .PHONY: fetch
@@ -33,3 +34,7 @@ version:
 
 versions:
 	@curl -s $(GITHUB_RELEASES) | jq -r '.[].tag_name'
+
+.PHONY: installed
+installed:
+	@cat INSTALLED 2> /dev/null || echo

@@ -43,3 +43,7 @@ version:
 
 versions:
 	@curl -s $(GITHUB_RELEASES) | jq -r '[.[] | select(.tag_name | startswith("kustomize/"))][].tag_name'
+
+INSTALLED=$(subst -,/,$(notdir $(shell readlink $(TARGET_LINK))))
+installed:
+	@echo $(INSTALLED)

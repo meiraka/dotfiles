@@ -51,3 +51,7 @@ versions:
 clean:
 	rm -rf *.tar.gz
 	rm -rf neovim-*
+
+INSTALLED=$(subst nvim-,,$(notdir $(shell readlink $(TARGET_LINK))))
+installed:
+	@echo $(INSTALLED)

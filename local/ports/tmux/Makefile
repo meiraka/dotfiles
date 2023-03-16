@@ -59,3 +59,7 @@ version:
 
 versions: src
 	@cd src && git tag
+
+INSTALLED=$(subst tmux ,,$(shell $(TARGET_COPY) -V))
+installed:
+	@echo $(INSTALLED)

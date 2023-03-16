@@ -58,3 +58,7 @@ version:
 
 versions: src
 	@cd src && git tag
+
+INSTALLED=$(subst git version ,,$(shell $(INSTALL_PREFIX)/bin/git version))
+installed:
+	@if [ "$(INSTALLED)" != "" ]; then echo "v$(INSTALLED)"; else echo; fi

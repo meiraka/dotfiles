@@ -18,7 +18,11 @@ $(INSTALL_DIR)/bin/$(BIN): minecraft-launcher/$(BIN)
 
 install: $(INSTALL_DIR)/bin/$(BIN)
 
-.PHONY: update version versions
+.PHONY: update version versions installed
 update:
 version:
+	@echo none
 versions:
+	@echo none
+installed:
+	@if [ -f "$(INSTALL_DIR)/bin/$(BIN)" ]; then echo none; else echo; fi

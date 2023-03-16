@@ -2,6 +2,7 @@
 all: install
 URL=https://osdn.net/projects/mix-mplus-ipa/downloads/72511
 VERSION=20200307
+MIGU_DIR=migu-$(VERSION)
 MIGU1M_DIR=migu-1m-$(VERSION)
 MIGU1C_DIR=migu-1c-$(VERSION)
 MIGU1P_DIR=migu-1p-$(VERSION)
@@ -16,30 +17,32 @@ ARCHIVE = $(addsuffix .zip, $(DIR))
 $(ARCHIVE):
 	curl -L $(URL)/$@ -o $@
 
-$(addprefix $(MIGU1M_DIR)/, $(MIGU1M)): $(MIGU1M_DIR).zip
+$(addprefix $(MIGU_DIR)/, $(MIGU1M)): $(MIGU1M_DIR).zip
 	unzip -o $(MIGU1M_DIR)
-	touch $(MIGU1M_DIR)/*
+	mkdir -p $(MIGU_DIR)
+	mv $(MIGU1M_DIR)/*.ttf $(MIGU_DIR)
+	touch $(MIGU_DIR)/*
 
-$(addprefix $(MIGU1C_DIR)/, $(MIGU1C)): $(MIGU1C_DIR).zip
+$(addprefix $(MIGU_DIR)/, $(MIGU1C)): $(MIGU1C_DIR).zip
 	unzip -o $(MIGU1C_DIR)
-	touch $(MIGU1C_DIR)/*
+	mkdir -p $(MIGU_DIR)
+	mv $(MIGU1C_DIR)/*.ttf $(MIGU_DIR)
+	touch $(MIGU_DIR)/*
 
-$(addprefix $(MIGU1P_DIR)/, $(MIGU1P)): $(MIGU1P_DIR).zip
+$(addprefix $(MIGU_DIR)/, $(MIGU1P)): $(MIGU1P_DIR).zip
 	unzip -o $(MIGU1P_DIR)
-	touch $(MIGU1P_DIR)/*
+	mkdir -p $(MIGU_DIR)
+	mv $(MIGU1P_DIR)/*.ttf $(MIGU_DIR)
+	touch $(MIGU_DIR)/*
 
 TARGET_DIR = $(HOME)/.local/share/fonts/
 TARGET=$(addprefix $(TARGET_DIR), $(MIGU1M) $(MIGU1C) $(MIGU1P))
 
-$(addprefix $(TARGET_DIR), $(MIGU1M)): $(TARGET_DIR)%: $(MIGU1M_DIR)/%
+$(TARGET): $(addprefix $(MIGU_DIR)/, $(MIGU1M) $(MIGU1C) $(MIGU1P)) 
 	mkdir -p $(TARGET_DIR)
-	cp $< $@
-$(addprefix $(TARGET_DIR), $(MIGU1C)): $(TARGET_DIR)%: $(MIGU1C_DIR)/%
-	mkdir -p $(TARGET_DIR)
-	cp $< $@
-$(addprefix $(TARGET_DIR), $(MIGU1P)): $(TARGET_DIR)%: $(MIGU1P_DIR)/%
-	mkdir -p $(TARGET_DIR)
-	cp $< $@
+	cp $(MIGU_DIR)/*.ttf $(TARGET_DIR)
+	echo "$(VERSION)" > INSTALLED
+	-fc-cache -vf
 
 clean:
 	rm -rf $(ARCHIVE) $(DIR)
@@ -50,3 +53,7 @@ version:
 	@echo $(VERSION)
 versions:
 	@echo $(VERSION)
+
+.PHONY: installed
+installed:
+	@cat INSTALLED 2> /dev/null || echo
