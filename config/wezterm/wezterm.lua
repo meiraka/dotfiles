@@ -4,10 +4,7 @@ local mux = wezterm.mux
 local color = require("color")
 local powerline = require("powerline")
 
-local myFont = wezterm.font_with_fallback({
-    "HackGen Console NFJ",
-    "Symbols Nerd Font Mono",
-})
+local myFont = wezterm.font("HackGen Console NFJ", { style = "Normal" })
 local myColors = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
@@ -151,6 +148,7 @@ return {
     colors = myColors,
     font = myFont,
     font_size = 12.0,
+    font_rules = { { italic = true, font = myFont } },
     disable_default_key_bindings = true,
     leader = myLeader,
     keys = myKeys,
