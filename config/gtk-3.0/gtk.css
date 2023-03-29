@@ -13,3 +13,10 @@ window decoration {
 menu {
     border-radius: 18;
 }
+
+.thunar {
+	background-color: rgba(30, 30, 48, 0.26);
+}
+.thunar * {
+	background-color: rgba(30, 30, 48, 0);
+}
