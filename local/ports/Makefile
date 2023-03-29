@@ -54,5 +54,5 @@ $(APPS):
 		echo "$${CURRENT},$${LATEST}" | awk -F ',' '{printf "\033[36m%-20s\033[0m \033[31m%-20s\033[0m %-20s\n", "$@", $$1, $$2}'; \
 		fi \
 		else \
-		$(MAKE) $(OPT_VERSION) --no-print-directory -C $@ $(SUBTARGET) 2> /dev/null | awk '{printf "\033[36m%-20s\033[0m %s\n", "$@", $$0}'; \
+		$(MAKE) $(OPT_VERSION) --no-print-directory -C $@ $(SUBTARGET) 2> /dev/null; \
 		fi
