@@ -5,13 +5,12 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=neovim
 REPO=neovim
-VERSION=v0.8.3
+VERSION=v0.9.0
 
 ARCHIVE=$(VERSION).tar.gz
 WORKDIR=$(REPO)-$(patsubst v%,%,$(VERSION))
 BIN=$(WORKDIR)/build/bin/nvim
-TARGET=$(INSTALL_PREFIX)/bin/nvim-$(VERSION)
-TARGET_LINK=$(INSTALL_PREFIX)/bin/nvim
+TARGET=$(INSTALL_PREFIX)/bin/nvim
 GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
 _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
@@ -27,13 +26,9 @@ $(BIN): $(WORKDIR)
 	cd $(WORKDIR); make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$(INSTALL_PREFIX)"
 
 $(TARGET): $(BIN)
-	cp $(BIN) $(TARGET)
+	cd $(WORKDIR); make install
 
-$(TARGET_LINK): $(TARGET)
-	@-rm $(TARGET_LINK)
-	ln -si $(TARGET) $(TARGET_LINK)
-
-install: $(TARGET_LINK)
+install: $(TARGET)
 
 .PHONY: update version versions
 update:
@@ -52,6 +47,5 @@ clean:
 	rm -rf *.tar.gz
 	rm -rf neovim-*
 
-INSTALLED=$(subst nvim-,,$(notdir $(shell readlink $(TARGET_LINK))))
 installed:
-	@echo $(INSTALLED)
+	@$(TARGET) -v | head -n 1 | sed 's/NVIM //g'

@@ -1,7 +1,7 @@
 .PHONY: clean install
 install: link
 
-VERSION=v19.8.1
+VERSION=v20.0.0
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
