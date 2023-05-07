@@ -11,6 +11,7 @@ TARGET=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
 all: install
 install: $(TARGET)
 $(TARGET): $(SRC)
+	mkdir -p $(INSTALL_DIR)/share/fonts/
 	cp HackGen_NF_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
 	cp HackGen_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
 	echo "$(VERSION)" > INSTALLED
