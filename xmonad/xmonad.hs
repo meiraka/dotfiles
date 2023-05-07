@@ -76,7 +76,7 @@ scratchpads =
       middle,
     NS
       "wallpaper"
-      "nitrogen ~/.wallpaper"
+      "nitrogen ~/.local/share/backgrounds"
       (resource =? "nitrogen")
       middle,
     NS

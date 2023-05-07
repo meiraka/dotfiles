@@ -9,7 +9,7 @@ DOT_DST = $(addprefix $(DOT_DST_PREFIX), $(DOT_SRC))
 
 # dotfiles
 
-link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)gitconfig $(DOT_DST_PREFIX)zshrc.local ## create dotfiles link
+link: $(DOT_DST_SUBDIRS) $(DOT_DST) $(DOT_DST_PREFIX)gitconfig $(DOT_DST_PREFIX)zshrc.local $(DOT_DST_PREFIX)local/share/backgrounds/sys ## create dotfiles link
 
 clean:  # remove linked files
 	@LIST="$(DOT_DST)";\
@@ -38,6 +38,11 @@ ifeq ($(shell grep $(DOT_DST_PREFIX)gitconfig.shared $(DOT_DST_PREFIX)gitconfig 
 endif
 $(DOT_DST_PREFIX)gitconfig:
 	git config --global include.path $(DOT_DST_PREFIX)gitconfig.shared
+
+# link to system wallpapers
+$(DOT_DST_PREFIX)local/share/backgrounds/sys:
+	mkdir -p 
+	ln -s /usr/share/backgrounds $(DOT_DST_PREFIX)local/share/backgrounds/sys
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
