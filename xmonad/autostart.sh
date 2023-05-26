@@ -3,6 +3,7 @@
 # xrandr --newmode "1200x1600R"  134.25  1200 1248 1280 1360  1600 1603 1613 1646 +hsync -vsync
 # xrandr --addmode DVI-1 1200x1600R
 # xrandr --output DVI-1 --mode 1200x1600R
+xrandr --output DP-4 --mode 2560x1440 -r 144
 
 killall polybar
 polybar &
