@@ -78,7 +78,7 @@ scratchpads =
       "wallpaper"
       "nitrogen ~/.local/share/backgrounds"
       (resource =? "nitrogen")
-      middle,
+      small,
     NS
       "bluetooth"
       "blueman-manager"
@@ -88,7 +88,7 @@ scratchpads =
   where
     large = customFloating $ W.RationalRect (1 / 20) (1 / 20) (18 / 20) (18 / 20)
     middle = customFloating $ W.RationalRect (3 / 20) (3 / 20) (14 / 20) (14 / 20)
-    little = customFloating $ W.RationalRect (5 / 20) (5 / 20) (10 / 20) (10 / 20)
+    small = customFloating $ W.RationalRect (5 / 20) (5 / 20) (10 / 20) (10 / 20)
 
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modMask}) =
