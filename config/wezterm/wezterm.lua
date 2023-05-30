@@ -8,7 +8,7 @@ local myFont = wezterm.font("HackGen Console NFJ", { style = "Normal" })
 local myColors = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
-    background = color.alpha(myColors.background, 0),
+    background = color.alpha(myColors.background, 0.9),
     inactive_tab_edge = inactive,
 }
 local myWorkspaces = 8
@@ -157,7 +157,7 @@ return {
     text_background_opacity = 1,
     use_fancy_tab_bar = false,
     use_ime = true,
-    window_background_opacity = 1,
+    window_background_opacity = 0.9,
     window_decorations = "NONE",
     window_frame = {
         font = myFont,

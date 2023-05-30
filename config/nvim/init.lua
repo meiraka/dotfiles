@@ -22,6 +22,7 @@ return require('packer').startup(function(use)
     use { 'catppuccin/nvim', as = 'catppuccin', config = function()
         require('catppuccin').setup({
             flavour = 'mocha',
+            transparent_background = true,
         })
     vim.cmd('colorscheme catppuccin')
     end }
@@ -142,6 +143,7 @@ return require('packer').startup(function(use)
             "rcarriga/nvim-notify",
         },
         config = function()
+            require("notify").setup({ background_colour = '#000000'})
             require("noice").setup({})
         end,
     })
