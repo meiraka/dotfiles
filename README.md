@@ -17,6 +17,22 @@ cd dotfiles
 make
 ```
 
+### Dependencies
+#### EndeavourOS
+
+```sh
+sudo pacman -S vivaldi wezterm xmonad xmonad-contrib gmrun polybar nitrogen picom blueman
+sudo pacman -S base-devel cmake unzip ninja curl
+```
+
+### macOS
+
+```sh
+xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install ninja cmake gettext curl
+```
+
 ## Commands
 ### dotfiles
 

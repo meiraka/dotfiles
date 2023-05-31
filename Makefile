@@ -41,7 +41,7 @@ $(DOT_DST_PREFIX)gitconfig:
 
 # link to system wallpapers
 $(DOT_DST_PREFIX)local/share/backgrounds/sys:
-	mkdir -p 
+	mkdir -p $(DOT_DST_PREFIX)local/share/backgrounds
 	ln -s /usr/share/backgrounds $(DOT_DST_PREFIX)local/share/backgrounds/sys
 
 help:
