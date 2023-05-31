@@ -3,12 +3,13 @@ local act = wezterm.action
 local mux = wezterm.mux
 local color = require("color")
 local powerline = require("powerline")
+local opacity = 0.95
 
 local myFont = wezterm.font("HackGen Console NFJ", { style = "Normal" })
 local myColors = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
-    background = color.alpha(myColors.background, 0.9),
+    background = color.alpha(myColors.background, opacity),
     inactive_tab_edge = inactive,
 }
 local myWorkspaces = 8
@@ -151,13 +152,14 @@ return {
     font_rules = { { italic = true, font = myFont } },
     disable_default_key_bindings = true,
     leader = myLeader,
+    macos_window_background_blur = 20,
     keys = myKeys,
     show_new_tab_button_in_tab_bar = false,
     show_tabs_in_tab_bar = false,
     text_background_opacity = 1,
     use_fancy_tab_bar = false,
     use_ime = true,
-    window_background_opacity = 0.9,
+    window_background_opacity = opacity,
     window_decorations = "NONE",
     window_frame = {
         font = myFont,
