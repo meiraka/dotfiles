@@ -14,22 +14,23 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.NamedScratchpad
 
 main = do
-  xmonad $
-    ewmhFullscreen . ewmh $
-      docks
-        def
-          { manageHook = myManageHook,
-            layoutHook = myLayoutHook,
-            workspaces = myWorkspaces,
-            terminal = myTerminal,
-            borderWidth = myBorderWidth,
-            normalBorderColor = myNormalBorderColor,
-            focusedBorderColor = myFocusedBorderColor,
-            focusFollowsMouse = False,
-            startupHook = myStartupHook,
-            keys = myKeys,
-            mouseBindings = myMouseBindings
-          }
+  xmonad
+    . ewmhFullscreen
+    . ewmh
+    $ docks
+      def
+        { manageHook = myManageHook,
+          layoutHook = myLayoutHook,
+          workspaces = myWorkspaces,
+          terminal = myTerminal,
+          borderWidth = myBorderWidth,
+          normalBorderColor = myNormalBorderColor,
+          focusedBorderColor = myFocusedBorderColor,
+          focusFollowsMouse = False,
+          startupHook = myStartupHook,
+          keys = myKeys,
+          mouseBindings = myMouseBindings
+        }
 
 myNormalBorderColor = "#282828"
 
