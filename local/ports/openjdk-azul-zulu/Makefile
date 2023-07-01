@@ -1,7 +1,7 @@
 .PHONY: clean install
 all: install
 
-VERSION=20.30.11-ca-jdk20.0.1
+VERSION=20.30.11-ca-fx-jdk20.0.1
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
