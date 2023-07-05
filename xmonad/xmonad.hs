@@ -1,4 +1,5 @@
 import qualified Data.Map as M
+import GHC.SourceGen (where')
 import System.Exit
 import System.IO
 import XMonad
@@ -49,13 +50,15 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8"]
 myManageHook =
   composeOne
     [ title =? "gmrun" -?> doCenterFloat,
-      className =? "Xfce4-notifyd" -?> doIgnore,
       isDialog -?> customFloating $ W.RationalRect (4 / 20) (4 / 20) (12 / 20) (12 / 20)
     ]
-    <+> manageDocks
-    <+> namedScratchpadManageHook scratchpads
-    <+> manageHook def
-    <+> (isFullscreen --> doFullFloat)
+    <+> composeAll
+      [ className =? "Xfce4-notifyd" --> doIgnore,
+        manageDocks,
+        namedScratchpadManageHook scratchpads,
+        manageHook def,
+        isFullscreen --> doFullFloat
+      ]
 
 myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap)
   where
