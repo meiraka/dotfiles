@@ -18,6 +18,7 @@ if which nvim > /dev/null 2>&1; then
     export VISUAL=nvim
 fi
 
+export ALSOFT_DRIVERS=pulse
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
