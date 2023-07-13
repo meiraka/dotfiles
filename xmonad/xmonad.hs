@@ -53,12 +53,12 @@ myManageHook =
       isDialog -?> customFloating $ W.RationalRect (4 / 20) (4 / 20) (12 / 20) (12 / 20)
     ]
     <+> composeAll
-      [ className =? "Xfce4-notifyd" --> doIgnore,
-        manageDocks,
+      [ manageDocks,
         namedScratchpadManageHook scratchpads,
         manageHook def,
         isFullscreen --> doFullFloat
       ]
+
 
 myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap)
   where
@@ -128,7 +128,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       -- increase or decrease number of windows in the master area
       ((keyModMask, xK_comma), sendMessage (IncMasterN 1)), -- %! Increment the number of windows in the master area
       ((keyModMask, xK_period), sendMessage (IncMasterN (-1))), -- %! Deincrement the number of windows in the master area
-      ((keyModMask, xK_n), spawn "killall xfce4-notifyd || /usr/lib/xfce4/notifyd/xfce4-notifyd & sleep 0.2 && notify-send Notification on"), -- %! toggle notification
       -- quit, or restart
       ((keyModMask .|. shiftMask, xK_q), io exitSuccess), -- %! Quit xmonad
       ((keyModMask .|. shiftMask, xK_r), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
