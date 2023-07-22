@@ -6,6 +6,7 @@
 * Window Manager: Xmonad
 * Panel: Polybar
 * Compositor: Picom
+* Notificator: dunst
 
 ## Install
 
@@ -21,7 +22,7 @@ make
 #### EndeavourOS
 
 ```sh
-sudo pacman -S vivaldi wezterm xmonad xmonad-contrib gmrun polybar nitrogen picom blueman
+sudo pacman -S vivaldi wezterm xmonad xmonad-contrib gmrun polybar dunst dmenu nitrogen picom blueman
 sudo pacman -S base-devel cmake unzip ninja curl
 ```
 
