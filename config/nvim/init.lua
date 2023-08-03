@@ -137,16 +137,16 @@ return require('packer').startup(function(use)
         end
     }
 
-    use({ "folke/noice.nvim",
-        requires = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify",
-        },
-        config = function()
-            require("notify").setup({ background_colour = '#000000'})
-            require("noice").setup({})
-        end,
-    })
+    -- use({ "folke/noice.nvim",
+    --     requires = {
+    --         "MunifTanjim/nui.nvim",
+    --         "rcarriga/nvim-notify",
+    --     },
+    --     config = function()
+    --         require("notify").setup({ background_colour = '#000000'})
+    --         require("noice").setup({})
+    --     end,
+    -- })
 
 
     vim.g.mapleader = " "
