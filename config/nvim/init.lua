@@ -147,7 +147,8 @@ return require('packer').startup(function(use)
     --         require("noice").setup({})
     --     end,
     -- })
-
+    
+    use { 'elkowar/yuck.vim' }
 
     vim.g.mapleader = " "
     vim.keymap.set('n', '<leader>t', '<cmd>TestNearest<cr>')
