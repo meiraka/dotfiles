@@ -114,6 +114,8 @@ setopt print_exit_value
 setopt prompt_subst
 
 source ~/.zshprompt
+
+DISABLE_AUTO_TITLE="true"
 #
 # scripts
 #
