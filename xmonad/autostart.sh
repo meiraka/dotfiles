@@ -3,9 +3,15 @@
 xrandr --output DP-4 --mode 2560x1440 -r 144
 nvidia-settings --load-config-only &
 
+# compositor
+if ! pgrep picom; then
+    picom -b --xrender-sync-fence &
+fi
+
 # dock
 killall polybar
 polybar &
+# /bin/sh -c 'killall trayer; sleep 2 && trayer --edge right --align left --height 50 --distance 50 --transparent true --alpha 255 --iconspacing 12' &
 
 # im
 fcitx5 &
@@ -18,12 +24,8 @@ dunst &
 # desktop background
 nitrogen --restore & 
 
-# compositor
-killall picom
-picom -b --xrender-sync-fence &
-
 # file manager daemon
-if [ `ps aux | grep "thunar --daemon" | grep -v grep | wc -l` = '0' ]; then
+if ! pgrep -f "thunar --daemon"; then
     thunar --daemon &
 fi
 
@@ -31,9 +33,9 @@ fi
 xfce4-power-manager &
 
 # network management
-if [ `ps aux | grep nm-applet | grep -v grep | wc -l` = '0' ]; then
-    nm-applet &
-fi
+# if [ `ps aux | grep nm-applet | grep -v grep | wc -l` = '0' ]; then
+#     nm-applet &
+# fi
 
 # keyring
 if [ -e /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 ]; then
