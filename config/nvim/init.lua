@@ -19,12 +19,8 @@ return require('packer').startup(function(use)
     --     })
     --     vim.cmd('colorscheme gruvbox')
     -- end }
-    use { 'catppuccin/nvim', as = 'catppuccin', config = function()
-        require('catppuccin').setup({
-            flavour = 'mocha',
-            transparent_background = true,
-        })
-    vim.cmd('colorscheme catppuccin')
+    use { 'rebelot/kanagawa.nvim', config = function()
+        vim.cmd('colorscheme kanagawa')
     end }
     use { 'junegunn/fzf', run = ':call fzf#install()' }
     use { 'junegunn/fzf.vim' }
@@ -80,7 +76,7 @@ return require('packer').startup(function(use)
             options = {
                 -- globalstatus = true,
                 -- theme = 'gruvbox',
-                theme = 'catppuccin',
+                theme = 'kanagawa',
             },
             sections = {
                 lualine_a = { 'mode' },

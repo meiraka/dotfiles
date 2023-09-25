@@ -6,7 +6,7 @@ local powerline = require("powerline")
 local opacity = 0.95
 
 local myFont = wezterm.font("HackGen Console NFJ", { style = "Normal" })
-local myColors = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
+local myColors = wezterm.color.get_builtin_schemes()["kanagawa (Gogh)"]
 local inactive = color.pseudo_alpha(myColors.foreground, myColors.background, 0.3)
 myColors.tab_bar = {
     background = color.alpha(myColors.background, opacity),
