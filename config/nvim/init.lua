@@ -1,38 +1,31 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
-
-local packer_bootstrap = ensure_packer()
-
-return require('packer').startup(function(use)
-    use { 'wbthomason/packer.nvim' }
-    -- use { 'ellisonleao/gruvbox.nvim', config = function()
-    --     require("gruvbox").setup({
-    --         italic = false,
-    --     })
-    --     vim.cmd('colorscheme gruvbox')
-    -- end }
-    use { 'rebelot/kanagawa.nvim', config = function()
-        vim.cmd('colorscheme kanagawa')
-    end }
-    use { 'junegunn/fzf', run = ':call fzf#install()' }
-    use { 'junegunn/fzf.vim' }
-    use { 'mattn/vim-goimports' }
-    use { 'neovim/nvim-lspconfig',
-        requires = {
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-vsnip' },
-            { 'hrsh7th/vim-vsnip' },
+vim.opt.rtp:prepend(lazypath)
+require("lazy").setup({
+    { "rebelot/kanagawa.nvim", config = function()
+            vim.cmd('colorscheme kanagawa')
+        end,
+    },
+    { 'junegunn/fzf', build = ':call fzf#install()' },
+    { 'junegunn/fzf.vim' },
+    { 'mattn/vim-goimports' },
+    { 'neovim/nvim-lspconfig',
+        dependencies = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+            'hrsh7th/nvim-cmp',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-vsnip',
+            'hrsh7th/vim-vsnip',
         },
         config = function()
             require('mason').setup()
@@ -66,8 +59,8 @@ return require('packer').startup(function(use)
                 }),
             })
         end
-    }
-    use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons' }, config = function()
+    },
+    { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' }, config = function()
         require('nvim-web-devicons').setup({})
         -- laststatus = 3 errors with noice
         -- vim.opt.laststatus = 3
@@ -86,37 +79,35 @@ return require('packer').startup(function(use)
                 lualine_z = { 'diagnostics' },
             },
         })
-    end }
-    use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
-    use { 'tpope/vim-fugitive' }
-    use { 'nvim-treesitter/nvim-treesitter', tag = '*',
-        run = function()
-            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-            ts_update()
-        end,
+    end },
+    { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end },
+    { 'tpope/vim-fugitive' },
+    { 'nvim-treesitter/nvim-treesitter', version = '*',
+        build = ":TSUpdate",
         config = function()
             require('nvim-treesitter.configs').setup({
                 ensure_installed = { 'go', 'css', 'yaml', 'regex', 'bash', 'markdown', 'markdown_inline' },
+                sync_install = false,
                 highlight = {
                     enable = true,
                     disable = { 'lua', 'vim', 'javascript' },
                 },
             })
         end
-    }
-    use { 'akinsho/toggleterm.nvim', tag = '*', config = function()
+    },
+    { 'akinsho/toggleterm.nvim', version = '*', config = function()
         require("toggleterm").setup({
             insert_mappings = true,
             terminal_mappings = true,
         })
-    end }
-    use { 'klen/nvim-test', config = function()
+    end },
+    { 'klen/nvim-test', config = function()
         require('nvim-test').setup({
             term = 'toggleterm',
-        })
-    end }
-    use { 'nvim-telescope/telescope.nvim',
-        requires = {
+    })
+    end },
+    { 'nvim-telescope/telescope.nvim',
+        dependencies = {
             'nvim-telescope/telescope-file-browser.nvim',
             'nvim-lua/plenary.nvim',
         },
@@ -131,33 +122,22 @@ return require('packer').startup(function(use)
             })
             require('telescope').load_extension 'file_browser'
         end
-    }
+    },
+    { 'elkowar/yuck.vim' },
+})
 
-    -- use({ "folke/noice.nvim",
-    --     requires = {
-    --         "MunifTanjim/nui.nvim",
-    --         "rcarriga/nvim-notify",
-    --     },
-    --     config = function()
-    --         require("notify").setup({ background_colour = '#000000'})
-    --         require("noice").setup({})
-    --     end,
-    -- })
-    
-    use { 'elkowar/yuck.vim' }
+vim.g.mapleader = " "
+vim.keymap.set('n', '<leader>t', '<cmd>TestNearest<cr>')
+vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
+vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
+vim.keymap.set('n', '<leader>f', '<cmd>Telescope file_browser<cr>')
+vim.keymap.set('n', '<leader>g', '<cmd>Telescope live_grep<cr>')
 
-    vim.g.mapleader = " "
-    vim.keymap.set('n', '<leader>t', '<cmd>TestNearest<cr>')
-    vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover)
-    vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
-    vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
-    vim.keymap.set('n', '<leader>f', '<cmd>Telescope file_browser<cr>')
-    vim.keymap.set('n', '<leader>g', '<cmd>Telescope live_grep<cr>')
-
-    vim.keymap.set('n', '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
-    vim.keymap.set('n', 'ff', '<cmd>Files<cr>')
-    vim.opt.mouse = nil
-    vim.cmd([[
+vim.keymap.set('n', '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
+vim.keymap.set('n', 'ff', '<cmd>Files<cr>')
+vim.opt.mouse = nil
+vim.cmd([[
 command LspDefinition lua vim.lsp.buf.definition()
 command LspFormat lua vim.lsp.buf.format { async = true }
 command LspReferences lua vim.lsp.buf.references()
@@ -175,10 +155,3 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
     ]])
-
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
