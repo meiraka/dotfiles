@@ -1,7 +1,7 @@
 .PHONY: all install
 USER=yuru7
 REPO=HackGen
-VERSION=v2.8.0
+VERSION=v2.9.0
 INSTALL_DIR = $(HOME)/.local
 
 ARCHIVES=HackGen_NF_$(VERSION).zip HackGen_$(VERSION).zip
