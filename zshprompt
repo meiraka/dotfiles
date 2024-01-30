@@ -38,6 +38,9 @@ SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_vcs_info
 function prompt_vcs_info() {
+    if [ ! -d .git ]; then
+        return
+    fi
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
         local VCS_TEXT="git"
         local VCS_REPO_TEXT=$(git config --get remote.origin.url)
