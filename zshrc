@@ -59,9 +59,9 @@ fi
 #
 
 function fzf-ghq-cd-workspace() {
-    local selected_dir=$(ghq list -p | fzf --query=${LBUFFER})
+    local selected_dir=$(ghq list | fzf --query=${LBUFFER})
     if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
+        BUFFER="cd $(ghq root)/${selected_dir}"
         zle accept-line
     fi
     zle clear-screen
