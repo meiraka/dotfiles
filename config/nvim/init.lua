@@ -123,6 +123,9 @@ require("lazy").setup({
             require('telescope').load_extension 'file_browser'
         end
     },
+    { 'folke/trouble.nvim',
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
     { 'elkowar/yuck.vim' },
 })
 
@@ -133,6 +136,7 @@ vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename)
 vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
 vim.keymap.set('n', '<leader>f', '<cmd>Telescope file_browser<cr>')
 vim.keymap.set('n', '<leader>g', '<cmd>Telescope live_grep<cr>')
+vim.keymap.set("n", "<leader>l", function() require("trouble").toggle() end)
 
 vim.keymap.set('n', '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
 vim.keymap.set('n', 'ff', '<cmd>Files<cr>')
