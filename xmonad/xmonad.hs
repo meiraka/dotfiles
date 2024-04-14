@@ -128,6 +128,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       -- increase or decrease number of windows in the master area
       ((keyModMask, xK_comma), sendMessage (IncMasterN 1)), -- %! Increment the number of windows in the master area
       ((keyModMask, xK_period), sendMessage (IncMasterN (-1))), -- %! Deincrement the number of windows in the master area
+      -- vol
+      ((0, 0x1008FF11), spawn "vol down"),
+      ((0, 0x1008FF13), spawn "vol up"),
       -- quit, or restart
       ((keyModMask .|. shiftMask, xK_q), io exitSuccess), -- %! Quit xmonad
       ((keyModMask .|. shiftMask, xK_r), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+DESC=$(pactl --format=json list 2> /dev/null | jq -r '.sinks[] | select(.state=="RUNNING") | .description')
+
+
+vol() {
+    pactl --format=json list 2> /dev/null | jq -r '.sinks[] | select(.state=="RUNNING") | .volume.[].value_percent' | head -n 1 | sed 's/%//g'
+}
+
+up() {
+    pactl set-sink-volume 0 +3%
+    dunstify "$DESC: " -h int:value:`vol`
+}
+
+down() {
+    pactl set-sink-volume 0 -3%
+    dunstify "$DESC: " -h int:value:`vol`
+}
+
+case "$1" in
+    "up") up ;;
+    "down") down ;;
+esac
