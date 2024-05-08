@@ -47,6 +47,7 @@ wezterm.on("gui-startup", function()
         window:gui_window():toggle_fullscreen()
         local overrides = window:gui_window():get_config_overrides() or {}
         overrides.enable_tab_bar = true
+        overrides.window_decorations = "RESIZE"
         window:gui_window():set_config_overrides(overrides)
     end
 end)
@@ -143,12 +144,17 @@ wezterm.on("toggle-tabbar", function(window, _)
     window:set_config_overrides(overrides)
 end)
 
+local font_size = 12
+if string.find(wezterm.target_triple, "apple%-darwin") then
+    font_size = 9
+end
+
 return {
     audible_bell = "Disabled",
     enable_tab_bar = false,
     colors = myColors,
     font = myFont,
-    font_size = 12.0,
+    font_size = font_size,
     font_rules = { { italic = true, font = myFont } },
     disable_default_key_bindings = true,
     leader = myLeader,
@@ -163,7 +169,7 @@ return {
     window_decorations = "NONE",
     window_frame = {
         font = myFont,
-        font_size = 12.0,
+        font_size = font_size,
         active_titlebar_bg = myColors.background,
         inactive_titlebar_bg = myColors.background,
     },
