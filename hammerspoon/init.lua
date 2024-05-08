@@ -8,21 +8,23 @@ local function toggle(appName)
     return function()
         local app = application.get(appName)
         if app == nil then
-            app = application.open("WezTerm")
+            app = application.open(appName)
         end
         if app:isFrontmost() then
             app:hide()
         else
             local desktopSize = window.desktop():size()
-            app:mainWindow():setSize(geometry.size(desktopSize.w * 18 / 20, desktopSize.h * 18 / 20))
-            app:mainWindow():centerOnScreen()
-            app:mainWindow():setSize(geometry.size(desktopSize.w * 18 / 20, desktopSize.h * 18 / 20))
-            app:mainWindow():centerOnScreen()
-            app:mainWindow():setSize(geometry.size(desktopSize.w * 18 / 20, desktopSize.h * 18 / 20))
-            app:mainWindow():centerOnScreen()
-            local sp = spaces.activeSpaceOnScreen()
             local win = app:mainWindow()
+            win:setSize(geometry.size(desktopSize.w * 18 / 20, desktopSize.h * 18 / 20))
+            win:centerOnScreen()
+            win:setSize(geometry.size(desktopSize.w * 18 / 20, desktopSize.h * 18 / 20))
+            win:centerOnScreen()
+            win:setSize(geometry.size(desktopSize.w * 18 / 20, desktopSize.h * 18 / 20))
+            win:centerOnScreen()
+
+            local sp = spaces.activeSpaceOnScreen()
             spaces.moveWindowToSpace(win:id(), sp)
+            win:focus()
         end
     end
 end

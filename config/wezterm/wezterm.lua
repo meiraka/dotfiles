@@ -42,9 +42,8 @@ wezterm.on("gui-startup", function()
     -- setup and activate first workspace
     local _, _, window = mux.spawn_window({ workspace = "1" })
     mux.set_active_workspace("1")
-    -- enables tab_bar and fullscreen in mac
+    -- enables tab_bar in mac
     if string.find(wezterm.target_triple, "apple%-darwin") then
-        window:gui_window():toggle_fullscreen()
         local overrides = window:gui_window():get_config_overrides() or {}
         overrides.enable_tab_bar = true
         overrides.window_decorations = "RESIZE"
