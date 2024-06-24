@@ -1,7 +1,7 @@
 .PHONY: clean install
 install: link
 
-VERSION=v21.5.0
+VERSION=v21.7.3
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 

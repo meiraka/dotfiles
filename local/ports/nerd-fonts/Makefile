@@ -1,7 +1,7 @@
 .PHONY: all install
 USER=ryanoasis
 REPO=nerd-fonts
-VERSION=v2.3.3
+VERSION=v3.2.0
 INSTALL_DIR = $(HOME)/.local
 
 ARCHIVES=NerdFontsSymbolsOnly-$(VERSION).zip
@@ -10,7 +10,7 @@ TARGET=$(INSTALL_DIR)/share/fonts/Symbols-1000-em\ Nerd\ Font\ Complete\ Mono.tt
 all: install
 install: $(TARGET)
 $(TARGET): $(ARCHIVES)
-	unzip -o $(ARCHIVES) *.ttf
+	unzip -o $(ARCHIVES) '*.ttf'
 	cp *.ttf $(INSTALL_DIR)/share/fonts/
 	echo "$(VERSION)" > INSTALLED
 	-fc-cache -vf
@@ -24,7 +24,7 @@ GITHUB_RELEASES=https://api.github.com/repos/$(USER)/$(REPO)/releases
 
 .PHONY: update version versions
 update:
-	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_RELEASES) | jq -r .[0].tag_name))
+	$(eval NEW_VERSION := $(shell curl -sL $(GITHUB_RELEASES) | jq -r .[0].tag_name))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) install

@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-VERSION=jq-1.6
+VERSION=jq-1.7.1
 GITHUB=https://github.com/stedolan/jq
 INSTALL_DIR=$(HOME)/.local
 
@@ -34,7 +34,7 @@ GITHUB_RELEASES = https://api.github.com/repos/stedolan/jq/releases
 
 .PHONY: update
 update:
-	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_RELEASES) | jq -r .[0].tag_name))
+	$(eval NEW_VERSION := $(shell curl -sL $(GITHUB_RELEASES) | jq -r .[0].tag_name))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) install

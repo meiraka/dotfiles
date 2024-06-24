@@ -1,7 +1,7 @@
 .PHONY: install uninstall
 all: install
 
-VERSION=v4.33.3
+VERSION=v4.43.1
 INSTALL_DIR=$(HOME)/.local
 
 USER=mikefarah
