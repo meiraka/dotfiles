@@ -1,23 +1,29 @@
 #!/bin/sh
 
-DESC=$(pactl --format=json list 2> /dev/null | jq -r '.sinks[] | select(.state=="RUNNING") | .description')
 
 
-vol() {
-    pactl --format=json list 2> /dev/null | jq -r '.sinks[] | select(.state=="RUNNING") | .volume.[].value_percent' | head -n 1 | sed 's/%//g'
+notify() {
+    NAME=$(pactl get-default-sink)
+    INFO=$(pactl --format=json list 2> /dev/null | jq '.sinks[] | select(.name=="'"$NAME"'")')
+    DESC=$(echo "$INFO" | jq -r '.properties."device.description"')
+    ICON=$(echo "$INFO" | jq -r '.properties."device.icon_name"')
+    VOL=$(echo "$INFO" | jq -r '.volume.[].value_percent' | head -n 1 | sed 's/%//g')
+    SHORT_ICON=$(echo "$ICON" | sed 's/\([a-z]\+\)-\([a-z]\+\).\+/\1-\2/g')
+    dunstify "Volume" "$DESC" -i "$SHORT_ICON" -h in"t:value:$VOL"
 }
 
 up() {
     pactl set-sink-volume 0 +3%
-    dunstify "$DESC: " -h int:value:`vol`
+    notify
 }
 
 down() {
     pactl set-sink-volume 0 -3%
-    dunstify "$DESC: " -h int:value:`vol`
+    notify
 }
 
 case "$1" in
     "up") up ;;
     "down") down ;;
+    "notify") notify ;;
 esac
