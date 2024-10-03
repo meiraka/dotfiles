@@ -13,12 +13,12 @@ notify() {
 }
 
 up() {
-    pactl set-sink-volume 0 +3%
+    pactl set-sink-volume 0 +1%
     notify
 }
 
 down() {
-    pactl set-sink-volume 0 -3%
+    pactl set-sink-volume 0 -1%
     notify
 }
 
