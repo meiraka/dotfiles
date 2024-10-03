@@ -5,7 +5,7 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=tmux
 REPO=tmux
-VERSION=3.4
+VERSION=3.5
 
 ARCHIVE=tmux-$(VERSION).tar.gz
 WORKDIR=$(REPO)-$(VERSION)

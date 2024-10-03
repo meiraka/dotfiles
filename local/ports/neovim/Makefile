@@ -5,7 +5,7 @@ INSTALL_PREFIX?=$(HOME)/.local
 
 USER=neovim
 REPO=neovim
-VERSION=v0.9.5
+VERSION=v0.10.2
 
 ARCHIVE=$(VERSION).tar.gz
 WORKDIR=$(REPO)-$(patsubst v%,%,$(VERSION))

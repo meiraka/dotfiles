@@ -1,7 +1,7 @@
 .PHONY: clean install
 all: install
 
-VERSION=go1.22.2
+VERSION=go1.23.2
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 

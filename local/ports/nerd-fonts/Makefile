@@ -1,7 +1,7 @@
 .PHONY: all install
 USER=ryanoasis
 REPO=nerd-fonts
-VERSION=v3.2.0
+VERSION=v3.2.1
 INSTALL_DIR = $(HOME)/.local
 
 ARCHIVES=NerdFontsSymbolsOnly-$(VERSION).zip
