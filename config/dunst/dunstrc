@@ -5,9 +5,9 @@
     fullscreen = pushback
 
     width = 500
-    height = 200
+    height = (0, 200)
     origin = top-right
-    offset = 10x50
+    offset = (10, 50)
 
     corner_radius = 15 # 18 (picom corner-radius) - 3(frame_width)
     text_icon_padding = 12
