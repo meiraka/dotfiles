@@ -75,8 +75,8 @@ scratchpads =
       large,
     NS
       "sound"
-      "pavucontrol --name soundScratchpad"
-      (resource =? "soundScratchpad")
+      "pavucontrol"
+      (resource =? "pavucontrol")
       middle,
     NS
       "wallpaper"
