@@ -14,8 +14,9 @@ export CLICOLOR=1
 export LANG=ja_JP.UTF-8
 export LC_LANG=${LANG}
 export LC_ALL=${LANG}
-if which nvim > /dev/null 2>&1; then
-    export VISUAL=nvim
+editor=$(which nvim)
+if [[ $? -eq 0 ]]; then
+    export VISUAL="${editor}"
 fi
 
 export ALSOFT_DRIVERS=pulse
