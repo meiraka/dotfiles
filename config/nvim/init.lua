@@ -150,7 +150,7 @@ vim.keymap.set("n", "<leader>l", function() require("trouble").toggle() end)
 
 vim.keymap.set('n', '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>')
 vim.keymap.set('n', 'ff', '<cmd>Files<cr>')
-vim.opt.mouse = nil
+vim.opt.mouse = ""
 vim.cmd([[
 command LspDefinition lua vim.lsp.buf.definition()
 command LspFormat lua vim.lsp.buf.format { async = true }
