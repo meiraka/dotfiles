@@ -17,6 +17,7 @@ require("lazy").setup({
     },
     { 'junegunn/fzf', build = ':call fzf#install()' },
     { 'junegunn/fzf.vim' },
+    { 'mechatroner/rainbow_csv' },
     { 'mattn/vim-goimports' },
     { 'neovim/nvim-lspconfig',
         dependencies = {
