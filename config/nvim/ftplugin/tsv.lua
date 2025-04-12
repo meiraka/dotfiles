@@ -4,35 +4,36 @@ vim.opt.expandtab = false
 vim.opt.listchars = "tab:--|,trail:·,precedes:…,extends:…,nbsp:‗"
 vim.opt.list = true
 
-local updateVTS = function(vts, istr)
-    for index, str in pairs(vim.split(istr, "\t")) do
+local calcVTS = function(vts, row)
+    for index, str in pairs(vim.split(vim.fn.getline(row), "\t")) do
         local current = vim.fn.strcharlen(str) + 1
         local old = vts[index] or 0
         if old < current then
             vts[index] = current
         end
-        index = index + 1
     end
     return vts
 end
 
-SetVTS = function()
-    local t = 30
-    local maxline = t
-    local tbl = {}
-    local i = 1
-    while i < maxline do
-        tbl = updateVTS(tbl, vim.fn.getline(i))
-        i = i + 1
+
+SetVTS = function(s, e)
+    local vts = {}
+    for i, v in ipairs(vim.opt.vts:get()) do
+        vts[i] = tonumber(v)
     end
-    local arg = ""
-    for k, v in ipairs(tbl) do
-        if k ~= 1 then
-            arg = arg .. ","
-        end
-        arg = arg .. v
+    for i = s, e do
+        vts = calcVTS(vts, i)
     end
-    vim.opt.vts = arg
+    vim.opt.vts = vts
 end
 
-SetVTS()
+SetVTS(1, 81)
+
+local tsvUpdateEvents = {
+    callback = function()
+        local line = vim.api.nvim_win_get_cursor(0)[1]
+        SetVTS(line, line + 1)
+    end
+}
+vim.api.nvim_create_autocmd("TextChangedI", tsvUpdateEvents)
+vim.api.nvim_create_autocmd("TextChanged", tsvUpdateEvents)
