@@ -18,13 +18,13 @@ end
 
 SetVTS = function(s, e)
     local vts = {}
-    for i, v in ipairs(vim.opt.vts:get()) do
+    for i, v in ipairs(vim.opt_local.vts:get()) do
         vts[i] = tonumber(v)
     end
     for i = s, e do
         vts = calcVTS(vts, i)
     end
-    vim.opt.vts = vts
+    vim.opt_local.vts = vts
 end
 
 SetVTS(1, 81)
