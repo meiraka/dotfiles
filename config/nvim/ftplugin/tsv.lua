@@ -1,8 +1,8 @@
-vim.opt.tabstop = 8
-vim.opt.wrap = false
-vim.opt.expandtab = false
-vim.opt.listchars = "tab:--|,trail:·,precedes:…,extends:…,nbsp:‗"
-vim.opt.list = true
+vim.opt_local.tabstop = 8
+vim.opt_local.wrap = false
+vim.opt_local.expandtab = false
+vim.opt_local.listchars = "tab:--|,trail:·,precedes:…,extends:…,nbsp:‗"
+vim.opt_local.list = true
 
 local calcVTS = function(vts, row)
     for index, str in pairs(vim.split(vim.fn.getline(row), "\t")) do
