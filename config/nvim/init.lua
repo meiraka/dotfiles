@@ -1,25 +1,28 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
-    { "rebelot/kanagawa.nvim", config = function()
+    {
+        "rebelot/kanagawa.nvim",
+        config = function()
             vim.cmd('colorscheme kanagawa')
         end,
     },
-    { 'junegunn/fzf', build = ':call fzf#install()' },
+    { 'junegunn/fzf',           build = ':call fzf#install()' },
     { 'junegunn/fzf.vim' },
     { 'mechatroner/rainbow_csv' },
     { 'mattn/vim-goimports' },
-    { 'neovim/nvim-lspconfig',
+    {
+        'neovim/nvim-lspconfig',
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
@@ -31,16 +34,12 @@ require("lazy").setup({
         config = function()
             require('mason').setup()
             require("mason-lspconfig").setup()
-            require('mason-lspconfig').setup_handlers({ function(server)
-                require('lspconfig')[server].setup({
-                    capabilities = require('cmp_nvim_lsp').default_capabilities(),
-                    settings = {
-                        Lua = { diagnostics = { globals = { 'vim' } } }, -- suppress neovim's undefined global `vim`
-                    },
-                })
-            end
+            vim.lsp.config("lua_ls", {
+                settings = {
+                    Lua = { diagnostics = { globals = { 'vim' } } }, -- suppress neovim's undefined global `vim`
+                },
             })
-            require('lspconfig').hls.setup({
+            vim.lsp.config("hls", {
                 capabilities = require('cmp_nvim_lsp').default_capabilities(),
                 filetypes = { 'haskell', 'lhaskell', 'cabal' },
             })
@@ -61,29 +60,35 @@ require("lazy").setup({
             })
         end
     },
-    { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' }, config = function()
-        require('nvim-web-devicons').setup({})
-        -- laststatus = 3 errors with noice
-        -- vim.opt.laststatus = 3
-        vim.opt.laststatus = 2
-        require('lualine').setup({
-            options = {
-                -- globalstatus = true,
-                -- theme = 'gruvbox',
-                theme = 'kanagawa',
-            },
-            sections = {
-                lualine_a = { 'mode' },
-                lualine_b = { 'filetype' },
-                lualine_x = { 'diff' },
-                lualine_y = {},
-                lualine_z = { 'diagnostics' },
-            },
-        })
-    end },
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function()
+            require('nvim-web-devicons').setup({})
+            -- laststatus = 3 errors with noice
+            -- vim.opt.laststatus = 3
+            vim.opt.laststatus = 2
+            require('lualine').setup({
+                options = {
+                    -- globalstatus = true,
+                    -- theme = 'gruvbox',
+                    theme = 'kanagawa',
+                },
+                sections = {
+                    lualine_a = { 'mode' },
+                    lualine_b = { 'filetype' },
+                    lualine_x = { 'diff' },
+                    lualine_y = {},
+                    lualine_z = { 'diagnostics' },
+                },
+            })
+        end
+    },
     { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end },
     { 'tpope/vim-fugitive' },
-    { 'nvim-treesitter/nvim-treesitter', version = '*',
+    {
+        'nvim-treesitter/nvim-treesitter',
+        version = '*',
         build = ":TSUpdate",
         config = function()
             require('nvim-treesitter.configs').setup({
@@ -96,18 +101,26 @@ require("lazy").setup({
             })
         end
     },
-    { 'akinsho/toggleterm.nvim', version = '*', config = function()
-        require("toggleterm").setup({
-            insert_mappings = true,
-            terminal_mappings = true,
-        })
-    end },
-    { 'klen/nvim-test', config = function()
-        require('nvim-test').setup({
-            term = 'toggleterm',
-    })
-    end },
-    { 'nvim-telescope/telescope.nvim',
+    {
+        'akinsho/toggleterm.nvim',
+        version = '*',
+        config = function()
+            require("toggleterm").setup({
+                insert_mappings = true,
+                terminal_mappings = true,
+            })
+        end
+    },
+    {
+        'klen/nvim-test',
+        config = function()
+            require('nvim-test').setup({
+                term = 'toggleterm',
+            })
+        end
+    },
+    {
+        'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-telescope/telescope-file-browser.nvim',
             'nvim-lua/plenary.nvim',
@@ -124,11 +137,14 @@ require("lazy").setup({
             require('telescope').load_extension 'file_browser'
         end
     },
-    { 'folke/trouble.nvim',
+    {
+        'folke/trouble.nvim',
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
-            auto_open = true,
             auto_close = true,
+            modes = {
+                diagnostics = { auto_open = true },
+            },
         },
     },
     { 'elkowar/yuck.vim' },
@@ -136,8 +152,8 @@ require("lazy").setup({
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
 for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    local hl = 'DiagnosticSign' .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
 vim.g.mapleader = " "
