@@ -27,12 +27,17 @@ local go_tags = function(p)
         table.insert(args, '-tags=' .. t[i])
     end
 
-    require('lspconfig')['gopls'].setup({
+    vim.lsp.config('gopls', {
         capabilities = require('cmp_nvim_lsp').default_capabilities(),
         settings = {
             gopls = { buildFlags = flags },
         },
     })
+    -- restart gopls
+    for _, v in ipairs(vim.lsp.get_clients({ name = 'gopls' })) do
+        v.stop()
+    end
+    vim.defer_fn(function() vim.cmd("e") end, 100)
     require('nvim-test.runners.go-test'):setup {
         args = args
     }
