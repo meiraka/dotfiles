@@ -1,4 +1,4 @@
-export PATH=~/.cargo/bin:~/.local/bin:/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/opt/go/bin:~/.local/opt/node/bin:./node_modules/.bin:~/.local/opt/jdk/bin:~/.local/opt/zig
+export PATH=~/.cargo/bin:~/.local/bin:/usr/local/bin:~/bin:~/local/bin:$PATH:~/.local/opt/go/bin:~/.local/opt/nvim/bin:~/.local/opt/node/bin:./node_modules/.bin:~/.local/opt/jdk/bin:~/.local/opt/zig
 export LIBRARY_PATH=$HOME/.local/lib:/opt/homebrew/lib:$LIBRARY_PATH
 export CPATH=$HOME/.local/include:/opt/homebrew/include:$CPATH
 if [ -L ~/.local/opt/jdk ]; then

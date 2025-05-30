@@ -1,16 +1,19 @@
 .PHONY: clean install
 all:: install
 
-INSTALL_PREFIX?=$(HOME)/.local
 
 USER=neovim
 REPO=neovim
 VERSION=v0.11.1
 
+INSTALL_DIR=$(HOME)/.local/opt
+INSTALL_PREFIX?=$(INSTALL_DIR)/nvim-$(patsubst v%,%,$(VERSION))
+
 ARCHIVE=$(VERSION).tar.gz
 WORKDIR=$(REPO)-$(patsubst v%,%,$(VERSION))
 BIN=$(WORKDIR)/build/bin/nvim
 TARGET=$(INSTALL_PREFIX)/bin/nvim
+TARGET_LINK=$(INSTALL_DIR)/nvim
 GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
 _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
@@ -28,7 +31,13 @@ $(BIN): $(WORKDIR)
 $(TARGET): $(BIN)
 	cd $(WORKDIR); make install
 
-install: $(TARGET)
+$(TARGET_LINK): $(TARGET)
+	@touch $(TARGET_LINK)
+	@rm $(TARGET_LINK)
+	ln -si $(INSTALL_PREFIX) $(TARGET_LINK)
+
+
+install: $(TARGET_LINK)
 
 .PHONY: update version versions
 update:
@@ -47,5 +56,6 @@ clean:
 	rm -rf *.tar.gz
 	rm -rf neovim-*
 
+INSTALLED=$(notdir $(shell readlink $(TARGET_LINK)))
 installed:
-	@$(TARGET) -v | head -n 1 | sed 's/NVIM //g'
+	@echo $(patsubst nvim-%,v%,$(INSTALLED))
