@@ -1,11 +1,10 @@
 # display
-# set 144hz
-xrandr --output DP-4 --mode 2560x1440 -r 144
+xrandr --output DP-0 --mode 3840x2160 -r 100
 nvidia-settings --load-config-only &
 
 # compositor
 if ! pgrep picom; then
-    picom -b --xrender-sync-fence &
+    picom -b &
 fi
 
 # dock
