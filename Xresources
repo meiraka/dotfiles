@@ -29,4 +29,4 @@ Xft.autohint: false
 Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
-Xft.dpi: 108
+Xft.dpi: 192
