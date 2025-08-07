@@ -143,11 +143,29 @@ require("lazy").setup({
         opts = {
             auto_close = true,
             modes = {
-                diagnostics = { auto_open = true },
+                diagnostics = {
+                    auto_open = true,
+                    preview = {
+                        type = "float",
+                        relative = "editor",
+                        border = "rounded",
+                        title = "Preview",
+                        title_pos = "center",
+                        position = { 0, -2 },
+                        size = { width = 0.3, height = 0.3 },
+                        zindex = 200,
+                    },
+                },
             },
         },
     },
     { 'elkowar/yuck.vim' },
+})
+
+vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+    callback = function()
+        vim.cmd([[Trouble qflist open]])
+    end,
 })
 
 local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
