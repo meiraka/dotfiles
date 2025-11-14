@@ -2,6 +2,9 @@
 xrandr --output DP-0 --mode 3840x2160 -r 100
 nvidia-settings --load-config-only &
 
+# mouse
+xinput --set-prop 'Kingsis Peripherals ZOWIE Gaming mouse' 'libinput Accel Profile Enabled' 0, 1
+
 # compositor
 if ! pgrep picom; then
     picom -b &
