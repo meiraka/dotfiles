@@ -9,6 +9,10 @@ return {
             'hrsh7th/cmp-vsnip',
             'hrsh7th/vim-vsnip',
         },
+        keys = {
+            { '<leader>r', vim.lsp.buf.rename, desc = 'rename' },
+        },
+        event = { "BufReadPre", "BufNewFile" },
         config = function()
             require('mason').setup()
             require("mason-lspconfig").setup()

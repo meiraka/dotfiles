@@ -21,42 +21,45 @@ return {
                 hijack_netrw = true,
             })
             require('telescope').load_extension 'file_browser'
-        end
+        end,
+        keys = {
+            -- { '<leader>f', '<cmd>Telescope file_browser<cr>', desc = 'browse files' },
+            -- { '<leader>g', '<cmd>Telescope live_grep<cr>',    desc = 'grep files' },
+        },
     },
-    { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end },
+    { 'lewis6991/gitsigns.nvim' },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
-        config = function()
+        opts = {
+            options = {
+                -- globalstatus = true,
+                -- theme = 'gruvbox',
+                theme = 'kanagawa',
+            },
+            sections = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'filetype' },
+                lualine_x = { 'diff' },
+                lualine_y = {},
+                lualine_z = { 'diagnostics' },
+            },
+        },
+        config = function(_, opts)
             require('nvim-web-devicons').setup({})
-            -- laststatus = 3 errors with noice
-            -- vim.opt.laststatus = 3
-            vim.opt.laststatus = 2
-            require('lualine').setup({
-                options = {
-                    -- globalstatus = true,
-                    -- theme = 'gruvbox',
-                    theme = 'kanagawa',
-                },
-                sections = {
-                    lualine_a = { 'mode' },
-                    lualine_b = { 'filetype' },
-                    lualine_x = { 'diff' },
-                    lualine_y = {},
-                    lualine_z = { 'diagnostics' },
-                },
-            })
+            require('lualine').setup(opts)
         end
     },
     {
         'akinsho/toggleterm.nvim',
         version = '*',
-        config = function()
-            require("toggleterm").setup({
-                insert_mappings = true,
-                terminal_mappings = true,
-            })
-        end
+        opts = {
+            insert_mappings = true,
+            terminal_mappings = true,
+        },
+        keys = {
+            { '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>', desc = 'toggle terminal' },
+        },
     },
     {
         'folke/trouble.nvim',
@@ -77,40 +80,20 @@ return {
                         zindex = 200,
                     },
                 },
+                lsp = {
+                    focus = true,
+                    win = { position = 'right', size = 0.3 },
+                },
             },
         },
         cmd = "Trouble",
         keys = {
-            {
-               "<leader>xx",
-                "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics (Trouble)",
-            },
-            {
-                "<leader>xX",
-                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-                desc = "Buffer Diagnostics (Trouble)",
-            },
-            {
-                "<leader>cs",
-                "<cmd>Trouble symbols toggle focus=false<cr>",
-                desc = "Symbols (Trouble)",
-            },
-            {
-                "<leader>cl",
-                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-                desc = "LSP Definitions / references / ... (Trouble)",
-            },
-            {
-                "<leader>xl",
-                "<cmd>Trouble loclist toggle<cr>",
-                desc = "Location List (Trouble)",
-            },
-            {
-                "<leader>xq",
-                "<cmd>Trouble qflist toggle<cr>",
-                desc = "Quickfix List (Trouble)",
-            },
+            { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Diagnostics (Trouble)", },
+            { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)", },
+            { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",      desc = "Symbols (Trouble)", },
+            { "<leader>h",  "<cmd>Trouble lsp toggle<cr>",                      desc = "LSP Definitions / references / ... (Trouble)", },
+            { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                  desc = "Location List (Trouble)", },
+            { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                   desc = "Quickfix List (Trouble)", },
         },
     },
 }
