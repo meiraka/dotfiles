@@ -1,7 +1,7 @@
 .PHONY: install uninstall
 all: install
 
-VERSION=v12.12.0
+VERSION=v12.13.0
 INSTALL_DIR=$(HOME)/.local
 
 USER=tsenart

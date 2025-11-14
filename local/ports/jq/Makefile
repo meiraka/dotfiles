@@ -1,7 +1,7 @@
 .PHONY: install
 all: install
 
-VERSION=jq-1.7.1
+VERSION=jq-1.8.1
 GITHUB=https://github.com/stedolan/jq
 INSTALL_DIR=$(HOME)/.local
 

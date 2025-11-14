@@ -1,7 +1,7 @@
 .PHONY: clean install
 install: link
 
-VERSION=v22.9.0
+VERSION=v25.2.0
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
