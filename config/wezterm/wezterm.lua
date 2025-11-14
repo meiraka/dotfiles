@@ -144,9 +144,6 @@ wezterm.on("toggle-tabbar", function(window, _)
 end)
 
 local font_size = 12
-if string.find(wezterm.target_triple, "apple%-darwin") then
-    font_size = 9
-end
 
 return {
     audible_bell = "Disabled",
@@ -155,6 +152,7 @@ return {
     font = myFont,
     font_size = font_size,
     font_rules = { { italic = true, font = myFont } },
+    dpi = 192,
     disable_default_key_bindings = true,
     leader = myLeader,
     macos_window_background_blur = 20,
