@@ -11,6 +11,7 @@ return {
         },
         keys = {
             { '<leader>r', vim.lsp.buf.rename, desc = 'rename' },
+            { '<leader>d', vim.lsp.buf.definition , desc = 'jump to definition' },
         },
         event = { "BufReadPre", "BufNewFile" },
         config = function()

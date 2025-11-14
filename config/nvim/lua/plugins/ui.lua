@@ -58,7 +58,36 @@ return {
             terminal_mappings = true,
         },
         keys = {
-            { '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>', desc = 'toggle terminal' },
+            -- { '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>', desc = 'toggle terminal' },
+        },
+    },
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            bigfile = { enabled = true },
+            explorer = { enabled = true },
+            image = { enabled = true },
+            indent = { enabled = true },
+            input = { enabled = true },
+            picker = { enabled = true },
+            notifier = { enabled = true },
+            quickfile = { enabled = true },
+            scope = { enabled = true },
+            statuscolumn = { enabled = true },
+            terminal = {
+                enabled = true,
+                win = { position = 'float' },
+                start_insert = false,
+                auto_insert = false,
+            },
+            words = { enabled = true },
+        },
+        keys = {
+            { "<leader><space>", function() Snacks.picker.smart({ filter = { cwd = true } }) end, desc = "Smart Find Files" },
+            { "<leader>/",       function() Snacks.picker.grep() end,                       desc = "Grep" },
+            { "<c-t>",           function() Snacks.terminal() end,                          desc = "Toggle Terminal" },
         },
     },
     {
