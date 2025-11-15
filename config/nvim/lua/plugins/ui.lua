@@ -5,28 +5,6 @@ return {
             vim.cmd('colorscheme kanagawa')
         end,
     },
-    {
-        'nvim-telescope/telescope.nvim',
-        dependencies = {
-            'nvim-telescope/telescope-file-browser.nvim',
-            'nvim-lua/plenary.nvim',
-        },
-        config = function()
-            if vim.fn.executable('rg') == 0 then
-                if vim.fn.executable('cargo') == 1 then
-                    vim.fn.jobstart('cargo install ripgrep')
-                end
-            end
-            require('telescope').setup({
-                hijack_netrw = true,
-            })
-            require('telescope').load_extension 'file_browser'
-        end,
-        keys = {
-            -- { '<leader>f', '<cmd>Telescope file_browser<cr>', desc = 'browse files' },
-            -- { '<leader>g', '<cmd>Telescope live_grep<cr>',    desc = 'grep files' },
-        },
-    },
     { 'lewis6991/gitsigns.nvim' },
     {
         'nvim-lualine/lualine.nvim',
