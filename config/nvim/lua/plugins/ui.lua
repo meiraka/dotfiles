@@ -34,7 +34,10 @@ return {
         lazy = false,
         opts = {
             bigfile = { enabled = true },
-            explorer = { enabled = true },
+            explorer = {
+                enabled = true,
+                replace_netrw = true,
+            },
             image = { enabled = true },
             indent = { enabled = true },
             input = { enabled = true },
@@ -56,6 +59,7 @@ return {
             { "<leader>/",       function() Snacks.picker.grep() end,                             desc = "Grep" },
             { "<c-t>",           function() Snacks.terminal() end,                                desc = "Toggle Terminal" },
             { "<leader>nn",      function() Snacks.notifier.show_history() end,                   desc = "Notification history" },
+            { "<leader><Tab>",   function() Snacks.explorer() end,                                desc = "Tree" },
         },
     },
     {
