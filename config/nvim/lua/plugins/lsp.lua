@@ -19,7 +19,7 @@ return {
             require("mason-lspconfig").setup()
             vim.lsp.config("lua_ls", {
                 settings = {
-                    Lua = { diagnostics = { globals = { 'vim' } } }, -- suppress neovim's undefined global `vim`
+                    Lua = { diagnostics = { globals = { 'vim', 'Snacks' } } },
                 },
             })
             vim.lsp.config("hls", {

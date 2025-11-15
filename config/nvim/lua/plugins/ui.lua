@@ -53,8 +53,9 @@ return {
         },
         keys = {
             { "<leader><space>", function() Snacks.picker.smart({ filter = { cwd = true } }) end, desc = "Smart Find Files" },
-            { "<leader>/",       function() Snacks.picker.grep() end,                       desc = "Grep" },
-            { "<c-t>",           function() Snacks.terminal() end,                          desc = "Toggle Terminal" },
+            { "<leader>/",       function() Snacks.picker.grep() end,                             desc = "Grep" },
+            { "<c-t>",           function() Snacks.terminal() end,                                desc = "Toggle Terminal" },
+            { "<leader>nn",      function() Snacks.notifier.show_history() end,                   desc = "Notification history" },
         },
     },
     {
