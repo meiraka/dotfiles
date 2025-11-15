@@ -29,17 +29,6 @@ return {
         end
     },
     {
-        'akinsho/toggleterm.nvim',
-        version = '*',
-        opts = {
-            insert_mappings = true,
-            terminal_mappings = true,
-        },
-        keys = {
-            -- { '<c-t>', '<Cmd>exe v:count1 . "ToggleTerm"<CR>', desc = 'toggle terminal' },
-        },
-    },
-    {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
