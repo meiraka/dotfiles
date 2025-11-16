@@ -71,7 +71,10 @@ return {
                 replace_netrw = true,
             },
             image = { enabled = true },
-            indent = { enabled = true },
+            indent = {
+                enabled = true,
+                animate = { enabled = false },
+            },
             input = { enabled = true },
             picker = { enabled = true },
             notifier = { enabled = true },
