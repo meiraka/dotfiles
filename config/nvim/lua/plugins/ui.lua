@@ -29,6 +29,26 @@ return {
         end
     },
     {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+            win = {
+                width = 0.8,
+                col = 0.5,
+                border = "rounded",
+            },
+        },
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
+    },
+    {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
