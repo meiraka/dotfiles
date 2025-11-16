@@ -1,6 +1,8 @@
 return {
     {
         "rebelot/kanagawa.nvim",
+        lazy = false,
+        priority = 1000,
         config = function()
             vim.cmd('colorscheme kanagawa')
         end,
@@ -24,7 +26,6 @@ return {
         opts = {
             options = {
                 -- globalstatus = true,
-                -- theme = 'gruvbox',
                 theme = 'kanagawa',
             },
             sections = {
@@ -35,10 +36,6 @@ return {
                 lualine_z = { 'diagnostics' },
             },
         },
-        config = function(_, opts)
-            require('nvim-web-devicons').setup({})
-            require('lualine').setup(opts)
-        end
     },
     {
         "folke/which-key.nvim",
@@ -62,8 +59,8 @@ return {
     },
     {
         "folke/snacks.nvim",
-        priority = 1000,
         lazy = false,
+        priority = 900,
         opts = {
             bigfile = { enabled = true },
             explorer = {

@@ -1,4 +1,4 @@
 return {
-    { 'junegunn/fzf',      build = ':call fzf#install()' },
-    { 'tpope/vim-fugitive' },
+    { 'junegunn/fzf',       event = 'VeryLazy', build = ':call fzf#install()', },
+    { 'tpope/vim-fugitive', event = 'VeryLazy', },
 }
