@@ -9,10 +9,12 @@ return {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { "<leader>gh", function() require('gitsigns').stage_hunk() end,                                       mode = { "n" }, desc = "Git stage hunk" },
-            { "<leader>gH", function() require('gitsigns').reset_hunk() end,                                       mode = { "n" }, desc = "Git reset hunk" },
-            { "gh",         function() require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, mode = { "v" }, desc = "Git stage hunk" },
-            { "gH",         function() require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, mode = { "v" }, desc = "Git reset hunk" },
+            { "<leader>gh", function() require('gitsigns').stage_hunk() end,                                       mode = { "n" },           desc = "Git stage hunk" },
+            { "<leader>gH", function() require('gitsigns').reset_hunk() end,                                       mode = { "n" },           desc = "Git reset hunk" },
+            { "gh",         function() require('gitsigns').stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, mode = { "v" },           desc = "Git stage hunk" },
+            { "gH",         function() require('gitsigns').reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end, mode = { "v" },           desc = "Git reset hunk" },
+            { "<leader>ga", function() require('gitsigns').stage_buffer() end,                                     desc = "Git stage buffer" },
+            { "<leader>gr", function() require('gitsigns').reset_buffer() end,                                     desc = "Git reset buffer" },
         },
     },
     {
