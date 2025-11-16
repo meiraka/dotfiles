@@ -10,8 +10,8 @@ return {
             'hrsh7th/vim-vsnip',
         },
         keys = {
-            { '<leader>r', vim.lsp.buf.rename, desc = 'rename' },
-            { '<leader>d', vim.lsp.buf.definition , desc = 'jump to definition' },
+            { '<leader>r', vim.lsp.buf.rename, desc = 'LSP Rename' },
+            { '<leader>d', vim.lsp.buf.definition , desc = 'LSP Definition' },
         },
         event = { "BufReadPre", "BufNewFile" },
         config = function()

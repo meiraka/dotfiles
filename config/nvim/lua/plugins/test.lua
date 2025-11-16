@@ -15,7 +15,7 @@ return {
             term = 'toggleterm',
         },
         keys = {
-            { '<leader>t', '<cmd>TestNearest<cr>', desc = 'run test' },
+            { '<leader>t', '<cmd>TestNearest<cr>', desc = 'Run Test' },
         },
     },
 }
