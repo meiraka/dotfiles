@@ -46,6 +46,13 @@ return {
                 col = 0.5,
                 border = "rounded",
             },
+            spec = {
+                { "<leader>g", group = "Git" },
+                { "<leader>f", group = "Find" },
+                { "<leader>x", group = "Diagnostics, Quickfix, Loclist" },
+                { "<leader>l", group = "LSP" },
+            },
+
         },
         keys = {
             {
@@ -90,8 +97,8 @@ return {
             { "<c-t>",           function() Snacks.terminal() end,                                       desc = "Terminal" },
             -- Top Pickers & Explorer
             { "<leader><space>", function() Snacks.picker.smart({ filter = { cwd = true } }) end,        desc = "Smart Find Files" },
-            { "<leader>,",       function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
-            { "<leader>/",       function() Snacks.picker.grep() end,                                    desc = "Grep" },
+            { "<leader>,",       function() Snacks.picker.buffers() end,                                 desc = "List Buffers" },
+            { "<leader>/",       function() Snacks.picker.grep() end,                                    desc = "Grep Files" },
             { "<leader>:",       function() Snacks.picker.command_history() end,                         desc = "Command History" },
             { "<leader>e",       function() Snacks.explorer() end,                                       desc = "File Explorer" },
 
@@ -111,15 +118,13 @@ return {
             { "<leader>gd",      function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
             { "<leader>gf",      function() Snacks.picker.git_log_file() end,                            desc = "Git Log File" },
             -- LSP
-            { "gd",              function() Snacks.picker.lsp_definitions() end,                         desc = "Goto Definition" },
-            { "gD",              function() Snacks.picker.lsp_declarations() end,                        desc = "Goto Declaration" },
-            { "gr",              function() Snacks.picker.lsp_references() end,                          nowait = true,                     desc = "References" },
-            { "gI",              function() Snacks.picker.lsp_implementations() end,                     desc = "Goto Implementation" },
-            { "gy",              function() Snacks.picker.lsp_type_definitions() end,                    desc = "Goto T[y]pe Definition" },
-            { "gai",             function() Snacks.picker.lsp_incoming_calls() end,                      desc = "C[a]lls Incoming" },
-            { "gao",             function() Snacks.picker.lsp_outgoing_calls() end,                      desc = "C[a]lls Outgoing" },
-            { "<leader>ss",      function() Snacks.picker.lsp_symbols() end,                             desc = "LSP Symbols" },
-            { "<leader>sS",      function() Snacks.picker.lsp_workspace_symbols() end,                   desc = "LSP Workspace Symbols" },
+            { "<leader>ld",      function() Snacks.picker.lsp_definitions() end,                         desc = "LSP Definition" },
+            { "<leader>lD",      function() Snacks.picker.lsp_declarations() end,                        desc = "LSP Declaration" },
+            { "<leader>lr",      function() Snacks.picker.lsp_references() end,                          nowait = true,                     desc = "LSP References" },
+            { "<leader>li",      function() Snacks.picker.lsp_implementations() end,                     desc = "LSP Implementation" },
+            { "<leader>lt",      function() Snacks.picker.lsp_type_definitions() end,                    desc = "LSP Type Definition" },
+            { "<leader>ls",      function() Snacks.picker.lsp_symbols() end,                             desc = "LSP Symbols" },
+            { "<leader>lS",      function() Snacks.picker.lsp_workspace_symbols() end,                   desc = "LSP Workspace Symbols" },
             -- Other
             { "<leader>cR",      function() Snacks.rename.rename_file() end,                             desc = "Rename File" },
             { "<leader>n",       function() Snacks.notifier.show_history() end,                          desc = "Notification history" },
@@ -155,10 +160,10 @@ return {
         },
         cmd = "Trouble",
         keys = {
-            { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",              desc = "List Diagnostics", },
-            { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "List Diagnostics/Buffer", },
-            { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",      desc = "List Symbols", },
-            { "<leader>h",  "<cmd>Trouble lsp toggle<cr>",                      desc = "List LSP References", },
+            { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Diagnostics", },
+            { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics/Buffer", },
+            -- { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",      desc = "List Symbols", },
+            { "<leader>h",  "<cmd>Trouble lsp toggle<cr>",                      desc = "LSP References", },
             { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                  desc = "Location List", },
             { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                   desc = "Quickfix List", },
         },
