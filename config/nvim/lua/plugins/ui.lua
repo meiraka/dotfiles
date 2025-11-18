@@ -68,6 +68,13 @@ return {
         "folke/snacks.nvim",
         lazy = false,
         priority = 900,
+        build = function()
+            if vim.fn.executable('rg') == 0 then
+                if vim.fn.executable('cargo') == 1 then
+                    vim.fn.jobstart('cargo install ripgrep')
+                end
+            end
+        end,
         opts = {
             bigfile = { enabled = true },
             explorer = {
