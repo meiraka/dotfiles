@@ -79,34 +79,34 @@ wezterm.on('update-status', function(window, pane)
     local right = {}
 
     -- vcs info from zshprompt
-    local vcs = pane:get_user_vars().VCS
-    if vcs ~= nil and vcs ~= "" then
-        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
-        local repo = pane:get_user_vars().VCS_REPO
+    -- local vcs = pane:get_user_vars().VCS
+    -- if vcs ~= nil and vcs ~= "" then
+    --     powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
+    --     local repo = pane:get_user_vars().VCS_REPO
 
-        if string.find(repo, "github.com") then
-            table.insert(right, { Foreground = { Color = "#FFFFF" } })
-            table.insert(right, { Text = wezterm.nerdfonts.dev_github_badge .. ' ' })
-        else
-            table.insert(right, { Foreground = { Color = "#F1502F" } })
-            table.insert(right, { Text = wezterm.nerdfonts.dev_git .. ' ' })
-        end
-        table.insert(right, { Foreground = { Color = myColors.foreground } })
-        table.insert(right, { Text = repo .. ' ' })
-        powerline.right_soft(right, myColors.background)
+    --     if string.find(repo, "github.com") then
+    --         table.insert(right, { Foreground = { Color = "#FFFFF" } })
+    --         table.insert(right, { Text = wezterm.nerdfonts.dev_github_badge .. ' ' })
+    --     else
+    --         table.insert(right, { Foreground = { Color = "#F1502F" } })
+    --         table.insert(right, { Text = wezterm.nerdfonts.dev_git .. ' ' })
+    --     end
+    --     table.insert(right, { Foreground = { Color = myColors.foreground } })
+    --     table.insert(right, { Text = repo .. ' ' })
+    --     powerline.right_soft(right, myColors.background)
 
-        local branch = pane:get_user_vars().VCS_BRANCH
-        local default_branch = pane:get_user_vars().VCS_DEFAULT_BRANCH
-        if branch == default_branch then -- main branch
-            table.insert(right, { Foreground = { Color = myColors.ansi[4] } })
-            table.insert(right, { Text = wezterm.nerdfonts.dev_git_merge .. ' ' })
-        else
-            table.insert(right, { Foreground = { Color = myColors.ansi[7] } })
-            table.insert(right, { Text = wezterm.nerdfonts.dev_git_branch .. ' ' })
-        end
-        table.insert(right, { Foreground = { Color = myColors.foreground } })
-        table.insert(right, { Text = branch .. ' ' })
-    end
+    --     local branch = pane:get_user_vars().VCS_BRANCH
+    --     local default_branch = pane:get_user_vars().VCS_DEFAULT_BRANCH
+    --     if branch == default_branch then -- main branch
+    --         table.insert(right, { Foreground = { Color = myColors.ansi[4] } })
+    --         table.insert(right, { Text = wezterm.nerdfonts.dev_git_merge .. ' ' })
+    --     else
+    --         table.insert(right, { Foreground = { Color = myColors.ansi[7] } })
+    --         table.insert(right, { Text = wezterm.nerdfonts.dev_git_branch .. ' ' })
+    --     end
+    --     table.insert(right, { Foreground = { Color = myColors.foreground } })
+    --     table.insert(right, { Text = branch .. ' ' })
+    -- end
 
     -- kube context from zshprompt
     local context = pane:get_user_vars().KUBE_CONTEXT

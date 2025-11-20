@@ -31,10 +31,10 @@ return {
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = {},
-                lualine_c = { { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' }, { 'filename', padding = { right = 1 }, separator = '' } , 'diff'},
+                lualine_c = { { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' }, { 'filename', padding = { left = 1 }, separator = '' } , 'diff'},
                 lualine_x = { 'diagnostics' },
                 lualine_y = { 'b:gitsigns_status_dict.root' },
-                lualine_z = { { 'branch', icons_enabled = false } },
+                lualine_z = { { 'b:gitsigns_status_dict.head' } },
             },
         },
     },

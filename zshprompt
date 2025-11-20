@@ -61,6 +61,7 @@ function prompt_vcs_info() {
             PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
         fi
     fi
+    RPROMPT="${PROMPT_VCS_INFO}"
 }
 
 add-zsh-hook precmd prompt_kube_info
