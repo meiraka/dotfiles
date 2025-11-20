@@ -25,7 +25,6 @@ prompt_arrow="❱ "
 #prompt_red=$(prompt_color fg '#e27878')
 #prompt_green=$(prompt_color fg '#89b8c2')
 #prompt_yellow=$(prompt_color fg '#e2a478')
-prompt_gray=$(prompt_color fg '#aaaaaa')
 prompt_reset=$(prompt_color reset)
 prompt_red=$(echo '%{\e[0;31m%}')
 prompt_green=$(echo '%{\e[0;32m%}')
@@ -34,6 +33,7 @@ prompt_yellow=$(echo '%{\e[0;33m%}')
 PROMPT2=". "
 RPROMPT=''
 SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
+ZLE_RPROMPT_INDENT=0
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_vcs_info
@@ -55,11 +55,7 @@ function prompt_vcs_info() {
         set_user_var VCS_REPO "${VCS_REPO_TEXT}"
         set_user_var VCS_BRANCH "${VCS_BRANCH_TEXT}"
         set_user_var VCS_DEFAULT_BRANCH "${VCS_DEFAULT_BRANCH}"
-        if [ "${VCS_BRANCH_TEXT}" = "${VCS_DEFAULT_BRANCH}" ]; then
-            PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_yellow}${VCS_BRANCH_TEXT}${prompt_reset}"
-        else
-            PROMPT_VCS_INFO="${prompt_gray}${VCS_REPO_TEXT} ${prompt_green}${VCS_BRANCH_TEXT}${prompt_reset}"
-        fi
+        PROMPT_VCS_INFO="$(prompt_color fg '#7e9cd8')$(prompt_color bg '#7e9cd8')$(prompt_color fg '#1f1f28') ${VCS_REPO_TEXT} $(prompt_color fg '#7fb4ca')$(prompt_color bg '#7fb4ca')$(prompt_color fg '#1f1f28') ${VCS_BRANCH_TEXT} ${prompt_reset}"
     fi
     RPROMPT="${PROMPT_VCS_INFO}"
 }
