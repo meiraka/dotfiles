@@ -25,15 +25,16 @@ return {
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {
             options = {
-                -- globalstatus = true,
+                globalstatus = true,
                 theme = 'kanagawa',
             },
             sections = {
                 lualine_a = { 'mode' },
-                lualine_b = { 'filetype' },
-                lualine_x = { 'diff' },
-                lualine_y = {},
-                lualine_z = { 'diagnostics' },
+                lualine_b = {},
+                lualine_c = { { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' }, { 'filename', padding = { right = 1 }, separator = '' } , 'diff'},
+                lualine_x = { 'diagnostics' },
+                lualine_y = { 'b:gitsigns_status_dict.root' },
+                lualine_z = { { 'branch', icons_enabled = false } },
             },
         },
     },
