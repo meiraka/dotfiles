@@ -113,7 +113,6 @@ setopt transient_rprompt
 setopt print_exit_value
 setopt prompt_subst
 
-source ~/.zshprompt
 
 DISABLE_AUTO_TITLE="true"
 #
@@ -143,6 +142,6 @@ autoload -Uz _zinit
 
 # Additional completion
 zinit light zsh-users/zsh-completions
-# move to git base dir
-zinit light mollifier/cd-gitroot
-alias cdu=cd-gitroot
+zinit light mafredri/zsh-async
+
+source ~/.zshprompt

@@ -22,9 +22,6 @@ function set_user_var() {
 }
 
 prompt_arrow="❱ "
-#prompt_red=$(prompt_color fg '#e27878')
-#prompt_green=$(prompt_color fg '#89b8c2')
-#prompt_yellow=$(prompt_color fg '#e2a478')
 prompt_reset=$(prompt_color reset)
 prompt_red=$(echo '%{\e[0;31m%}')
 prompt_green=$(echo '%{\e[0;32m%}')
@@ -35,45 +32,76 @@ RPROMPT=''
 SPROMPT='${prompt_red}%{$suggest%}%B%r%b [y, n, a, e] > ${prompt_reset}'
 ZLE_RPROMPT_INDENT=0
 
+local VCS=""
+local VCS_REPO=""
+local VCS_BRANCH=""
 autoload -Uz add-zsh-hook
-add-zsh-hook precmd prompt_vcs_info
-function prompt_vcs_info() {
+add-zsh-hook precmd env_vcs_info
+function env_vcs_info() {
+    async_stop_worker env_vcs_info
+    async_start_worker env_vcs_info -n
+    async_register_callback env_vcs_info env_vcs_info_callback
+    async_job env_vcs_info env_vcs_info_async
+}
+function env_vcs_info_async() {
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
-        local VCS_TEXT="git"
-        local VCS_REPO_TEXT=$(git config --get remote.origin.url)
-        local VCS_BRANCH_TEXT=$(git rev-parse --abbrev-ref HEAD)
-        local VCS_DEFAULT_BRANCH=$(git rev-parse --abbrev-ref origin/HEAD 2> /dev/null | cut -c8-)
+        echo "git"
+        echo $(git config --get remote.origin.url)
+        echo $(git rev-parse --abbrev-ref HEAD)
+        return
     fi
-    if [ "${VCS_TEXT}" = "" ]; then
-        PROMPT_VCS_INFO=""
-        set_user_var VCS ""
-        set_user_var VCS_REPO ""
-        set_user_var VCS_BRANCH ""
-        set_user_var VCS_DEFAULT_BRANCH ""
-    else
-        set_user_var VCS "${VCS_TEXT}"
-        set_user_var VCS_REPO "${VCS_REPO_TEXT}"
-        set_user_var VCS_BRANCH "${VCS_BRANCH_TEXT}"
-        set_user_var VCS_DEFAULT_BRANCH "${VCS_DEFAULT_BRANCH}"
-        PROMPT_VCS_INFO="$(prompt_color fg '#7e9cd8')$(prompt_color bg '#7e9cd8')$(prompt_color fg '#1f1f28') ${VCS_REPO_TEXT} $(prompt_color fg '#7fb4ca')$(prompt_color bg '#7fb4ca')$(prompt_color fg '#1f1f28') ${VCS_BRANCH_TEXT} ${prompt_reset}"
-    fi
-    RPROMPT="${PROMPT_VCS_INFO}"
+    echo ""
+    echo ""
+    echo ""
+}
+function env_vcs_info_callback() {
+    VCS=$(echo "$3" | head -n1)
+    VCS_REPO=$(echo "$3" | head -n2 | tail -n1)
+    VCS_BRANCH=$(echo "$3" | head -n3 | tail -n1)
+    set_user_var VCS "${VCS}"
+    set_user_var VCS_REPO "${VCS_REPO}"
+    set_user_var VCS_BRANCH "${VCS_BRANCH}"
+    update_rprompt
+    zle reset-prompt
 }
 
-add-zsh-hook precmd prompt_kube_info
-function prompt_kube_info() {
+local KUBE_CONTEXT=""
+local KUBE_NAMESPACE=""
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd env_kube_info
+function env_kube_info() {
+    async_stop_worker env_kube_info
+    async_start_worker env_kube_info -n
+    async_register_callback env_kube_info env_kube_info_callback
+    async_job env_kube_info env_kube_info_async
+}
+function env_kube_info_async() {
     local context ns
     if context=$(kubectl config current-context 2>/dev/null); then
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
         [[ -z "$ns" ]] && ns="(default)"
-        PROMPT_KUBE_INFO="${prompt_green}${context}:${ns}${prompt_reset}"
-        set_user_var KUBE_CONTEXT "${context}"
-        set_user_var KUBE_NAMESPACE "${ns}"
+        echo "${context}"
+        echo "${ns}"
     else
-        PROMPT_KUBE_INFO=""
-        set_user_var KUBE_CONTEXT ""
-        set_user_var KUBE_NAMESPACE ""
+        echo ""
+        echo ""
     fi
+}
+function env_kube_info_callback() {
+    KUBE_CONTEXT=$(echo "$3" | head -n1)
+    KUBE_NAMESPACE=$(echo "$3" | head -n2 | tail -n1)
+    set_user_var KUBE_CONTEXT "${KUBE_CONTEXT}"
+    set_user_var KUBE_NAMESPACE "${KUBE_NAMESPACE}"
+}
+   
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd update_rprompt
+function update_rprompt() {
+    local val=""
+    if [ "${VCS}" != "" ]; then
+        val="${val}$(prompt_color fg '#1f1f28')$(prompt_color bg '#1f1f28')$(prompt_color fg '#7e9cd8') ${VCS_REPO} $(prompt_color bg '#7e9cd8')$(prompt_color fg '#1f1f28') ${VCS_BRANCH} ${prompt_reset}"
+    fi
+    RPROMPT="$val"
 }
 
 function zle-line-init zle-keymap-select {
