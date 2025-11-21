@@ -43,8 +43,10 @@ return {
         event = "VeryLazy",
         opts = {
             win = {
-                width = 0.8,
-                col = 0.5,
+                no_overlap = true,
+                width = 0.2,
+                height = -6,
+                col = -2,
                 border = "rounded",
             },
             spec = {
@@ -53,7 +55,6 @@ return {
                 { "<leader>x", group = "Diagnostics, Quickfix, Loclist" },
                 { "<leader>l", group = "LSP" },
             },
-
         },
         keys = {
             {
