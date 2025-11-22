@@ -27,6 +27,7 @@ return {
             options = {
                 globalstatus = true,
                 theme = 'kanagawa',
+                section_separators = { left = '', right = ''},
             },
             sections = {
                 lualine_a = { 'mode' },
