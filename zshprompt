@@ -1,28 +1,93 @@
-local prompt_arrow="❱ "
 
 PROMPT2=". "
 SPROMPT='%{$suggest%}%B%r%b [y, n, a, e] > '
 ZLE_RPROMPT_INDENT=0
 
+local keymap="main"
+function mode_color() {
+    case "${keymap}" in
+        vicmd)
+            case "${REGION_ACTIVE}" in
+                1)
+                    echo 'magenta'
+                    ;;
+                2)
+                    echo 'magenta'
+                    ;;
+                *)
+                    echo 'blue'
+                    ;;
+            esac
+        ;;
+        main)
+            echo 'green'
+            ;;
+        visual)
+            echo 'magenta'
+            ;;
+        *)
+            echo 'red'
+            ;;
+    esac
+}
+
+
+local prompt_arrow="❱ "
+function update_prompt() {
+    local color="$(mode_color)"
+    PROMPT="%F{${color}}${prompt_arrow}%f"
+    if [ "${VCS}" != "" ]; then
+        RPROMPT="${val}%F{black}%f%K{black}%F{${color}} $(vcs_icon) ${VCS_REPO} %k%f%K{${color}}%F{black} ${VCS_BRANCH} %k%f"
+    else
+        RPROMPT=""
+    fi
+    zle reset-prompt
+}
+
+function vcs_icon() {
+    case "${VCS}" in
+        git)
+            if [[ "${VCS_REPO}" == *"ghe"* ]] || [[ "${VCS_REPO}" == *"github"* ]]; then
+                echo ""
+                return
+            fi
+            echo ""
+            ;;
+        *)
+            echo ""
+            ;;
+    esac
+}
+
+function zle-line-init zle-keymap-select {
+    keymap="${KEYMAP}"
+    update_prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+autoload -U add-zle-hook-widget
+add-zle-hook-widget zle-line-pre-redraw update_prompt
+
 function set_user_var() {
    printf "\033]1337;SetUserVar=%s=%s\007" $1 `echo -n $2 | base64`
 }
 
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd env_vcs_info_async
 local VCS=""
 local VCS_REPO=""
 local VCS_BRANCH=""
 
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd env_vcs_info
-
-function env_vcs_info() {
+function env_vcs_info_async() {
     async_stop_worker env_vcs_info
     async_start_worker env_vcs_info -n
     async_register_callback env_vcs_info env_vcs_info_callback
-    async_job env_vcs_info env_vcs_info_async
+    async_job env_vcs_info env_vcs_info_out
 }
 
-function env_vcs_info_async() {
+function env_vcs_info_out() {
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
         echo "git"
         echo $(git config --get remote.origin.url)
@@ -44,20 +109,18 @@ function env_vcs_info_callback() {
     update_prompt
 }
 
+add-zsh-hook precmd env_kube_info_async
 local KUBE_CONTEXT=""
 local KUBE_NAMESPACE=""
 
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd env_kube_info
-
-function env_kube_info() {
+function env_kube_info_async() {
     async_stop_worker env_kube_info
     async_start_worker env_kube_info -n
     async_register_callback env_kube_info env_kube_info_callback
-    async_job env_kube_info env_kube_info_async
+    async_job env_kube_info env_kube_info_out
 }
 
-function env_kube_info_async() {
+function env_kube_info_out() {
     local context ns
     if context=$(kubectl config current-context 2>/dev/null); then
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
@@ -76,34 +139,3 @@ function env_kube_info_callback() {
     set_user_var KUBE_CONTEXT "${KUBE_CONTEXT}"
     set_user_var KUBE_NAMESPACE "${KUBE_NAMESPACE}"
 }
-
-function mode_color() {
-    case $KEYMAP in
-        vicmd)
-            echo 'magenta'
-        ;;
-        main)
-            echo 'blue'
-        ;;
-        visual)
-            echo 'magenta'
-        ;;
-        *)
-            echo 'blue'
-        ;;
-    esac
-}
-   
-function zle-line-init zle-keymap-select update_prompt {
-    local color="$(mode_color)"
-    PROMPT="%F{${color}}${prompt_arrow}%f"
-    if [ "${VCS}" != "" ]; then
-        RPROMPT="${val}%F{black}%f%K{black}%F{${color}} ${VCS_REPO} %k%f%K{${color}}%F{black} ${VCS_BRANCH} %k%f"
-    else
-        RPROMPT=""
-    fi
-    zle reset-prompt
-}
-
-zle -N zle-line-init
-zle -N zle-keymap-select
