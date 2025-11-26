@@ -34,6 +34,7 @@ function mode_color() {
 
 local prompt_arrow="❱ "
 function update_prompt() {
+    local val
     local color="$(mode_color)"
     PROMPT="%F{${color}}${prompt_arrow}%f"
     if [ "${VCS}" != "" ]; then
@@ -89,20 +90,17 @@ function env_vcs_info_async() {
 
 function env_vcs_info_out() {
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
-        echo "git"
-        echo $(git config --get remote.origin.url)
-        echo $(git rev-parse --abbrev-ref HEAD)
+        echo "git$(git config --get remote.origin.url)$(git rev-parse --abbrev-ref HEAD)"
         return
     fi
-    echo ""
-    echo ""
-    echo ""
+    echo ""
 }
 
 function env_vcs_info_callback() {
-    VCS=$(echo "$3" | head -n1)
-    VCS_REPO=$(echo "$3" | head -n2 | tail -n1)
-    VCS_BRANCH=$(echo "$3" | head -n3 | tail -n1)
+    local val=(${(s//)3})
+    VCS=$val[1]
+    VCS_REPO=$val[2]
+    VCS_BRANCH=$val[3]
     set_user_var VCS "${VCS}"
     set_user_var VCS_REPO "${VCS_REPO}"
     set_user_var VCS_BRANCH "${VCS_BRANCH}"
@@ -124,17 +122,16 @@ function env_kube_info_out() {
     local context ns
     if context=$(kubectl config current-context 2>/dev/null); then
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
-        echo "${context}"
-        echo "${ns}"
+        echo "${context}${ns}"
     else
-        echo ""
-        echo ""
+        echo ""
     fi
 }
 
 function env_kube_info_callback() {
-    KUBE_CONTEXT=$(echo "$3" | head -n1)
-    KUBE_NAMESPACE=$(echo "$3" | head -n2 | tail -n1)
+    local val=(${(s//)3})
+    KUBE_CONTEXT=$val[1]
+    KUBE_NAMESPACE=$val[2]
     set_user_var KUBE_CONTEXT "${KUBE_CONTEXT}"
     set_user_var KUBE_NAMESPACE "${KUBE_NAMESPACE}"
 }

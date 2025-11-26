@@ -79,47 +79,34 @@ wezterm.on('update-status', function(window, pane)
     local right = {}
 
     -- vcs info from zshprompt
-    -- local vcs = pane:get_user_vars().VCS
+    local vcs = pane:get_user_vars().VCS
+    local vcs_color=myColors.ansi[2]
     -- if vcs ~= nil and vcs ~= "" then
-    --     powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.9))
+    --     powerline.right_hard(right, vcs_color)
     --     local repo = pane:get_user_vars().VCS_REPO
-
+    --     table.insert(right, { Foreground = { Color = myColors.background} })
     --     if string.find(repo, "github.com") then
-    --         table.insert(right, { Foreground = { Color = "#FFFFF" } })
     --         table.insert(right, { Text = wezterm.nerdfonts.dev_github_badge .. ' ' })
     --     else
-    --         table.insert(right, { Foreground = { Color = "#F1502F" } })
     --         table.insert(right, { Text = wezterm.nerdfonts.dev_git .. ' ' })
     --     end
-    --     table.insert(right, { Foreground = { Color = myColors.foreground } })
     --     table.insert(right, { Text = repo .. ' ' })
     --     powerline.right_soft(right, myColors.background)
-
     --     local branch = pane:get_user_vars().VCS_BRANCH
-    --     local default_branch = pane:get_user_vars().VCS_DEFAULT_BRANCH
-    --     if branch == default_branch then -- main branch
-    --         table.insert(right, { Foreground = { Color = myColors.ansi[4] } })
-    --         table.insert(right, { Text = wezterm.nerdfonts.dev_git_merge .. ' ' })
-    --     else
-    --         table.insert(right, { Foreground = { Color = myColors.ansi[7] } })
-    --         table.insert(right, { Text = wezterm.nerdfonts.dev_git_branch .. ' ' })
-    --     end
-    --     table.insert(right, { Foreground = { Color = myColors.foreground } })
     --     table.insert(right, { Text = branch .. ' ' })
     -- end
 
     -- kube context from zshprompt
+    local kube_color=myColors.ansi[5]
     local context = pane:get_user_vars().KUBE_CONTEXT
     if context ~= nil and context ~= "" then
-        powerline.right_hard(right, color.pseudo_alpha(myColors.background, myColors.foreground, 0.7))
-        table.insert(right, { Foreground = { Color = myColors.ansi[5] } })
+        powerline.right_hard(right, kube_color)
+        table.insert(right, { Foreground = { Color = myColors.background } })
         table.insert(right, { Text = '󱃾' .. ' ' })
-        table.insert(right, { Foreground = { Color = myColors.foreground } })
         table.insert(right, { Text = context .. ' ' })
         local namespace = pane:get_user_vars().KUBE_NAMESPACE
         if namespace ~= nil and namespace ~= "" then
             powerline.right_soft(right, myColors.background)
-            table.insert(right, { Foreground = { Color = myColors.foreground } })
             table.insert(right, { Text = namespace .. ' ' })
         end
     end
