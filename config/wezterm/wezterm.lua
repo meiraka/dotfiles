@@ -15,18 +15,18 @@ myColors.tab_bar = {
 local myWorkspaces = 8
 local myLeader = { key = 'f', mods = 'CTRL', timeout_milliseconds = 1000 }
 local myKeys = {
-    { key = "L", mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
-    { key = "w", mods = "SUPER", action = act.CloseCurrentTab({ confirm = true }) },
-    { key = "c", mods = "SUPER", action = act.CopyTo("ClipboardAndPrimarySelection") },
-    { key = "v", mods = "SUPER", action = act.PasteFrom("Clipboard") },
-    { key = "-", mods = "SUPER", action = act.DecreaseFontSize },
-    { key = "+", mods = "SUPER", action = act.IncreaseFontSize },
-    { key = "0", mods = "SUPER", action = act.ResetFontSize },
-    { key = "h", mods = "LEADER", action = act.SplitHorizontal({}) },
-    { key = "v", mods = "LEADER", action = act.SplitVertical({}) },
-    { key = "Space", mods = "LEADER", action = act.PaneSelect({}) },
-    { key = "f", mods = "LEADER", action = act.ToggleFullScreen },
-    { key = "t", mods = "ALT", action = act.EmitEvent("toggle-tabbar") },
+    { key = "L",     mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
+    { key = "w",     mods = "SUPER",      action = act.CloseCurrentTab({ confirm = true }) },
+    { key = "c",     mods = "SUPER",      action = act.CopyTo("ClipboardAndPrimarySelection") },
+    { key = "v",     mods = "SUPER",      action = act.PasteFrom("Clipboard") },
+    { key = "-",     mods = "SUPER",      action = act.DecreaseFontSize },
+    { key = "+",     mods = "SUPER",      action = act.IncreaseFontSize },
+    { key = "0",     mods = "SUPER",      action = act.ResetFontSize },
+    { key = "h",     mods = "LEADER",     action = act.SplitHorizontal({}) },
+    { key = "v",     mods = "LEADER",     action = act.SplitVertical({}) },
+    { key = "Space", mods = "LEADER",     action = act.PaneSelect({}) },
+    { key = "f",     mods = "LEADER",     action = act.ToggleFullScreen },
+    { key = "t",     mods = "ALT",        action = act.EmitEvent("toggle-tabbar") },
 }
 for i = 1, myWorkspaces do
     table.insert(myKeys, {
@@ -78,26 +78,8 @@ wezterm.on('update-status', function(window, pane)
 
     local right = {}
 
-    -- vcs info from zshprompt
-    local vcs = pane:get_user_vars().VCS
-    local vcs_color=myColors.ansi[2]
-    -- if vcs ~= nil and vcs ~= "" then
-    --     powerline.right_hard(right, vcs_color)
-    --     local repo = pane:get_user_vars().VCS_REPO
-    --     table.insert(right, { Foreground = { Color = myColors.background} })
-    --     if string.find(repo, "github.com") then
-    --         table.insert(right, { Text = wezterm.nerdfonts.dev_github_badge .. ' ' })
-    --     else
-    --         table.insert(right, { Text = wezterm.nerdfonts.dev_git .. ' ' })
-    --     end
-    --     table.insert(right, { Text = repo .. ' ' })
-    --     powerline.right_soft(right, myColors.background)
-    --     local branch = pane:get_user_vars().VCS_BRANCH
-    --     table.insert(right, { Text = branch .. ' ' })
-    -- end
-
     -- kube context from zshprompt
-    local kube_color=myColors.ansi[5]
+    local kube_color = myColors.ansi[5]
     local context = pane:get_user_vars().KUBE_CONTEXT
     if context ~= nil and context ~= "" then
         powerline.right_hard(right, kube_color)
