@@ -124,7 +124,6 @@ function env_kube_info_out() {
     local context ns
     if context=$(kubectl config current-context 2>/dev/null); then
         ns=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
-        [[ -z "$ns" ]] && ns="(default)"
         echo "${context}"
         echo "${ns}"
     else
