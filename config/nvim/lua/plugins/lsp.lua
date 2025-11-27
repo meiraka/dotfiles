@@ -26,6 +26,7 @@ return {
                 capabilities = require('cmp_nvim_lsp').default_capabilities(),
                 filetypes = { 'haskell', 'lhaskell', 'cabal' },
             })
+            vim.lsp.enable({"hls"})
             local cmp = require("cmp");
             cmp.setup({
                 snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
