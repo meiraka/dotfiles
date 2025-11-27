@@ -97,7 +97,10 @@ return {
             statuscolumn = { enabled = true },
             terminal = {
                 enabled = true,
-                win = { position = 'float' },
+                win = {
+                    position = 'float',
+                    border = 'rounded',
+                },
                 start_insert = false,
                 auto_insert = false,
             },
