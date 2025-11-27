@@ -1,4 +1,4 @@
-import qualified Data.Map as M
+import Data.Map qualified as M
 import GHC.SourceGen (where')
 import System.Exit
 import System.IO
@@ -11,7 +11,7 @@ import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.ToggleLayouts
-import qualified XMonad.StackSet as W
+import XMonad.StackSet qualified as W
 import XMonad.Util.NamedScratchpad
 
 main = do
@@ -58,7 +58,6 @@ myManageHook =
         manageHook def,
         isFullscreen --> doFullFloat
       ]
-
 
 myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoidStruts fillNoGap)
   where
