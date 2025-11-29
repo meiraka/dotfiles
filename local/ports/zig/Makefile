@@ -36,17 +36,24 @@ GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
 
 .PHONY: update version versions
 update:
-	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_TAGS) | jq -re .[0].name))
-	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
-	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
-	$(MAKE) install
-
 version:
-	@echo $(VERSION)
-
+	@echo none
 versions:
-	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
-
-INSTALLED=$(subst zig-,,$(notdir $(shell readlink $(TARGET_LINK))))
+	@echo none
 installed:
-	@echo $(INSTALLED)
+	@echo none
+#update:
+#	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_TAGS) | jq -re .[0].name))
+#	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
+#	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
+#	$(MAKE) install
+#
+#version:
+#	@echo $(VERSION)
+#
+#versions:
+#	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
+#
+#INSTALLED=$(subst zig-,,$(notdir $(shell readlink $(TARGET_LINK))))
+#installed:
+#	@echo $(INSTALLED)
