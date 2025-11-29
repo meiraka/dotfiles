@@ -11,7 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
-require("lazy").setup("plugins")
+
+vim.opt.backspace = "start,eol,indent"
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
 vim.opt.mouse = ""
 vim.opt.wildmode = "list:longest,full"
@@ -22,10 +26,7 @@ vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-vim.opt.backspace = "start,eol,indent"
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
+vim.opt.winborder = "rounded"
 
 vim.diagnostic.config({
     signs = {
@@ -39,3 +40,4 @@ vim.diagnostic.config({
 })
 
 vim.keymap.set('n', '<leader>b', '<cmd>b#<cr>')
+require("lazy").setup("plugins")
