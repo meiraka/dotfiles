@@ -17,7 +17,12 @@ return {
         config = function()
             require('mason').setup()
             require("mason-lspconfig").setup()
+            vim.lsp.config("*", {
+                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            })
+
             vim.lsp.config("lua_ls", {
+                capabilities = require('cmp_nvim_lsp').default_capabilities(),
                 settings = {
                     Lua = { diagnostics = { globals = { 'vim', 'Snacks' } } },
                 },
