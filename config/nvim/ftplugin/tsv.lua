@@ -29,11 +29,12 @@ end
 
 SetVTS(1, 81)
 
-local tsvUpdateEvents = {
-    callback = function()
-        local line = vim.api.nvim_win_get_cursor(0)[1]
-        SetVTS(line, line + 1)
-    end
-}
-vim.api.nvim_create_autocmd("TextChangedI", tsvUpdateEvents)
-vim.api.nvim_create_autocmd("TextChanged", tsvUpdateEvents)
+local tsvUpdateEvents = function()
+    local line = vim.api.nvim_win_get_cursor(0)[1]
+    SetVTS(line, line + 1)
+end
+
+vim.api.nvim_create_autocmd({ "TextChangedI", "TextChanged" }, {
+    pattern = { '*.tsv' },
+    callback = tsvUpdateEvents,
+})
