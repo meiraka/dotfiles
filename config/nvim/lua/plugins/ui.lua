@@ -36,7 +36,13 @@ return {
                 lualine_a = { 'mode' },
                 lualine_b = {},
                 lualine_c = { { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' }, { 'filename', padding = { left = 1 }, separator = '' }, 'diff' },
-                lualine_x = { 'diagnostics' },
+                lualine_x = {
+                    { 'diagnostics' },
+                    {
+                        require("noice").api.status.message.get_hl,
+                        cond = require("noice").api.status.message.has,
+                    },
+                },
                 lualine_y = { 'b:gitsigns_status_dict.root' },
                 lualine_z = { { 'b:gitsigns_status_dict.head' } },
             },
@@ -147,6 +153,26 @@ return {
             { "<leader>un",      function() Snacks.notifier.hide() end,                                  desc = "Dismiss All Notifications" },
             { "]]",              function() Snacks.words.jump(vim.v.count1) end,                         desc = "Next Reference",           mode = { "n", "t" } },
             { "[[",              function() Snacks.words.jump(-vim.v.count1) end,                        desc = "Prev Reference",           mode = { "n", "t" } },
+        },
+    },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            lsp = {
+                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                },
+            },
+            presets = {
+                long_message_to_split = true,
+            },
+        },
+        dependencies = {
+            "MunifTanjim/nui.nvim",
         },
     },
     {
