@@ -1,10 +1,13 @@
 return {
     {
-        "rebelot/kanagawa.nvim",
+        'sainnhe/gruvbox-material',
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd('colorscheme kanagawa')
+            -- Optionally configure and load the colorscheme
+            -- directly inside the plugin declaration.
+            vim.g.gruvbox_material_enable_italic = true
+            vim.cmd.colorscheme('gruvbox-material')
         end,
     },
     {
@@ -26,7 +29,7 @@ return {
         opts = {
             options = {
                 globalstatus = true,
-                theme = 'kanagawa',
+                theme = 'gruvbox-material',
                 section_separators = { left = '', right = '' },
             },
             sections = {
