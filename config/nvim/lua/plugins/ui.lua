@@ -6,7 +6,8 @@ return {
         config = function()
             -- Optionally configure and load the colorscheme
             -- directly inside the plugin declaration.
-            vim.g.gruvbox_material_enable_italic = true
+            vim.g.gruvbox_material_sign_column_background = 'linenr'
+            vim.g.gruvbox_material_dim_inactive_windows = true
             vim.cmd.colorscheme('gruvbox-material')
         end,
     },
