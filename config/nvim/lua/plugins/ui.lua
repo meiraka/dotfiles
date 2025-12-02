@@ -32,13 +32,32 @@ return {
                 globalstatus = true,
                 theme = 'gruvbox-material',
                 section_separators = { left = '', right = '' },
+                component_separators = { left = '', right = '' },
             },
             sections = {
                 lualine_a = { 'mode' },
-                lualine_b = {},
-                lualine_c = { { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' }, { 'filename', padding = { left = 1 }, separator = '' }, 'diff' },
-                lualine_x = {
+                lualine_b = {
+                    { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' },
+                    { 'filename', symbols = { modified = '', readonly = '' }, padding = { right = 1 }, separator = '' },
+                },
+                lualine_c = {
+                    {
+                        'diff',
+                        symbols = { added = ' ', modified = ' ', removed = ' ' },
+                        source = function()
+                            local gitsigns = vim.b.gitsigns_status_dict
+                            if gitsigns then
+                                return {
+                                    added = gitsigns.added,
+                                    modified = gitsigns.changed,
+                                    removed = gitsigns.removed
+                                }
+                            end
+                        end
+                    },
                     { 'diagnostics' },
+                },
+                lualine_x = {
                     {
                         function() return require("noice").api.status.message.get_hl() end,
                         cond = function() return require("noice").api.status.message.has() end,
