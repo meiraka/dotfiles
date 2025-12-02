@@ -168,8 +168,11 @@ return {
                     ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
                 },
             },
-            presets = {
-                long_message_to_split = true,
+            routes = {
+                {
+                    view = "messages",
+                    filter = { event = "msg_show", min_height = 3 },
+                },
             },
         },
         dependencies = {
