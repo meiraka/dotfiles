@@ -69,6 +69,31 @@ return {
         },
     },
     {
+        'b0o/incline.nvim',
+        opts = {
+            window = {
+                padding = 0,
+                margin = { horizontal = 0 },
+            },
+            render = function(props)
+                local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+                if filename == '' then
+                    filename = '[No Name]'
+                end
+                local ft_icon, ft_color = require('nvim-web-devicons').get_icon_color(filename)
+                return {
+                    ft_icon and
+                    { ' ', ft_icon, ' ', guibg = ft_color, guifg = require('incline.helpers').contrast_color(ft_color) } or
+                    '',
+                    ' ',
+                    { filename },
+                    ' ',
+                }
+            end,
+        },
+        event = 'VeryLazy',
+    },
+    {
         "folke/which-key.nvim",
         event = "VeryLazy",
         opts = {
