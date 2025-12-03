@@ -59,8 +59,8 @@ return {
                 },
                 lualine_x = {
                     {
-                        function() return require("noice").api.status.message.get_hl() end,
-                        cond = function() return require("noice").api.status.message.has() end,
+                        function() return require("noice").api.status.search.get_hl() end,
+                        cond = function() return require("noice").api.status.search.has() end,
                     },
                 },
                 lualine_y = { 'b:gitsigns_status_dict.root' },
