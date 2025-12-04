@@ -117,6 +117,7 @@ return {
                 if filename == '' then
                     filename = '[No Name]'
                 end
+
                 local ft_icon, ft_color = require('nvim-web-devicons').get_icon_color(filename)
                 return {
                     ft_icon and
@@ -144,7 +145,7 @@ return {
             spec = {
                 { "<leader>g", group = "Git" },
                 { "<leader>f", group = "Find" },
-                { "<leader>x", group = "Diagnostics, Quickfix, Loclist" },
+                { "<leader>x", group = "List" },
                 { "<leader>l", group = "LSP" },
             },
         },
@@ -292,6 +293,14 @@ return {
             { "<leader>h",  "<cmd>Trouble lsp toggle<cr>",                      desc = "LSP References", },
             { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                  desc = "Location List", },
             { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                   desc = "Quickfix List", },
+        },
+    },
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", },
+        opts = {},
+        keys = {
+            { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "TODO", },
         },
     },
 }
