@@ -37,6 +37,28 @@ return {
             { "<leader>gp", function() require('gitsigns').preview_hunk() end,                                     desc = "Git preview hunk" },
             { "<leader>ga", function() require('gitsigns').stage_buffer() end,                                     desc = "Git stage buffer" },
             { "<leader>gr", function() require('gitsigns').reset_buffer() end,                                     desc = "Git reset buffer" },
+            {
+                "]c",
+                function()
+                    if vim.wo.diff then
+                        vim.cmd.normal({ ']c', bang = true })
+                    else
+                        require("gitsigns").nav_hunk('next')
+                    end
+                end,
+                desc = "Git next hunk",
+            },
+            {
+                "[c",
+                function()
+                    if vim.wo.diff then
+                        vim.cmd.normal({ '[c', bang = true })
+                    else
+                        require("gitsigns").nav_hunk('prev')
+                    end
+                end,
+                desc = "Git prev hunk"
+            },
         },
     },
     {
