@@ -18,6 +18,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 vim.opt.mouse = ""
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.wildmode = "list:longest,full"
 vim.opt.termguicolors = true
 vim.opt.foldmethod = "indent"
