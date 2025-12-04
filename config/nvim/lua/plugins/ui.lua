@@ -250,10 +250,9 @@ return {
                 },
             },
             routes = {
-                {
-                    view = "messages",
-                    filter = { event = "msg_show", min_height = 3 },
-                },
+                { view = "notify",   filter = { event = "msg_show", cmdline = "Git push.*" }, },
+                { view = "notify",   filter = { event = "msg_show", cmdline = "G push.*" }, },
+                { view = "messages", filter = { event = "msg_show", min_height = 3 }, },
             },
         },
         dependencies = {
