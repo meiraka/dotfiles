@@ -251,11 +251,9 @@ return {
                 },
             },
             routes = {
-                { view = "mini",     filter = { event = "msg_show", cmdline = "Git push.*" }, },
-                { view = "mini",     filter = { event = "msg_show", cmdline = "G push.*" }, },
-                { view = "popup",    filter = { event = "msg_show", cmdline = "Git status.*" }, },
-                { view = "popup",    filter = { event = "msg_show", cmdline = "G status.*" }, },
-                { view = "messages", filter = { event = "msg_show", min_height = 3 }, },
+                { view = "mini",  filter = { event = "msg_show", cmdline = "Git push.*" }, },
+                { view = "mini",  filter = { event = "msg_show", cmdline = "G push.*" }, },
+                { view = "popup", filter = { event = "msg_show", min_height = 2 }, },
             },
         },
         dependencies = {
