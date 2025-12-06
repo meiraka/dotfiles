@@ -30,6 +30,7 @@ vim.opt.incsearch = true
 vim.opt.winborder = "rounded"
 
 vim.diagnostic.config({
+    severity_sort = true,
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = "󰅚",

@@ -232,7 +232,6 @@ return {
             auto_close = true,
             modes = {
                 diagnostics = {
-                    auto_open = false,
                     preview = {
                         type = "float",
                         relative = "editor",
@@ -259,6 +258,27 @@ return {
             { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                  desc = "Location List", },
             { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                   desc = "Quickfix List", },
         },
+    },
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy",
+        priority = 1000,
+        opts = {
+            preset = "classic",
+            transparent_bg = true,
+            options = {
+                use_icons_from_diagnostic = true,
+                show_source = { enabled = true },
+                multilines = {
+                    enabled = true,
+                    always_show = true,
+                },
+            },
+        },
+        config = function(_, opts)
+            require("tiny-inline-diagnostic").setup(opts)
+            vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+        end,
     },
     {
         "folke/todo-comments.nvim",
