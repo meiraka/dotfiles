@@ -10,7 +10,7 @@ local arrayEq = function(a, b)
     return true
 end
 
--- set gopls and nvim-test go build tags.
+-- set gopls and neotest-golang build tags.
 local tags = {}
 local go_tags = function(p)
     if arrayEq(p.fargs, tags) then
