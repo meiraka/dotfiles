@@ -43,7 +43,12 @@ return {
             })
         end,
         keys = {
-            { '<leader>t', function() require("neotest").run.run() end, desc = 'Run Test' },
+            { '<leader>tt', function() require("neotest").run.run() end,                        desc = 'Test nearest func' },
+            { '<leader>tc', function() require("neotest").run.run(vim.fn.expand("%")) end,      desc = 'Test current file' },
+            { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
+            { '<leader>to', function() require("neotest").output_panel.toggle() end,            desc = 'Toggle test output' },
+            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Prev test failed' },
+            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
         },
     },
 }
