@@ -104,7 +104,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
       ((keyModMask .|. shiftMask, xK_b), namedScratchpadAction scratchpads "bluetooth"), -- %! Toggle bluetooth control
       ((keyModMask .|. shiftMask, xK_w), namedScratchpadAction scratchpads "wallpaper"), -- %! Toggle wallpaper
       ((keyModMask, xK_w), kill), -- %! Close the focused window
-      ((keyModMask, xK_f), sendMessage ToggleLayout), -- %! Toggle fullscreen mode
+      ((keyModMask .|. controlMask, xK_f), sendMessage ToggleLayout), -- %! Toggle fullscreen mode
       ((keyModMask, xK_t), sendMessage NextLayout), -- %! Toggle tab view in fullscreen mode
       ((keyModMask, xK_n), refresh), -- %! Resize viewed windows to the correct size
       -- move focus up or down the window stack
