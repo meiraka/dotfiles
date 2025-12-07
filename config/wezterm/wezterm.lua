@@ -12,6 +12,7 @@ config.font_rules = { { italic = true, font = config.font } }
 config.font_size = 12
 config.dpi = 192
 
+config.max_fps = 240
 config.text_background_opacity = 1
 config.window_background_opacity = 0.95
 config.macos_window_background_blur = 20
