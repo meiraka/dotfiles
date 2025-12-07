@@ -19,7 +19,6 @@ return {
         branch = "main",
         build = ":TSUpdate",
         opts = {
-            install_dir = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter",
             ensure_installed = { 'go', 'css', 'yaml', 'regex', 'bash', 'markdown', 'markdown_inline' },
         },
         config = function(_, opts)
