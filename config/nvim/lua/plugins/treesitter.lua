@@ -19,7 +19,13 @@ return {
         branch = "main",
         build = ":TSUpdate",
         opts = {
-            ensure_installed = { 'go', 'css', 'yaml', 'regex', 'bash', 'markdown', 'markdown_inline' },
+            ensure_installed = {
+                'bash', 'go',
+                'css', 'html',
+                'json', 'yaml', 'promql',
+                'regex',
+                'markdown', 'markdown_inline',
+            },
         },
         config = function(_, opts)
             require("nvim-treesitter").setup(opts)
