@@ -15,7 +15,7 @@ return {
             term = 'toggleterm',
         },
         keys = {
-            { '<leader>t', '<cmd>TestNearest<cr>', desc = 'Run Test' },
+            -- { '<leader>t', '<cmd>TestNearest<cr>', desc = 'Run Test' },
         },
     },
     {
@@ -42,5 +42,8 @@ return {
                 },
             })
         end,
+        keys = {
+            { '<leader>t', function() require("neotest").run.run() end, desc = 'Run Test' },
+        },
     },
 }
