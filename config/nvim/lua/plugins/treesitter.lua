@@ -1,3 +1,4 @@
+local tt = "nvim-treesitter-textobjects"
 return {
     {
         'nvim-treesitter/nvim-treesitter',
@@ -33,5 +34,101 @@ return {
                 end,
             })
         end,
+    },
+    {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        branch = "main",
+        opts = {
+            select = {
+                lookahead = true,
+                selection_modes = {
+                    ['@parameter.outer'] = 'v', -- charwise
+                    ['@function.outer'] = 'V',  -- linewise
+                    ['@class.outer'] = '<c-v>', -- blockwise
+                },
+            },
+        },
+        keys = {
+            {
+                "af",
+                function() require(tt .. ".select").select_textobject("@function.outer", "textobjects") end,
+                mode = { "x", "o" },
+                desc = "Function outer block",
+            },
+            {
+                "if",
+                function() require(tt .. ".select").select_textobject("@function.inner", "textobjects") end,
+                mode = { "x", "o" },
+                desc = "Function inner block",
+            },
+            {
+                "ac",
+                function() require(tt .. ".select").select_textobject("@class.outer", "textobjects") end,
+                mode = { "x", "o" },
+                desc = "Class outer block",
+            },
+            {
+                "ic",
+                function() require(tt .. ".select").select_textobject("@class.inner", "textobjects") end,
+                mode = { "x", "o" },
+                desc = "Class inner block",
+            },
+            {
+                "as",
+                function() require(tt .. ".select").select_textobject("@class.inner", "textobjects") end,
+                mode = { "x", "o" },
+                desc = "Scope block",
+            },
+            { "<leader>a", function() require(tt .. ".swap").swap_next "@parameter.inner" end, desc = "Swap inner" },
+            { "<leader>A", function() require(tt .. ".swap").swap_next "@parameter.outer" end, desc = "Swap outer" },
+            {
+                "]m",
+                function() require(tt .. ".move").goto_next_start("@function.outer", "textobjects") end,
+                mode = { "n", "x", "o" },
+                desc = "Next method start",
+            },
+            {
+                "[m",
+                function() require(tt .. ".move").goto_previous_start("@function.outer", "textobjects") end,
+                mode = { "n", "x", "o" },
+                desc = "Next method start",
+            },
+            {
+                "]M",
+                function() require(tt .. ".move").goto_next_end("@function.outer", "textobjects") end,
+                mode = { "n", "x", "o" },
+                desc = "Next method end",
+            },
+            {
+                "[M",
+                function() require(tt .. ".move").goto_previous_start("@function.outer", "textobjects") end,
+                mode = { "n", "x", "o" },
+                desc = "Next method end",
+            },
+            {
+                "]s",
+                function() require(tt .. ".move").goto_next_start("@local.scope", "locals") end,
+                mode = { "n", "x", "o" },
+                desc = "Next scope start",
+            },
+            {
+                "[s",
+                function() require(tt .. ".move").goto_previous_start("@local.scope", "locals") end,
+                mode = { "n", "x", "o" },
+                desc = "Prev scope start",
+            },
+            {
+                "]]",
+                function() require(tt .. ".move").goto_next_start("@class.outer", "textobjects") end,
+                mode = { "n", "x", "o" },
+                desc = "Next class start",
+            },
+            {
+                "[[",
+                function() require(tt .. ".move").goto_previous_start("@class.outer", "textobjects") end,
+                mode = { "n", "x", "o" },
+                desc = "Prev class start",
+            },
+        },
     },
 }
