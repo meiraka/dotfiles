@@ -39,6 +39,19 @@ return {
                     },
                 },
             })
-        end
+        end,
+        ft = { "markdown", "norg" },
+        keys = {
+            {
+                "K",
+                function()
+                    require("diagram").show_diagram_hover()
+                end,
+                mode = "n",
+                ft = { "markdown", "norg" },
+                desc = "Show diagram in new tab",
+            },
+        },
+
     }
 }
