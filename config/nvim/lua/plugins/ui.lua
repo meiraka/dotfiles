@@ -142,7 +142,13 @@ return {
                 enabled = true,
                 replace_netrw = true,
             },
-            image = { enabled = true },
+            image = {
+                enabled = true,
+                doc = {
+                    enabled = false, -- use 3rd/diagram.nvim
+                },
+                convert = { notify = true },
+            },
             indent = {
                 enabled = true,
                 animate = { enabled = false },
