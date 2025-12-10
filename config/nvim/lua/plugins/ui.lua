@@ -137,6 +137,12 @@ return {
             end
         end,
         opts = {
+            styles = {
+                snacks_image = {
+                    relative = "editor",
+                    col = -1,
+                },
+            },
             bigfile = { enabled = true },
             explorer = {
                 enabled = true,
@@ -145,9 +151,16 @@ return {
             image = {
                 enabled = true,
                 doc = {
-                    enabled = false, -- use 3rd/diagram.nvim
+                    enabled = true,
+                    inline = false,
+                    float = true,
                 },
-                convert = { notify = true },
+                convert = {
+                    mermaid = function()
+                        local theme = vim.o.background == "light" and "neutral" or "dark"
+                        return { "-i", "{src}", "-o", "{file}", "-b", "transparent", "-t", theme, "-s", "12" }
+                    end,
+                },
             },
             indent = {
                 enabled = true,

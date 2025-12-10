@@ -8,6 +8,8 @@ return {
                 "3rd/image.nvim",
                 opts = {
                     scale_factor = 1.0,
+                    max_width_window_percentage = 50,
+                    max_height_window_percentage = 50,
                 },
                 integrations = { markdown = { only_render_image_at_cursor_mode = "inline" } },
             }
@@ -41,17 +43,5 @@ return {
             })
         end,
         ft = { "markdown", "norg" },
-        keys = {
-            {
-                "K",
-                function()
-                    require("diagram").show_diagram_hover()
-                end,
-                mode = "n",
-                ft = { "markdown", "norg" },
-                desc = "Show diagram in new tab",
-            },
-        },
-
     }
 }
