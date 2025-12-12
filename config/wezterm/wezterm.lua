@@ -56,6 +56,7 @@ config.inactive_pane_hsb = {
 }
 config.audible_bell = "Disabled"
 config.use_ime = true
+config.send_composed_key_when_right_alt_is_pressed = false
 
 -- workspaces
 local workspaces = 8
