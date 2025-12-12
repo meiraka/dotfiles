@@ -230,11 +230,16 @@ return {
                     ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
                 },
             },
+
             routes = {
-                { view = "mini",  filter = { event = "msg_show", cmdline = "Git push.*" }, },
-                { view = "mini",  filter = { event = "msg_show", cmdline = "G push.*" }, },
-                { view = "popup", filter = { event = "msg_show", min_height = 4 }, },
+                { view = "popup", filter = { event = "msg_show", cmdline = "Git status.*" }, },
+                { view = "popup", filter = { event = "msg_show", cmdline = "G status.*" }, },
+                { view = "mini",  filter = { event = "msg_show", cmdline = "Git .*" }, },
+                { view = "mini",  filter = { event = "msg_show", cmdline = "G .*" }, },
+                { view = "mini",  filter = { event = "msg_show", cmdline = ".*fugitive#.*" }, },
+                { view = "popup", filter = { event = "msg_show", min_height = 2 }, },
             },
+            -- format = { notify = { "{level} ", "{event}", "{kind}", "{cmdline} ", "{title} ", "{message}", } },
         },
         dependencies = {
             "MunifTanjim/nui.nvim",
