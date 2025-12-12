@@ -178,7 +178,8 @@ return {
             words = { enabled = true },
         },
         keys = {
-            { "<c-t>",           function() Snacks.terminal() end,                                       desc = "Terminal" },
+            { "<M-Space>",       function() Snacks.terminal() end,                                       desc = "Terminal",                 mode = { "n", "t" } },
+            { "<M-Esc>",         "<C-\\><C-n>",                                                          desc = "Normal mode",              mode = { "t" } },
             -- Top Pickers & Explorer
             { "<leader><space>", function() Snacks.picker.smart({ filter = { cwd = true } }) end,        desc = "Smart Find Files" },
             { "<leader>,",       function() Snacks.picker.buffers() end,                                 desc = "List Buffers" },
