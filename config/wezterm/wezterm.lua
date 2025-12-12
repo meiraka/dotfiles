@@ -7,8 +7,12 @@ local config = wezterm.config_builder()
 
 config:set_strict_mode(true)
 
-config.font = wezterm.font("PlemolJP35 Console NF", { weight = "Medium", style = "Normal" })
-config.font_rules = { { italic = true, font = config.font } }
+config.font = wezterm.font("PlemolJP Console NF", { weight = "Medium", style = "Normal" })
+config.font_rules = {
+    { italic = true,  intensity = 'Normal', font = wezterm.font("PlemolJP Console NF", { weight = "ExtraLight", italic = true }) },
+    { italic = true,  intensity = 'Bold',   font = wezterm.font("PlemolJP Console NF", { weight = "Bold", italic = true }) },
+    { italic = false, intensity = 'Bold',   font = wezterm.font("PlemolJP Console NF", { weight = "Bold", }) },
+}
 config.font_size = 12
 config.dpi = 192
 
