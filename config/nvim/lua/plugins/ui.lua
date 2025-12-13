@@ -74,6 +74,7 @@ return {
         'b0o/incline.nvim',
         opts = {
             window = {
+                placement = { vertical = "bottom" },
                 overlap = { borders = true },
                 padding = 0,
                 margin = { horizontal = 0 },
