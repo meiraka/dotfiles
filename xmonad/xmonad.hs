@@ -49,9 +49,7 @@ myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 myManageHook =
   composeOne
-    [ title =? "gmrun" -?> doCenterFloat,
-      isDialog -?> customFloating $ W.RationalRect (4 / 20) (4 / 20) (12 / 20) (12 / 20)
-    ]
+    [isDialog -?> customFloating $ W.RationalRect (4 / 20) (4 / 20) (12 / 20) (12 / 20)]
     <+> composeAll
       [ manageDocks,
         namedScratchpadManageHook scratchpads,
@@ -98,7 +96,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
   M.fromList $
     -- launching and killing programs
     [ ((keyModMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf), -- %! Launch terminal
-      ((keyModMask, xK_r), spawn "gmrun"), -- %! Launch gmrun
+      ((keyModMask, xK_r), spawn "rofi -show run"), -- %! Launch gmrun
       ((keyModMask, xK_space), namedScratchpadAction scratchpads "terminal"), -- %! Toggle terminal
       ((keyModMask .|. shiftMask, xK_s), namedScratchpadAction scratchpads "sound"), -- %! Toggle sound control
       ((keyModMask .|. shiftMask, xK_b), namedScratchpadAction scratchpads "bluetooth"), -- %! Toggle bluetooth control
