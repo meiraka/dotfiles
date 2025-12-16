@@ -7,7 +7,7 @@ configuration {
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-/*	show-icons: false;*/
+	show-icons: true;
 /*	preview-cmd: ;*/
 /*	on-selection-changed: ;*/
 /*	on-mode-changed: ;*/
@@ -23,7 +23,7 @@ configuration {
 /*	run-shell-command: "{terminal} -e {cmd}";*/
 /*	window-command: "wmctrl -i -R {window}";*/
 /*	window-match-fields: "all";*/
-/*	icon-theme: ;*/
+	icon-theme: "Papirus";
 /*	drun-match-fields: "name,generic,exec,categories,keywords";*/
 /*	drun-categories: ;*/
 /*	drun-exclude-categories: ;*/
@@ -188,12 +188,14 @@ inputbar {
 }
 
 element-icon {
-    size: 2em;
+    size: 1em;
+    padding: 12px;
+    border-radius: 100%;
 }
 
 element {
-  orientation: horizontal;
-  children: [element-text,element-icon];
+    orientation: horizontal;
+    children: [element-icon,element-text];
 }
 listview {
     border: 0px;
