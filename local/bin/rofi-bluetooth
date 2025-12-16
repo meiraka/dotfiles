@@ -1,0 +1,43 @@
+#!/bin/bash
+
+list() {
+    devs="$(bluetoothctl devices)"
+    sep=""
+    echo -en "\0markup-rows\x1ftrue\n"
+    IFS=$'\n'
+    for line in $devs
+    do
+        device=$(echo "$line" | cut -d ' ' -f 2)
+        name=$(echo "$line" | cut -d ' ' -f 3-)
+        info=$(bluetoothctl info "$device")
+        connected=$(echo "$info" | grep 'Connected:' | cut -d ':' -f 2-)
+        if [ "$connected" = " no" ]; then
+            connected="false"
+            connected_text="disconnected"
+        else
+            connected="true"
+            connected_text="connected"
+        fi
+        icon=$(echo "$info" | grep 'Icon:' | cut -d ':' -f 2-)
+        icon=${icon#?}
+    
+        echo -en "${device}\0"
+        echo -en "meta\x1fbluetooth ${name}\x1f"
+        echo -en "display\x1f<span>${name}</span>\r<span "'size="small" alpha="50%"'">${connected_text}</span>\x1f"
+        echo -en "active\x1f${connected}\x1ficon\x1f${icon}\n"
+
+    done
+}
+
+if [ "$#" -ge 1 ]; then
+    device="$1"
+    info=$(bluetoothctl info "$device")
+    connected=$(echo "$info" | grep 'Connected:' | cut -d ':' -f 2-)
+    if [ "$connected" = " no" ]; then
+        coproc ( bluetoothctl connect "$device" > /dev/null  2>&1 )
+    else
+        coproc ( bluetoothctl disconnect "$device" > /dev/null  2>&1 )
+    fi
+    exit 0
+fi
+list
