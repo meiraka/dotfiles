@@ -1,7 +1,7 @@
 @theme "gruvbox-dark"
 
 configuration {
-	modes: "window,drun,run,ssh";
+	modes: "drun,run,bt:rofi-bluetooth";
 	font: "Migu 1C Bold 10";
 /*	location: 0;*/
 /*	yoffset: 0;*/
@@ -37,7 +37,7 @@ configuration {
 /*	case-sensitive: false;*/
 /*	case-smart: false;*/
 /*	cycle: true;*/
-/*	sidebar-mode: false;*/
+	sidebar-mode: true;
 /*	hover-select: false;*/
 /*	eh: 1;*/
 /*	auto-select: false;*/
