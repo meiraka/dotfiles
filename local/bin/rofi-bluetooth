@@ -22,7 +22,7 @@ list() {
         icon=${icon#?}
     
         echo -en "${device}\0"
-        echo -en "meta\x1fbluetooth ${name}\x1f"
+        echo -en "meta\x1fbt ${name}\x1f"
         echo -en "display\x1f<span>${name}</span>\r<span "'size="small" alpha="50%"'">${connected_text}</span>\x1f"
         echo -en "active\x1f${connected}\x1ficon\x1f${icon}\n"
 
