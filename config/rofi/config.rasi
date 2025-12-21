@@ -1,8 +1,9 @@
-@theme "gruvbox-dark"
-
 configuration {
 	modes: "drun,run,bt:rofi-bluetooth";
 	font: "Migu 1C Bold 10";
+    display-drun: "󰀻";
+    display-run: "";
+    display-bt: "󰂯";
 /*	location: 0;*/
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
@@ -43,7 +44,7 @@ configuration {
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-/*	combi-modes: "window,run";*/
+/*	combi-modes: "drun,bt:rofi-bluetooth";*/
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
@@ -170,39 +171,123 @@ configuration {
   }
 }
 
+* {
+    bg: #202020;
+    fg: #f0f0f0;
+    bg-active: #ff2020;
+    icon-normal: #e0e0e0;
+    icon-active: #ff0000;
+    font: "Migu 1C bold 10";
+    font-icon: "Migu 1C bold 20";
+}
 
 window {
- children: [ mainbox ];
- padding: 20px;
- border: 4px;
- border-radius: 20px;
- width: 30%;
- height: 40%;
+    children: [ mainbox ];
+    background-color: var(bg);
+    border-color: var(fg);
+    padding: 20px;
+    border: 4px;
+    border-radius: 20px;
+    width: 30%;
+    height: 40%;
 }
 mainbox {
     border: 0;
-}
-inputbar {
-    border: 0 0 4px 0;
-    margin: 20px 0;
+    children: [ inputbar, listview, mode-switcher-box ];
 }
 
-element-icon {
-    size: 1em;
-    padding: 12px;
-    border-radius: 100%;
+inputbar {
+    children: [icon-prompt, entry];
+}
+
+icon-prompt {
+    expand: false;
+    filename: "search";
+    size: 2em;
+}
+
+entry {
+    vertical-align: 0.5;
+    font: var(font);
+    color: var(fg);
+}
+
+listview {
+    border: 0;
+    scrollbar: false;
+    spacing: 0;
+    background-color: var(bg);
 }
 
 element {
-    orientation: horizontal;
+    border: 0;
+    border-radius: 0.2em;
     children: [element-icon,element-text];
+    font: var(font);
+    margin: 0;
+    orientation: horizontal;
+    padding: 0.2em;
 }
-listview {
-    border: 0px;
-    scrollbar: false;
+
+element normal,
+element normal.normal,
+element alternate,
+element alternate.normal {
+    color: var(fg);
+    background-color: var(bg);
+}
+
+element selected,
+element selected.normal,
+{
+    background-color: var(bg-active);
+}
+
+element-icon {
+    background-color: none;
+    border: 0;
+    font: inherit;
+    size: 1em;
+    padding: 0.25em 0.5em;
+    border-radius: 100%;
 }
 
 element-text {
+    background-color: none;
+    color: var(fg);
+    border: 0;
+    font: inherit;
     vertical-align: 0.5;
+}
+
+mode-switcher {
+    border: none;
+    font: var(font-icon);
+    spacing: 0.5em;
+}
+
+mode-switcher-box {
+    expand: false;
+    children: [ space, mode-switcher, space ];
+    orientation: horizontal;
+}
+
+space {
+    expand: true;
+}
+
+button {
+    font: inherit;
+    expand: false;
+    width: 2.2em;
+    border: 0.1em;
+    color: var(icon-normal);
+    border-color: var(icon-normal);
+    border-radius: 2em;
+}
+
+button selected {
+    border-color: var(icon-active);
+    background-color: var(icon-active);
 }
 /* vim:ft=css

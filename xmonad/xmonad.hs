@@ -96,7 +96,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) =
   M.fromList $
     -- launching and killing programs
     [ ((keyModMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf), -- %! Launch terminal
-      ((keyModMask, xK_r), spawn "rofi -show run"), -- %! Launch gmrun
+      ((keyModMask, xK_r), spawn "rofi -show drun"), -- %! Launch rofi
       ((keyModMask, xK_space), namedScratchpadAction scratchpads "terminal"), -- %! Toggle terminal
       ((keyModMask .|. shiftMask, xK_s), namedScratchpadAction scratchpads "sound"), -- %! Toggle sound control
       ((keyModMask .|. shiftMask, xK_b), namedScratchpadAction scratchpads "bluetooth"), -- %! Toggle bluetooth control
