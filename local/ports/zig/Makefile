@@ -12,16 +12,25 @@ TARGET=$(INSTALL_DIR)/zig-$(VERSION)
 TARGET_LINK=$(INSTALL_DIR)/zig
 _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 
-ARCHIVE=zig-$(OS)-$(ARCH)-$(VERSION).tar.xz
+ifeq ($(firstword $(sort $(VERSION) 0.15.0)),0.15.0)
+	ARCHIVE=zig-$(ARCH)-$(OS)-$(VERSION).tar.xz
+	EXTRACTED=zig-$(ARCH)-$(OS)-$(VERSION)
+else
+	ARCHIVE=zig-$(OS)-$(ARCH)-$(VERSION).tar.xz
+	EXTRACTED=zig-$(OS)-$(ARCH)-$(VERSION)
+endif
+
+test:
+	echo $(ARCHIVE)
 
 $(TARGET):
 	curl -L https://ziglang.org/download/$(VERSION)/$(ARCHIVE) -o $(ARCHIVE)
 	tar -xf $(ARCHIVE)
 	mkdir -p $(INSTALL_DIR)
-	mv zig-$(OS)-$(ARCH)-$(VERSION) $(TARGET)
-	rm $(ARCHIVE)
+	mv $(EXTRACTED) $(TARGET)
 
 clean:
+	rm $(ARCHIVE)
 
 $(TARGET_LINK): $(TARGET)
 	@touch $(TARGET_LINK)
@@ -32,28 +41,21 @@ install: $(TARGET_LINK)
 
 USER=ziglang
 REPO=zig
-GITHUB_TAGS=https://api.github.com/repos/$(USER)/$(REPO)/tags
+GITLAB_TAGS=https://gitlab.com/api/v4/projects/$(USER)%2F$(REPO)/repository/tags
 
 .PHONY: update version versions
 update:
+	$(eval NEW_VERSION := $(shell curl -s $(GITLAB_TAGS) | jq -re .[0].name))
+	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
+	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
+	$(MAKE) install
+
 version:
-	@echo none
+	@echo $(VERSION)
+
 versions:
-	@echo none
+	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
+
+INSTALLED=$(subst zig-,,$(notdir $(shell readlink $(TARGET_LINK))))
 installed:
-	@echo none
-#update:
-#	$(eval NEW_VERSION := $(shell curl -s $(GITHUB_TAGS) | jq -re .[0].name))
-#	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
-#	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
-#	$(MAKE) install
-#
-#version:
-#	@echo $(VERSION)
-#
-#versions:
-#	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
-#
-#INSTALLED=$(subst zig-,,$(notdir $(shell readlink $(TARGET_LINK))))
-#installed:
-#	@echo $(INSTALLED)
+	@echo $(INSTALLED)
