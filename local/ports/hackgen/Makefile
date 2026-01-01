@@ -4,31 +4,33 @@ REPO=HackGen
 VERSION=v2.10.0
 INSTALL_DIR = $(HOME)/.local
 
-ARCHIVES=HackGen_NF_$(VERSION).zip HackGen_$(VERSION).zip
-SRC=HackGen_$(VERSION)/HackGen-Regular.ttf HackGen_NF_$(VERSION)/HackGenConsoleNF-Regular.ttf
-TARGET=$(INSTALL_DIR)/share/fonts/HackGen-Regular.ttf
+ARCHIVE=HackGen_NF_$(VERSION).zip
+OLD=$(filter-out $(ARCHIVE),$(wildcard $(subst $(VERSION),*,$(ARCHIVE))))
+
+FONTS=HackGen35ConsoleNF-Bold.ttf HackGen35ConsoleNF-Regular.ttf HackGenConsoleNF-Bold.ttf HackGenConsoleNF-Regular.ttf
+
+TARGETS=$(addprefix $(INSTALL_DIR)/share/fonts/,$(FONTS))
 
 all: install
-install: $(TARGET)
-$(TARGET): $(SRC)
+install: $(TARGETS)
+$(INSTALL_DIR)/share/fonts/:
 	mkdir -p $(INSTALL_DIR)/share/fonts/
-	cp HackGen_NF_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
-	cp HackGen_$(VERSION)/*.ttf $(INSTALL_DIR)/share/fonts/
-	echo "$(VERSION)" > INSTALLED
-	-fc-cache -vf
 
-.PHONY: extract
-extract: $(SRC)
-$(SRC): $(ARCHIVES)
-	unzip -o ${@D}.zip
-	touch ${@D}/*
-
-###
+$(TARGETS): $(ARCHIVE) $(INSTALL_DIR)/share/fonts/
+	unzip -p $(<) *$(@F) > $(@)
+	@touch $(@)
+	@echo "$(VERSION)" > INSTALLED
 
 .PHONY: fetch
-fetch: $(ARCHIVES)
-$(ARCHIVES):
+fetch: $(ARCHIVE)
+$(ARCHIVE):
 	curl -L https://github.com/$(USER)/$(REPO)/releases/download/$(VERSION)/$@ -o $@
+
+list: $(ARCHIVE)
+	@echo $(notdir $(filter %.ttf,$(shell unzip -Z1 $(ARCHIVE))))
+
+clean:
+	rm $(TARGETS)
 
 GITHUB_RELEASES=https://api.github.com/repos/$(USER)/$(REPO)/releases
 
