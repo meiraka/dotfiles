@@ -41,11 +41,11 @@ install: $(TARGET_LINK)
 
 USER=ziglang
 REPO=zig
-GITLAB_TAGS=https://gitlab.com/api/v4/projects/$(USER)%2F$(REPO)/repository/tags
+TAGS_URL=https://codeberg.org/api/v1/repos/$(USER)/$(REPO)/tags
 
 .PHONY: update version versions
 update:
-	$(eval NEW_VERSION := $(shell curl -s $(GITLAB_TAGS) | jq -re .[0].name))
+	$(eval NEW_VERSION := $(shell curl -s $(TAGS_URL) | jq -re .[0].name))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) install
@@ -54,7 +54,7 @@ version:
 	@echo $(VERSION)
 
 versions:
-	@curl -s $(GITHUB_TAGS) | jq -r '.[].name'
+	@curl -s $(TAGS_URL) | jq -r '.[].name'
 
 INSTALLED=$(subst zig-,,$(notdir $(shell readlink $(TARGET_LINK))))
 installed:
