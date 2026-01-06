@@ -25,6 +25,12 @@ return {
                         sanitize_output = true,
                     }),
                 },
+                icons = {
+                    passed = "",
+                    running = "",
+                    failed = "",
+                    unknown = ""
+                },
             })
         end,
         keys = {
