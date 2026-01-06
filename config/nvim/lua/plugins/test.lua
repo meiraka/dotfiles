@@ -11,13 +11,19 @@ return {
                 build = function()
                     vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
                 end,
+                dependencies = {
+                    "uga-rosa/utf8.nvim",
+                },
             },
         },
         config = function()
-            local config = { runner = "gotestsum" }
             require("neotest").setup({
                 adapters = {
-                    require("neotest-golang")(config),
+                    require("neotest-golang")({
+                        runner = "gotestsum",
+                        warn_test_name_dupes = false,
+                        sanitize_output = true,
+                    }),
                 },
             })
         end,
