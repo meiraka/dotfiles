@@ -7,7 +7,7 @@ return {
         opts = {
             ensure_installed = {
                 'bash', 'go',
-                'css', 'html',
+                'css', 'html', 'latex',
                 'json', 'yaml', 'promql',
                 'regex',
                 'markdown', 'markdown_inline',

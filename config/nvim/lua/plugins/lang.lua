@@ -2,6 +2,20 @@ return {
     { 'mechatroner/rainbow_csv', ft = "csv", },
     { 'mattn/vim-goimports',     ft = "go", },
     {
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+            code = {
+                language_border = ' ',
+                language_left = '',
+                language_right = '',
+                width = 'block',
+                min_width = 80,
+                border = 'thick',
+            },
+        },
+        ft = { "markdown" },
+    },
+    {
         '3rd/diagram.nvim',
         dependencies = {
             {
