@@ -1,5 +1,5 @@
 configuration {
-	modes: "drun,run,bt:rofi-bluetooth";
+	modes: "combi";
 	font: "Sans Bold 10";
     display-drun: "󰀻";
     display-run: "";
@@ -38,13 +38,13 @@ configuration {
 /*	case-sensitive: false;*/
 /*	case-smart: false;*/
 /*	cycle: true;*/
-	sidebar-mode: true;
+	sidebar-mode: false;
 /*	hover-select: false;*/
 /*	eh: 1;*/
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-/*	combi-modes: "drun,bt:rofi-bluetooth";*/
+	combi-modes: "drun,bt:rofi-bluetooth";
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
@@ -177,8 +177,8 @@ configuration {
     bg-active: #ff2020;
     icon-normal: #e0e0e0;
     icon-active: #ff0000;
-    font: "Migu 1C bold 10";
-    font-icon: "Migu 1C bold 20";
+    font: "Sans bold 10";
+    font-icon: "Sans bold 20";
 }
 
 window {
@@ -193,7 +193,7 @@ window {
 }
 mainbox {
     border: 0;
-    children: [ inputbar, listview, mode-switcher-box ];
+    children: [ inputbar, listview ];
 }
 
 inputbar {
