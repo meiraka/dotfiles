@@ -21,7 +21,7 @@
     frame_color = "#28282880"
     transparency = 0
 
-    font = Migu 1C 10
+    font = Sans 10
     line_height = 0
     ellipsize = end
     ignore_newline = no

@@ -1,6 +1,6 @@
 configuration {
 	modes: "drun,run,bt:rofi-bluetooth";
-	font: "Migu 1C Bold 10";
+	font: "Sans Bold 10";
     display-drun: "󰀻";
     display-run: "";
     display-bt: "󰂯";
