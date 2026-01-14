@@ -1,70 +1,55 @@
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'VeryLazy',
+    callback = function()
+        vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('my.lsp', {}),
+            callback = function(args)
+                local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+                if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
+                    vim.api.nvim_create_autocmd('BufWritePre', {
+                        group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
+                        buffer = args.buf,
+                        callback = function()
+                            if vim.bo.filetype ~= "go" then
+                                vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+                            end
+                        end,
+                    })
+                end
+            end,
+        })
+
+        vim.lsp.config("lua_ls", {
+            settings = {
+                Lua = { diagnostics = { globals = { 'vim', 'Snacks' } } },
+            },
+        })
+    end
+})
 return {
     {
-        'neovim/nvim-lspconfig',
+        "mason-org/mason-lspconfig.nvim",
+        opts = {},
         dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            'hrsh7th/nvim-cmp',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-vsnip',
-            'hrsh7th/vim-vsnip',
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
         },
+        event = { "BufReadPre", "BufNewFile" },
+        cmd = { "Mason" },
         keys = {
             { '<leader>r', vim.lsp.buf.rename,                                       desc = 'LSP Rename' },
             { '<leader>d', vim.lsp.buf.definition,                                   desc = 'LSP Definition' },
             { 'K',         function() vim.lsp.buf.hover({ border = 'rounded' }) end, desc = 'LSP Hover' },
         },
-        event = { "BufReadPre", "BufNewFile" },
-        config = function()
-            require('mason').setup()
-            require("mason-lspconfig").setup()
-            vim.lsp.config("*", {
-                capabilities = require('cmp_nvim_lsp').default_capabilities(),
-            })
-
-            vim.lsp.config("lua_ls", {
-                capabilities = require('cmp_nvim_lsp').default_capabilities(),
-                settings = {
-                    Lua = { diagnostics = { globals = { 'vim', 'Snacks' } } },
-                },
-            })
-            vim.lsp.config("hls", {
-                capabilities = require('cmp_nvim_lsp').default_capabilities(),
-                filetypes = { 'haskell', 'lhaskell', 'cabal' },
-            })
-            vim.lsp.enable({ "hls" })
-            vim.api.nvim_create_autocmd('LspAttach', {
-                group = vim.api.nvim_create_augroup('my.lsp', {}),
-                callback = function(args)
-                    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-                    if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
-                        vim.api.nvim_create_autocmd('BufWritePre', {
-                            group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
-                            buffer = args.buf,
-                            callback = function()
-                                if vim.bo.filetype ~= "go" then
-                                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
-                                end
-                            end,
-                        })
-                    end
-                end,
-            })
-            local cmp = require("cmp");
-            cmp.setup({
-                snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
-                sources = {
-                    { name = "nvim_lsp" },
-                    { name = 'vsnip' },
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-p>"] = cmp.mapping.select_prev_item(),
-                    ["<C-n>"] = cmp.mapping.select_next_item(),
-                    ['<C-l>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm { select = true },
-                }),
-            })
-        end
     },
+    {
+        'saghen/blink.cmp',
+        version = '1.*',
+        dependencies = { 'rafamadriz/friendly-snippets' },
+        opts = {
+            keymap = { preset = 'enter' },
+            completion = { documentation = { auto_show = true, } },
+        },
+    },
+    { 'neovim/nvim-lspconfig', },
 }
