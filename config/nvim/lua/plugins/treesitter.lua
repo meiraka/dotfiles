@@ -117,18 +117,18 @@ return {
                 mode = { "n", "x", "o" },
                 desc = "Prev scope start",
             },
-            {
-                "]]",
-                function() require(tt .. ".move").goto_next_start("@class.outer", "textobjects") end,
-                mode = { "n", "x", "o" },
-                desc = "Next class start",
-            },
-            {
-                "[[",
-                function() require(tt .. ".move").goto_previous_start("@class.outer", "textobjects") end,
-                mode = { "n", "x", "o" },
-                desc = "Prev class start",
-            },
+            -- {
+            --     "]]",
+            --     function() require(tt .. ".move").goto_next_start("@class.outer", "textobjects") end,
+            --     mode = { "n", "x", "o" },
+            --     desc = "Next class start",
+            -- },
+            -- {
+            --     "[[",
+            --     function() require(tt .. ".move").goto_previous_start("@class.outer", "textobjects") end,
+            --     mode = { "n", "x", "o" },
+            --     desc = "Prev class start",
+            -- },
         },
     },
 }
