@@ -24,6 +24,7 @@ return {
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-vsnip',
             'hrsh7th/vim-vsnip',
+            'onsails/lspkind.nvim',
         },
         config = function()
             vim.lsp.config("*", {
@@ -31,6 +32,29 @@ return {
             })
             local cmp = require("cmp");
             cmp.setup({
+                window = {
+                    completion = {
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                        col_offset = -3,
+                        side_padding = 0,
+                        scrollbar = false,
+                    },
+                    documentation = {
+                        border = "solid",
+                    },
+                },
+                formatting = {
+                    fields = { "kind", "abbr", "menu" },
+                    format = function(entry, item)
+                        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry,
+                            item)
+                        local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                        kind.kind = " " .. (strings[1] or "") .. " "
+                        kind.menu = "    " .. (strings[2] or "")
+                        kind.menu_hl_group = "Comment"
+                        return kind
+                    end,
+                },
                 snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
                 sources = {
                     { name = "nvim_lsp" },
