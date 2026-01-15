@@ -24,6 +24,7 @@ vim.api.nvim_create_autocmd('User', {
                 Lua = { diagnostics = { globals = { 'vim', 'Snacks' } } },
             },
         })
+        vim.lsp.enable({ "hls" })
     end
 })
 return {
