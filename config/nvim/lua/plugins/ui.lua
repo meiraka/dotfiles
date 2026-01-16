@@ -223,8 +223,17 @@ return {
         "folke/noice.nvim",
         event = "VeryLazy",
         opts = {
-            cmdline = {
-                opts = { position = { row = "60%" } },
+            views = {
+                cmdline_popup = { position = { row = 20, col = "50%" }, },
+                cmdline_popupmenu = {
+                    position = { row = 22, col = "50%" },
+                    border = {
+                        style = { "├", "─", "┤", "│", "╯", "─", "╰", "│" },
+                    },
+                },
+            },
+            presets = {
+                command_palette = true,
             },
             lsp = {
                 override = {
