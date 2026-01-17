@@ -30,6 +30,10 @@ return {
             vim.lsp.config("*", { capabilities = require('cmp_nvim_lsp').default_capabilities() })
             local cmp = require("cmp");
             cmp.setup({
+                performance = {
+                    debounce = 0,
+                    throttle = 0,
+                },
                 window = {
                     completion = {
                         winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
