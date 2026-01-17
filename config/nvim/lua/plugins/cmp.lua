@@ -1,7 +1,7 @@
 return {
     {
         'saghen/blink.cmp',
-        enabled = false,
+        cond = false,
         version = '1.*',
         dependencies = { 'rafamadriz/friendly-snippets' },
         opts = {
@@ -19,7 +19,6 @@ return {
     },
     {
         'hrsh7th/nvim-cmp',
-        enabled = true,
         dependencies = {
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-vsnip',
@@ -46,15 +45,12 @@ return {
                     },
                 },
                 formatting = {
-                    fields = { "kind", "abbr", "menu" },
+                    fields = { "icon", "abbr", "kind", "menu" },
                     format = function(entry, item)
-                        local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry,
-                            item)
-                        local strings = vim.split(kind.kind, "%s", { trimempty = true })
-                        kind.kind = " " .. (strings[1] or "") .. " "
-                        kind.menu = "    " .. (strings[2] or "")
-                        kind.menu_hl_group = "Comment"
-                        return kind
+                        item = require("lspkind").cmp_format({ maxwidth = 50 })(entry, item)
+                        item.kind_hl_group = "Comment"
+                        item.menu_hl_group = "Comment"
+                        return item
                     end,
                 },
                 snippet = { expand = function(args) vim.fn["vsnip#anonymous"](args.body) end },
