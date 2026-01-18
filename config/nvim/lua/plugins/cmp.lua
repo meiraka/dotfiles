@@ -19,6 +19,14 @@ return {
                             kind = { highlight = "Comment" },
                         },
                     },
+                    cmdline_position = function()
+                        if vim.g.ui_cmdline_pos ~= nil then
+                            local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
+                            return { pos[1], pos[2] }        -- offset border
+                        end
+                        local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
+                        return { vim.o.lines - height, 0 }
+                    end,
                 },
             },
             cmdline = {
