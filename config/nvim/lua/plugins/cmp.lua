@@ -23,7 +23,10 @@ return {
                     ['<Up>'] = { 'select_prev', 'fallback' },
                     ['<Down>'] = { 'select_next', 'fallback' },
                 },
-                completion = { list = { selection = { preselect = false, auto_insert = true } } },
+                completion = {
+                    list = { selection = { preselect = false, auto_insert = true } },
+                    menu = { auto_show = true },
+                },
             },
         },
     },
