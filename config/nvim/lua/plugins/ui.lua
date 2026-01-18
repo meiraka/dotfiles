@@ -234,18 +234,6 @@ return {
         "folke/noice.nvim",
         event = "VeryLazy",
         opts = {
-            views = {
-                cmdline_popup = { position = { row = 20, col = "50%" }, },
-                cmdline_popupmenu = {
-                    position = { row = 22, col = "50%" },
-                    border = {
-                        style = { "├", "─", "┤", "│", "╯", "─", "╰", "│" },
-                    },
-                },
-            },
-            presets = {
-                command_palette = true,
-            },
             lsp = {
                 override = {
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -297,7 +285,6 @@ return {
             { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Diagnostics", },
             { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics/Buffer", },
             -- { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",      desc = "List Symbols", },
-            { "<leader>h",  "<cmd>Trouble lsp toggle<cr>",                      desc = "LSP References", },
             { "<leader>xl", "<cmd>Trouble loclist toggle<cr>",                  desc = "Location List", },
             { "<leader>xq", "<cmd>Trouble qflist toggle<cr>",                   desc = "Quickfix List", },
         },
