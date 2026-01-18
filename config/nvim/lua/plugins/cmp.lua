@@ -12,7 +12,11 @@ return {
                     draw = {
                         columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 }, { 'kind' } },
                         components = {
-                            kind = { highlight = function(_) return "Comment" end },
+                            kind_icon = {
+                                text = function(ctx) return select(1, require('mini.icons').get('lsp', ctx.kind)) .. " " end,
+                                highlight = function(ctx) return select(2, require('mini.icons').get('lsp', ctx.kind)) end,
+                            },
+                            kind = { highlight = "Comment" },
                         },
                     },
                 },
