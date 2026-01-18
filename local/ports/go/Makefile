@@ -1,7 +1,7 @@
 .PHONY: clean install
 all: install
 
-VERSION=go1.25.4
+VERSION=go1.25.6
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
@@ -15,7 +15,7 @@ _:=$(shell if [ -d "$(TARGET)" ]; then touch "$(TARGET)"; fi)
 ARCHIVE=$(VERSION).$(OS)-$(ARCH).tar.gz
 
 $(TARGET):
-	curl -L https://storage.googleapis.com/golang/$(ARCHIVE) -o $(ARCHIVE)
+	curl -L https://go.dev/dl/$(ARCHIVE) -o $(ARCHIVE)
 	tar -xzf $(ARCHIVE)
 	mkdir -p $(INSTALL_DIR)
 	mv go $(TARGET)
