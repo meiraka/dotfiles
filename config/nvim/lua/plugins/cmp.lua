@@ -1,7 +1,6 @@
 return {
     {
         'saghen/blink.cmp',
-        cond = false,
         version = '1.*',
         dependencies = { 'rafamadriz/friendly-snippets' },
         opts = {
@@ -44,6 +43,7 @@ return {
     },
     {
         'hrsh7th/nvim-cmp',
+        cond = false,
         dependencies = {
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-cmdline',
