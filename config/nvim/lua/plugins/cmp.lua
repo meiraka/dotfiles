@@ -6,7 +6,17 @@ return {
         dependencies = { 'rafamadriz/friendly-snippets' },
         opts = {
             keymap = { preset = 'enter' },
-            completion = { documentation = { auto_show = true, } },
+            completion = {
+                documentation = { auto_show = true, },
+                menu = {
+                    draw = {
+                        columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 }, { 'kind' } },
+                        components = {
+                            kind = { highlight = function(_) return "Comment" end },
+                        },
+                    },
+                },
+            },
             cmdline = {
                 keymap = {
                     preset = 'cmdline',
