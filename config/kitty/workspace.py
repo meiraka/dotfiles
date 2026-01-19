@@ -14,8 +14,6 @@ def main(args: list[str]) -> str:
         sys.stderr.buffer.write(cp.stderr)
         raise SystemExit(cp.returncode)
     output = json.loads(cp.stdout)
-    with open('/tmp/test', 'w') as f:
-        f.write(json.dumps(output))
     # open a new tab with a title specified by the user
     for w in output:
         for t in w["tabs"]:
