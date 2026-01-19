@@ -1,5 +1,5 @@
 from kitty.fast_data_types import Screen
-from kitty.tab_bar import DrawData, ExtraData, TabBarData, draw_title, ColorFormatter, as_rgb, color_as_int
+from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, color_as_int
 
 
 tab_state = {}
