@@ -16,19 +16,28 @@ def draw_tab(
     if not is_last:
         return 0
 
+    active_fg, inactive_fg, empty_fg = (
+        as_rgb(color_as_int(draw_data.inactive_fg)),
+        as_rgb(color_as_int(draw_data.active_fg)),
+        as_rgb(color_as_int(draw_data.active_fg)))
+    active_icon, inactive_icon, empty_icon = ('●', '●', '○')
+
     screen.cursor.bg = 0
     for i in range(1, 9):
-        screen.cursor.x = (i-1)*2
         title = str(i)
         if title in tab_state:
             if tab_state[title]:
-                screen.cursor.fg = as_rgb(color_as_int(draw_data.inactive_fg))
+                screen.cursor.fg = active_fg
+                screen.draw(active_icon)
             else:
-                screen.cursor.fg = as_rgb(color_as_int(draw_data.active_fg))
-            screen.draw('●')
+                # empty workspace
+                screen.cursor.fg = inactive_fg
+                screen.draw(inactive_icon)
         else:
-            screen.cursor.fg = as_rgb(color_as_int(draw_data.active_fg))
-            screen.draw('○')
+            # empty workspace
+            screen.cursor.fg = empty_fg
+            screen.draw(empty_icon)
+        screen.cursor.x += 1
 
     tab_state.clear()
     return screen.cursor.x
