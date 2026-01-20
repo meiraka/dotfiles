@@ -114,12 +114,14 @@ function env_vcs_info_callback() {
 add-zsh-hook precmd env_kube_info_async
 local KUBE_CONTEXT=""
 local KUBE_NAMESPACE=""
+local kubeconfig_last_modified=''
 
 function env_kube_info_async() {
-    local lastcmd="${history[@][1]}"
-    if [ "${lastcmd[0,7]}" != "kubectl" ]; then
+    local last_modified="$(stat -c '%Y' ~/.kube/config 2> /dev/null)"
+    if [ "$kubeconfig_last_modified" = "$last_modified" ]; then
         return
     fi
+    kubeconfig_last_modified="$last_modified"
     async_stop_worker env_kube_info
     async_start_worker env_kube_info -n
     async_register_callback env_kube_info env_kube_info_callback
