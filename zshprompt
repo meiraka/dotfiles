@@ -117,7 +117,7 @@ local KUBE_NAMESPACE=""
 local kubeconfig_last_modified=''
 
 function env_kube_info_async() {
-    local last_modified="$(stat -c '%Y' ~/.kube/config 2> /dev/null)"
+    local last_modified="$(date -r ~/.kube/config 2> /dev/null)"
     if [ "$kubeconfig_last_modified" = "$last_modified" ]; then
         return
     fi
