@@ -25,6 +25,7 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export GLFW_IM_MODULE=ibus kitty
 export EDITOR="$VISUAL"
+export BROWSER=vivaldi
 export QT_QPA_PLATFORMTHEME=qt5ct
 export MPD_HOST="moode.local"
 export FZF_DEFAULT_OPTS='--height 50% --color=16,bg+:0'
