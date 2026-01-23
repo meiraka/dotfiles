@@ -2,8 +2,28 @@ return {
     {
         'saghen/blink.cmp',
         version = '1.*',
-        dependencies = { 'rafamadriz/friendly-snippets' },
+        dependencies = {
+            { 'saghen/blink.compat',         version = '2.*', lazy = true, opts = {} },
+            { 'dmitmel/cmp-cmdline-history' },
+            { 'rafamadriz/friendly-snippets' },
+        },
         opts = {
+            fuzzy = {
+                sorts = {
+                    'exact',
+                    'score',
+                    'sort_text',
+                },
+            },
+            sources = {
+                providers = {
+                    cmdline_history = {
+                        name = 'cmdline_history',
+                        module = 'blink.compat.source',
+                        score_offset = -3,
+                    },
+                },
+            },
             keymap = { preset = 'enter' },
             completion = {
                 documentation = { auto_show = true, },
@@ -34,6 +54,7 @@ return {
                     ['<Up>'] = { 'select_prev', 'fallback' },
                     ['<Down>'] = { 'select_next', 'fallback' },
                 },
+                sources = { 'buffer', 'cmdline', 'cmdline_history' },
                 completion = {
                     list = { selection = { preselect = false, auto_insert = true } },
                     menu = { auto_show = true },
