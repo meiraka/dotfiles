@@ -20,7 +20,7 @@ return {
                     cmdline_history = {
                         name = 'cmdline_history',
                         module = 'blink.compat.source',
-                        score_offset = -3,
+                        score_offset = 1,
                     },
                 },
             },
