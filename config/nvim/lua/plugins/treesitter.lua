@@ -137,6 +137,9 @@ return {
             use_default_keymaps = false,
             max_join_length = 240,
         },
-        keys = { { "<leader>m", function() require('treesj').toggle() end, desc = "Split/Join block of code" } },
+        keys = {
+            { "<leader>j", function() require('treesj').join() end,  desc = "Join block of code" },
+            { "<leader>s", function() require('treesj').split() end, desc = "Split block of code" },
+        },
     },
 }
