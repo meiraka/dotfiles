@@ -101,6 +101,7 @@ return {
                 sources = {
                     { name = "nvim_lsp" },
                     { name = 'vsnip' },
+                    { name = 'buffer' },
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-p>"] = cmp.mapping.select_prev_item(),
