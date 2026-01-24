@@ -133,7 +133,10 @@ return {
     },
     {
         'Wansmer/treesj',
-        opts = { use_default_keymaps = false },
+        opts = {
+            use_default_keymaps = false,
+            max_join_length = 240,
+        },
         keys = { { "<leader>m", function() require('treesj').toggle() end, desc = "Edit: split/join block of code" } },
     },
 }
