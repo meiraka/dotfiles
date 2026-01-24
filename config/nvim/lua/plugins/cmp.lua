@@ -67,7 +67,6 @@ return {
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-vsnip',
             'hrsh7th/vim-vsnip',
-            'onsails/lspkind.nvim',
         },
         config = function()
             vim.lsp.config("*", { capabilities = require('cmp_nvim_lsp').default_capabilities() })
@@ -90,8 +89,8 @@ return {
                 },
                 formatting = {
                     fields = { "icon", "abbr", "kind", "menu" },
-                    format = function(entry, item)
-                        item = require("lspkind").cmp_format({ maxwidth = 50 })(entry, item)
+                    format = function(_, item)
+                        item.icon, item.icon_hl_group = require("mini.icons").get("lsp", item.kind)
                         item.kind_hl_group = "Comment"
                         item.menu_hl_group = "Comment"
                         return item
