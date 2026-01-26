@@ -12,7 +12,7 @@ return {
             { "<leader>ga", function() require('gitsigns').stage_buffer() end,                                     desc = "Git stage buffer" },
             { "<leader>gr", function() require('gitsigns').reset_buffer() end,                                     desc = "Git reset buffer" },
             {
-                "]c",
+                "]g",
                 function()
                     if vim.wo.diff then
                         vim.cmd.normal({ ']c', bang = true })
@@ -20,10 +20,10 @@ return {
                         require("gitsigns").nav_hunk('next')
                     end
                 end,
-                desc = "Git next hunk",
+                desc = "Next git hunk",
             },
             {
-                "[c",
+                "[g",
                 function()
                     if vim.wo.diff then
                         vim.cmd.normal({ '[c', bang = true })
@@ -31,7 +31,7 @@ return {
                         require("gitsigns").nav_hunk('prev')
                     end
                 end,
-                desc = "Git prev hunk"
+                desc = "Previous git hunk"
             },
         },
     },
