@@ -139,6 +139,10 @@ return {
         },
     },
     {
+        'nvim-treesitter/nvim-treesitter-context',
+        opts = {},
+    },
+    {
         'Wansmer/treesj',
         opts = {
             use_default_keymaps = false,
