@@ -3,7 +3,8 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         branch = "main",
-        build = ":TSUpdate",
+        -- FIXME: TSUpdate crashes vim
+        -- build = ":TSUpdate",
         opts = {
             ensure_installed = {
                 'bash', 'go',
