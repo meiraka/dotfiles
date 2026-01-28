@@ -9,13 +9,7 @@ return {
             { 'rafamadriz/friendly-snippets' },
         },
         opts = {
-            fuzzy = {
-                sorts = {
-                    'exact',
-                    'score',
-                    'sort_text',
-                },
-            },
+            fuzzy = { sorts = { 'exact', 'score', 'sort_text' } },
             sources = {
                 providers = {
                     cmdline_history = {
