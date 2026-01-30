@@ -58,6 +58,34 @@ return {
                         end
                     },
                     { 'diagnostics' },
+                    {
+                        function() -- show neotest statusline
+                            local neotest = require("neotest")
+                            local icons = {
+                                passed = "",
+                                failed = "",
+                                skipped = "",
+                                running = "",
+                            }
+                            local sum = { passed = 0, failed = 0, skipped = 0, running = 0 }
+                            for _, v in ipairs(neotest.state.adapter_ids()) do
+                                local c = neotest.state.status_counts(v)
+                                sum.passed = sum.passed + c.passed
+                                sum.failed = sum.failed + c.failed
+                                sum.skipped = sum.skipped + c.skipped
+                                sum.running = sum.running + c.running
+                            end
+
+                            local result = {}
+                            for k, v in pairs(sum) do
+                                if v > 0 then
+                                    table.insert(result, string.format('%%#%s#%s %d', "Neotest" .. k, icons[k], v))
+                                end
+                            end
+                            return table.concat(result, ' ')
+                        end,
+                        cond = function() return package.loaded["neotest"] ~= nil end
+                    },
                 },
                 lualine_x = {
                     {
