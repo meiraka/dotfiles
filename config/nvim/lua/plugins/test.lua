@@ -2,13 +2,21 @@ return {
     {
         "andythigpen/nvim-coverage",
         dependencies = { 'nvim-lua/plenary.nvim' },
-        cmd = { "Coverage", "CoverageLoad", "CoverageSummary" },
+        cmd = { "Coverage", "CoverageToggle", "CoverageClear", "CoverageSummary" },
         lazy = true,
         opts = {
             signs = {
-                covered = { text = "░" },
-                uncovered = { text = "░" },
+                covered = { text = " " },
+                uncovered = { text = "█" },
             },
+        },
+        config = function(_, opts)
+            local coverage = require("coverage")
+            coverage.setup(opts)
+            coverage.load()
+        end,
+        keys = {
+            { '<leader>tc', "<cmd>CoverageToggle<cr>", desc = 'Toggle Test Coverage' },
         },
     },
     {
