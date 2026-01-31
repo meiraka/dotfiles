@@ -1,6 +1,7 @@
 return {
     {
         "andythigpen/nvim-coverage",
+        dependencies = { 'nvim-lua/plenary.nvim' },
         cmd = { "Coverage", "CoverageLoad", "CoverageSummary" },
         lazy = true,
         opts = {
