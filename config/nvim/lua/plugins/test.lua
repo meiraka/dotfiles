@@ -13,6 +13,7 @@ return {
                 end,
                 dependencies = {
                     "uga-rosa/utf8.nvim",
+                    { "andythigpen/nvim-coverage", opts = {} },
                 },
             },
         },
@@ -21,6 +22,12 @@ return {
                 adapters = {
                     require("neotest-golang")({
                         runner = "gotestsum",
+                        go_test_args = {
+                            "-v",
+                            "-race",
+                            "-count=1",
+                            "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+                        },
                         warn_test_name_dupes = false,
                         sanitize_output = true,
                     }),

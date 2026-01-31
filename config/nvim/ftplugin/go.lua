@@ -18,7 +18,10 @@ local go_tags = function(p)
     end
     for k, _ in pairs(tags) do tags[k] = nil end
     local flags = {}
-    local go_test_args = { "-v", "-race", "-count=1" }
+    local go_test_args = {
+        "-v", "-race", "-count=1",
+        "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+    }
 
     local t = p.fargs
     for i = 1, #t do
