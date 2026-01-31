@@ -41,12 +41,15 @@ return {
             })
         end,
         keys = {
-            { '<leader>tt', function() require("neotest").run.run() end,                        desc = 'Test nearest func' },
-            { '<leader>td', function() require("neotest").run.run(vim.fn.expand("%:p:h")) end,  desc = 'Test current dir' },
-            { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
-            { '<leader>to', function() require("neotest").output_panel.toggle() end,            desc = 'Toggle test output' },
-            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Prev test failed' },
-            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
+            {
+                '<leader>tt',
+                function()
+                    local t = require("neotest")
+                    t.output_panel.clear()
+                    t.run.run()
+                end,
+                desc = 'Test nearest func'
+            },
             {
                 '<leader>tc',
                 function()
@@ -55,10 +58,25 @@ return {
                     if vim.bo.filetype == "go" and not string.match(path, "_test.go$") then
                         path = string.gsub(path, ".go$", "_test.go")
                     end
-                    require("neotest").run.run(path)
+                    local t = require("neotest")
+                    t.output_panel.clear()
+                    t.run.run(path)
                 end,
                 desc = 'Test current file'
             },
+            {
+                '<leader>td',
+                function()
+                    local t = require("neotest")
+                    t.output_panel.clear()
+                    t.run.run(vim.fn.expand("%:p:h"))
+                end,
+                desc = 'Test current dir'
+            },
+            { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
+            { '<leader>to', function() require("neotest").output_panel.toggle() end,            desc = 'Toggle test output' },
+            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Previous test failed' },
+            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
         },
     },
 }
