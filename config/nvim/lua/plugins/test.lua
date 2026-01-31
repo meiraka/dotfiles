@@ -18,6 +18,7 @@ return {
             "antoinemadec/FixCursorHold.nvim",
             {
                 "fredrikaverpil/neotest-golang",
+                lazy = true,
                 version = "*",
                 build = function()
                     vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
