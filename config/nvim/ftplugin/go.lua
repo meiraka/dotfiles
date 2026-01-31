@@ -27,12 +27,15 @@ local go_tags = function(p)
         table.insert(go_test_args, '-tags=' .. t[i])
     end
 
-    vim.lsp.config('gopls', {
-        capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    local lspconfig = {
         settings = {
             gopls = { buildFlags = flags },
         },
-    })
+    }
+    if package.loaded["cmp_nvim_lsp"] then
+        lspconfig.capabilities = require('cmp_nvim_lsp').default_capabilities()
+    end
+    vim.lsp.config('gopls', lspconfig)
     -- restart gopls
     for _, v in ipairs(vim.lsp.get_clients({ name = 'gopls' })) do
         v.stop()
