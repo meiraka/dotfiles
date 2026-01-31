@@ -51,7 +51,7 @@ return {
                 desc = 'Test nearest func'
             },
             {
-                '<leader>tc',
+                '<leader>tf',
                 function()
                     local path = vim.fn.expand("%")
                     -- run xx_test.go from xx.go
