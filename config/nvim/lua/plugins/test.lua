@@ -35,6 +35,7 @@ return {
         end,
         keys = {
             { '<leader>tt', function() require("neotest").run.run() end,                        desc = 'Test nearest func' },
+            { '<leader>td', function() require("neotest").run.run(vim.fn.expand("%:h")) end,    desc = 'Test current dir' },
             { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
             { '<leader>to', function() require("neotest").output_panel.toggle() end,            desc = 'Toggle test output' },
             { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Prev test failed' },
