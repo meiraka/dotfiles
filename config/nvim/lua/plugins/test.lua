@@ -1,5 +1,16 @@
 return {
     {
+        "andythigpen/nvim-coverage",
+        cmd = { "Coverage", "CoverageLoad", "CoverageSummary" },
+        lazy = true,
+        opts = {
+            signs = {
+                covered = { text = "░" },
+                uncovered = { text = "░" },
+            },
+        },
+    },
+    {
         "nvim-neotest/neotest",
         dependencies = {
             "nvim-neotest/nvim-nio",
@@ -13,7 +24,6 @@ return {
                 end,
                 dependencies = {
                     "uga-rosa/utf8.nvim",
-                    { "andythigpen/nvim-coverage", opts = {} },
                 },
             },
         },
