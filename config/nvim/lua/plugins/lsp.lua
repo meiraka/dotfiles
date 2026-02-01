@@ -21,7 +21,12 @@ vim.api.nvim_create_autocmd('User', {
 
         vim.lsp.config("lua_ls", {
             settings = {
-                Lua = { diagnostics = { globals = { 'vim', 'Snacks' } } },
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim', 'Snacks' },
+                        disable = { "missing-parameter", "missing-fields", "undefined-field" },
+                    },
+                },
             },
         })
         vim.lsp.enable({ "hls" })

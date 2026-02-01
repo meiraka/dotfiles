@@ -1,3 +1,3 @@
 return {
-    { 'junegunn/fzf', event = 'VeryLazy', build = ':call fzf#install()', },
+    { 'junegunn/fzf', version = "*", event = 'VeryLazy', build = ':call fzf#install()', },
 }

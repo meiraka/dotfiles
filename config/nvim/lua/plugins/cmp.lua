@@ -1,5 +1,18 @@
 return {
     {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        dependencies = {
+            'DrKJeff16/wezterm-types',
+        },
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                { path = "wezterm-types",      mods = { "wezterm" } },
+            },
+        },
+    },
+    {
         'saghen/blink.cmp',
         version = '1.*',
         dependencies = {
@@ -10,11 +23,18 @@ return {
         opts = {
             fuzzy = { sorts = { 'exact', 'score', 'sort_text' } },
             sources = {
+                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
                 providers = {
                     cmdline_history = {
                         name = 'cmdline_history',
                         module = 'blink.compat.source',
                         score_offset = 1,
+                    },
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        -- make lazydev completions top priority (see `:h blink.cmp`)
+                        score_offset = 100,
                     },
                 },
             },

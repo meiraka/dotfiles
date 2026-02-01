@@ -43,6 +43,7 @@ return {
                                 require("coverage").load(true)
                             end
                         end
+                        return {}
                     end,
                     -- set g:neotest_statusline
                     statusline = function(client)
