@@ -3,7 +3,7 @@ return {
     {
         "andythigpen/nvim-coverage",
         dependencies = { 'nvim-lua/plenary.nvim' },
-        event = 'VeryLazy',
+        lazy = true,
         opts = {
             auto_reload = false, -- update from neotest consumer
             signs = {
