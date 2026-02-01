@@ -20,6 +20,7 @@ return {
             { 'dmitmel/cmp-cmdline-history' },
             { 'rafamadriz/friendly-snippets' },
         },
+        event = { "InsertEnter", "CmdLineEnter" },
         opts = {
             fuzzy = { sorts = { 'exact', 'score', 'sort_text' } },
             sources = {

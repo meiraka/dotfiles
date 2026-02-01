@@ -26,6 +26,7 @@ return {
                     max_height_window_percentage = 50,
                 },
                 integrations = { markdown = { only_render_image_at_cursor_mode = "inline" } },
+                ft = { "markdown", "norg" },
             }
         },
         config = function()
