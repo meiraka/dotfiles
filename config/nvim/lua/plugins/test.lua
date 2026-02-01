@@ -2,19 +2,14 @@ return {
     {
         "andythigpen/nvim-coverage",
         dependencies = { 'nvim-lua/plenary.nvim' },
-        cmd = { "Coverage", "CoverageToggle", "CoverageClear", "CoverageSummary" },
-        lazy = true,
+        event = 'VeryLazy',
         opts = {
+            auto_reload = false, -- update from neotest consumer
             signs = {
                 covered = { text = " " },
                 uncovered = { text = "█" },
             },
         },
-        config = function(_, opts)
-            local coverage = require("coverage")
-            coverage.setup(opts)
-            coverage.load()
-        end,
         keys = {
             { '<leader>tc', "<cmd>CoverageToggle<cr>", desc = 'Toggle Test Coverage' },
         },
@@ -39,6 +34,35 @@ return {
         },
         config = function()
             require("neotest").setup({
+                consumers = {
+                    -- call CoverageLoad after test
+                    coverage = function(client)
+                        client.listeners.results = function(_, _, partial)
+                            if not partial then
+                                require("coverage").load(true)
+                            end
+                        end
+                    end,
+                    -- set g:neotest_statusline
+                    statusline = function(client)
+                        client.listeners.results = function(adapter_id, _, _)
+                            local status = require("neotest").state.status_counts(adapter_id)
+                            local icons = {
+                                passed = "",
+                                failed = "",
+                                skipped = "",
+                                running = "",
+                            }
+                            local result = {}
+                            for k, v in pairs(icons) do
+                                if status[k] > 0 then
+                                    table.insert(result, string.format('%%#%s#%s %d', "Neotest" .. k, v, status[k]))
+                                end
+                            end
+                            vim.g.neotest_statusline = table.concat(result, ' ')
+                        end
+                    end
+                },
                 adapters = {
                     require("neotest-golang")({
                         runner = "gotestsum",
