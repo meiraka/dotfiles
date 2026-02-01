@@ -1,3 +1,4 @@
+vim.g.neotest_statusline = ""
 return {
     {
         "andythigpen/nvim-coverage",
@@ -45,14 +46,31 @@ return {
                     end,
                     -- set g:neotest_statusline
                     statusline = function(client)
-                        client.listeners.results = function(adapter_id, _, _)
-                            local status = require("neotest").state.status_counts(adapter_id)
+                        local listener = function(adapter_id, _, _)
                             local icons = {
                                 passed = "",
                                 failed = "",
                                 skipped = "",
                                 running = "",
                             }
+                            local status = {
+                                passed = 0,
+                                failed = 0,
+                                skipped = 0,
+                                running = 0,
+                            }
+                            local tree = assert(client:get_position(nil, { adapter = adapter_id }))
+                            local results = client:get_results(adapter_id)
+                            for _, pos in tree:iter() do
+                                if pos.type == "test" then
+                                    local result = results[pos.id]
+                                    if result and status[result.status] ~= nil then
+                                        status[result.status] = status[result.status] + 1
+                                    elseif client:is_running(pos.id, { adapter = adapter_id }) then
+                                        status.running = status.running + 1
+                                    end
+                                end
+                            end
                             local result = {}
                             for k, v in pairs(icons) do
                                 if status[k] > 0 then
@@ -61,6 +79,8 @@ return {
                             end
                             vim.g.neotest_statusline = table.concat(result, ' ')
                         end
+                        client.listeners.run = listener
+                        client.listeners.results = listener
                     end
                 },
                 adapters = {
