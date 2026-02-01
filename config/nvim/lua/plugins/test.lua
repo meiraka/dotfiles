@@ -46,6 +46,7 @@ return {
                     end,
                     -- set g:neotest_statusline
                     statusline = function(client)
+                        local m = { lualine = "" }
                         local listener = function(adapter_id, _, _)
                             local icons = {
                                 passed = "",
@@ -77,10 +78,11 @@ return {
                                     table.insert(result, string.format('%%#%s#%s %d', "Neotest" .. k, v, status[k]))
                                 end
                             end
-                            vim.g.neotest_statusline = table.concat(result, ' ')
+                            m.lualine = table.concat(result, ' ')
                         end
                         client.listeners.run = listener
                         client.listeners.results = listener
+                        return m
                     end
                 },
                 adapters = {

@@ -58,7 +58,10 @@ return {
                         end
                     },
                     { 'diagnostics' },
-                    { function() return vim.g.neotest_statusline end },
+                    {
+                        function() return require('neotest').statusline.lualine end,
+                        cond = function() return package.loaded['neotest'] ~= nil end,
+                    },
                 },
                 lualine_x = {
                     {
