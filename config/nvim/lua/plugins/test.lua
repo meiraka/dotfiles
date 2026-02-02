@@ -44,22 +44,12 @@ return {
                     end
                     return {}
                 end,
-                -- set g:neotest_statusline
+                -- lualine status line
                 statusline = function(client)
                     local m = { lualine = "" }
                     local listener = function(adapter_id, _, _)
-                        local icons = {
-                            passed = "",
-                            failed = "",
-                            skipped = "",
-                            running = "",
-                        }
-                        local status = {
-                            passed = 0,
-                            failed = 0,
-                            skipped = 0,
-                            running = 0,
-                        }
+                        local config = require('neotest.config')
+                        local status = { passed = 0, failed = 0, skipped = 0, running = 0 }
                         local tree = assert(client:get_position(nil, { adapter = adapter_id }))
                         local results = client:get_results(adapter_id)
                         for _, pos in tree:iter() do
@@ -73,9 +63,9 @@ return {
                             end
                         end
                         local result = {}
-                        for k, v in pairs(icons) do
+                        for k, v in pairs(status) do
                             if status[k] > 0 then
-                                table.insert(result, string.format('%%#%s#%s %d', "Neotest" .. k, v, status[k]))
+                                table.insert(result, string.format('%%#%s#%s %d', config.highlights[k], config.icons[k], v))
                             end
                         end
                         m.lualine = table.concat(result, ' ')
@@ -83,7 +73,40 @@ return {
                     client.listeners.run = listener
                     client.listeners.results = listener
                     return m
-                end
+                end,
+                -- update golang config on the fly
+                golang = function(_)
+                    return {
+                        -- update build tag
+                        tags = function(tags)
+                            local config = require('neotest.config')
+                            local new_args = {}
+                            -- remove tags from go_test_args
+                            local skip = false
+                            for _, v in ipairs(config.adapters_config["neotest-golang"].go_test_args) do
+                                if v == "-tags" then
+                                    skip = true
+                                elseif skip then
+                                    skip = false
+                                else
+                                    table.insert(new_args, v)
+                                end
+                            end
+                            -- add new tags
+                            for _, v in ipairs(tags) do
+                                table.insert(new_args, "-tags")
+                                table.insert(new_args, v)
+                            end
+                            -- update config
+                            config.adapters_config["neotest-golang"].go_test_args = new_args
+                            config.adapters = {}
+                            for k, v in pairs(config.adapters_config) do
+                                table.insert(config.adapters, require(k)(v))
+                            end
+                            require("neotest").setup(config)
+                        end,
+                    }
+                end,
             },
             adapters_config = {
                 ["neotest-golang"] = {
@@ -109,38 +132,6 @@ return {
             opts.adapters = {}
             for k, v in pairs(opts.adapters_config) do
                 table.insert(opts.adapters, require(k)(v))
-            end
-            -- update golang config on the fly
-            opts.consumers.golang = function(_)
-                return {
-                    -- update build tag
-                    tags = function(tags)
-                        local new_args = {}
-                        -- remove tags from go_test_args
-                        local skip = false
-                        for _, v in ipairs(opts.adapters_config["neotest-golang"].go_test_args) do
-                            if v == "-tags" then
-                                skip = true
-                            elseif skip then
-                                skip = false
-                            else
-                                table.insert(new_args, v)
-                            end
-                        end
-                        -- add new tags
-                        for _, v in ipairs(tags) do
-                            table.insert(new_args, "-tags")
-                            table.insert(new_args, v)
-                        end
-                        -- update config
-                        opts.adapters_config["neotest-golang"].go_test_args = new_args
-                        opts.adapters = {}
-                        for k, v in pairs(opts.adapters_config) do
-                            table.insert(opts.adapters, require(k)(v))
-                        end
-                        require("neotest").setup(opts)
-                    end,
-                }
             end
 
             require("neotest").setup(opts)
