@@ -64,6 +64,7 @@ return {
                 },
             },
             cmdline = {
+                enabled = false,
                 sources = { 'buffer', 'cmdline', 'cmdline_history' },
                 completion = {
                     list = { selection = { preselect = false, auto_insert = true } },

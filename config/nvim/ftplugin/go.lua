@@ -18,16 +18,11 @@ local go_tags = function(p)
     end
     for k, _ in pairs(tags) do tags[k] = nil end
     local flags = {}
-    local go_test_args = {
-        "-v", "-race", "-count=1",
-        "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
-    }
 
     local t = p.fargs
     for i = 1, #t do
         table.insert(tags, t[i])
         table.insert(flags, '-tags=' .. t[i])
-        table.insert(go_test_args, '-tags=' .. t[i])
     end
 
     local lspconfig = {
@@ -44,13 +39,7 @@ local go_tags = function(p)
         v.stop()
     end
     vim.defer_fn(function() vim.cmd("e") end, 100)
-    require("neotest").setup({
-        adapters = {
-            require('neotest-golang')({
-                go_test_args = go_test_args,
-            })
-        },
-    })
+    require("neotest").golang.tags(t)
 end
 
 vim.api.nvim_create_user_command('GoTags', go_tags, { nargs = '*' })

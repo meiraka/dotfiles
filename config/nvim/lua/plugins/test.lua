@@ -33,79 +33,117 @@ return {
                 },
             },
         },
-        config = function()
-            require("neotest").setup({
-                consumers = {
-                    -- call CoverageLoad after test
-                    coverage = function(client)
-                        client.listeners.results = function(_, _, partial)
-                            if not partial then
-                                require("coverage").load(true)
-                            end
+        opts = {
+            consumers = {
+                -- call CoverageLoad after test
+                coverage = function(client)
+                    client.listeners.results = function(_, _, partial)
+                        if not partial then
+                            require("coverage").load(true)
                         end
-                        return {}
-                    end,
-                    -- set g:neotest_statusline
-                    statusline = function(client)
-                        local m = { lualine = "" }
-                        local listener = function(adapter_id, _, _)
-                            local icons = {
-                                passed = "",
-                                failed = "",
-                                skipped = "",
-                                running = "",
-                            }
-                            local status = {
-                                passed = 0,
-                                failed = 0,
-                                skipped = 0,
-                                running = 0,
-                            }
-                            local tree = assert(client:get_position(nil, { adapter = adapter_id }))
-                            local results = client:get_results(adapter_id)
-                            for _, pos in tree:iter() do
-                                if pos.type == "test" then
-                                    local result = results[pos.id]
-                                    if result and status[result.status] ~= nil then
-                                        status[result.status] = status[result.status] + 1
-                                    elseif client:is_running(pos.id, { adapter = adapter_id }) then
-                                        status.running = status.running + 1
-                                    end
-                                end
-                            end
-                            local result = {}
-                            for k, v in pairs(icons) do
-                                if status[k] > 0 then
-                                    table.insert(result, string.format('%%#%s#%s %d', "Neotest" .. k, v, status[k]))
-                                end
-                            end
-                            m.lualine = table.concat(result, ' ')
-                        end
-                        client.listeners.run = listener
-                        client.listeners.results = listener
-                        return m
                     end
-                },
-                adapters = {
-                    require("neotest-golang")({
-                        runner = "gotestsum",
-                        go_test_args = {
-                            "-v",
-                            "-race",
-                            "-count=1",
-                            "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
-                        },
-                        warn_test_name_dupes = false,
-                        sanitize_output = true,
-                    }),
-                },
-                icons = {
-                    passed = "",
-                    running = "",
-                    failed = "",
-                    unknown = ""
-                },
-            })
+                    return {}
+                end,
+                -- set g:neotest_statusline
+                statusline = function(client)
+                    local m = { lualine = "" }
+                    local listener = function(adapter_id, _, _)
+                        local icons = {
+                            passed = "",
+                            failed = "",
+                            skipped = "",
+                            running = "",
+                        }
+                        local status = {
+                            passed = 0,
+                            failed = 0,
+                            skipped = 0,
+                            running = 0,
+                        }
+                        local tree = assert(client:get_position(nil, { adapter = adapter_id }))
+                        local results = client:get_results(adapter_id)
+                        for _, pos in tree:iter() do
+                            if pos.type == "test" then
+                                local result = results[pos.id]
+                                if result and status[result.status] ~= nil then
+                                    status[result.status] = status[result.status] + 1
+                                elseif client:is_running(pos.id, { adapter = adapter_id }) then
+                                    status.running = status.running + 1
+                                end
+                            end
+                        end
+                        local result = {}
+                        for k, v in pairs(icons) do
+                            if status[k] > 0 then
+                                table.insert(result, string.format('%%#%s#%s %d', "Neotest" .. k, v, status[k]))
+                            end
+                        end
+                        m.lualine = table.concat(result, ' ')
+                    end
+                    client.listeners.run = listener
+                    client.listeners.results = listener
+                    return m
+                end
+            },
+            adapters_config = {
+                ["neotest-golang"] = {
+                    runner = "gotestsum",
+                    go_test_args = {
+                        "-v",
+                        "-race",
+                        "-count=1",
+                        "-coverprofile=" .. vim.fn.getcwd() .. "/coverage.out",
+                    },
+                    warn_test_name_dupes = false,
+                    sanitize_output = true,
+                }
+            },
+            icons = {
+                passed = "",
+                running = "",
+                failed = "",
+                unknown = ""
+            },
+        },
+        config = function(_, opts)
+            opts.adapters = {}
+            for k, v in pairs(opts.adapters_config) do
+                table.insert(opts.adapters, require(k)(v))
+            end
+            -- update golang config on the fly
+            opts.consumers.golang = function(_)
+                return {
+                    -- update build tag
+                    tags = function(tags)
+                        local new_args = {}
+                        -- remove tags from go_test_args
+                        local skip = false
+                        for _, v in ipairs(opts.adapters_config["neotest-golang"].go_test_args) do
+                            if v == "-tags" then
+                                skip = true
+                            elseif skip then
+                                skip = false
+                            else
+                                table.insert(new_args, v)
+                            end
+                        end
+                        -- add new tags
+                        for _, v in ipairs(tags) do
+                            table.insert(new_args, "-tags")
+                            table.insert(new_args, v)
+                        end
+                        -- update config
+                        opts.adapters_config["neotest-golang"].go_test_args = new_args
+                        opts.adapters = {}
+                        for k, v in pairs(opts.adapters_config) do
+                            table.insert(opts.adapters, require(k)(v))
+                        end
+                        require("neotest").setup(opts)
+                    end,
+                }
+            end
+
+            require("neotest").setup(opts)
         end,
         keys = {
             {
