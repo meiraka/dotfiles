@@ -168,10 +168,10 @@ return {
                 end,
                 desc = 'Test current dir'
             },
-            { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
-            { '<leader>to', function() require("neotest").output_panel.toggle() end,            desc = 'Toggle test output' },
-            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Previous test failed' },
-            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
+            { '<leader>ts', function() require("neotest").summary.toggle() end,                                                       desc = 'Toggle test summary' },
+            { '<leader>to', function() Snacks.win({ buf = require('neotest').output_panel.buffer(), width = 0.8, height = 0.8 }) end, desc = 'Test output' },
+            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end,                                       desc = 'Previous test failed' },
+            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end,                                       desc = 'Next test failed' },
         },
     },
 }
