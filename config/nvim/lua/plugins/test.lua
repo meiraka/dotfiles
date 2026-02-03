@@ -35,6 +35,30 @@ return {
         },
         opts = {
             consumers = {
+                floating_output_panel = function(client)
+                    local neotest = require("neotest")
+                    local m = {}
+                    m.update_buf = function()
+                        if m.win == nil then
+                            return
+                        end
+                        local buf = neotest.output_panel.buffer()
+                        if m.win.buf ~= buf then
+                            m.win:set_buf(buf)
+                            m.win:redraw()
+                        end
+                    end
+                    client.listeners.results = function(_, _, _) m.update_buf() end
+                    m.toggle = function()
+                        if m.win == nil then
+                            m.win = Snacks.win({ buf = neotest.output_panel.buffer(), width = 0.8, height = 0.8 })
+                            return
+                        end
+                        m.update_buf()
+                        m.win:toggle()
+                    end
+                    return m
+                end,
                 -- call CoverageLoad after test
                 coverage = function(client)
                     client.listeners.results = function(_, _, partial)
@@ -168,10 +192,10 @@ return {
                 end,
                 desc = 'Test current dir'
             },
-            { '<leader>ts', function() require("neotest").summary.toggle() end,                                                       desc = 'Toggle test summary' },
-            { '<leader>to', function() Snacks.win({ buf = require('neotest').output_panel.buffer(), width = 0.8, height = 0.8 }) end, desc = 'Test output' },
-            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end,                                       desc = 'Previous test failed' },
-            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end,                                       desc = 'Next test failed' },
+            { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
+            { '<leader>to', function() require("neotest").floating_output_panel.toggle() end,   desc = 'Toggle test output' },
+            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Previous test failed' },
+            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
         },
     },
 }
