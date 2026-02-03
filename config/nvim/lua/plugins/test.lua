@@ -47,7 +47,7 @@ return {
                 -- lualine status line
                 statusline = function(client)
                     local m = { lualine = "" }
-                    local listener = function(adapter_id, _, _)
+                    local listener = function(adapter_id, _, partial)
                         local config = require('neotest.config')
                         local status = { passed = 0, failed = 0, skipped = 0, running = 0 }
                         local tree = assert(client:get_position(nil, { adapter = adapter_id }))
@@ -64,7 +64,7 @@ return {
                         end
                         local result = {}
                         for k, v in pairs(status) do
-                            if status[k] > 0 then
+                            if v > 0 or (k == "running" and partial) then
                                 table.insert(result, string.format('%%#%s#%s %d', config.highlights[k], config.icons[k], v))
                             end
                         end
@@ -89,10 +89,11 @@ return {
                 }
             },
             icons = {
-                passed = "",
-                running = "",
-                failed = "",
-                unknown = ""
+                passed = "",
+                running = "",
+                failed = "",
+                unknown = "",
+                skipped = "",
             },
         },
         config = function(_, opts)
