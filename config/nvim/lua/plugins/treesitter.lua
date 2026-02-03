@@ -139,7 +139,7 @@ return {
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
-        opts = {},
+        opts = { max_lines = 1 },
     },
     {
         'Wansmer/treesj',
