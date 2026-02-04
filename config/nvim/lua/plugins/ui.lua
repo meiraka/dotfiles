@@ -175,6 +175,10 @@ return {
             indent = {
                 enabled = true,
                 animate = { enabled = false },
+                chunk = {
+                    enabled = true,
+                    char = { corner_top = "╭", corner_bottom = "╰", },
+                },
             },
             input = { enabled = true },
             picker = { enabled = true },
