@@ -51,8 +51,13 @@ return {
                     client.listeners.results = function(_, _, _) m.update_buf() end
                     m.toggle = function()
                         if m.win == nil then
-                            m.win = Snacks.win({ buf = neotest.output_panel.buffer(), width = 0.8, height = 0.8 })
-                            return
+                            m.win = Snacks.win({
+                                buf = neotest.output_panel.buffer(),
+                                border = 'rounded',
+                                backdrop = false,
+                                width = 0.8,
+                                height = 0.8,
+                            })
                         end
                         m.update_buf()
                         m.win:toggle()
