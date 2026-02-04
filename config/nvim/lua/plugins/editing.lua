@@ -1,15 +1,5 @@
 return {
     {
-        "machakann/vim-sandwich",
-        keys = {
-            { "sa" },
-            { "sd" },
-            { "sr" },
-            { "ib", mode = { "x" } },
-            { "ab", mode = { "x" } },
-        },
-    },
-    {
         "monaqa/dial.nvim",
         keys = {
             { "<C-a>",  function() require("dial.map").manipulate("increment", "normal") end,  help = "increment" },
@@ -20,6 +10,17 @@ return {
             { "<C-x>",  function() require("dial.map").manipulate("decrement", "visual") end,  help = "decrement",       mode = { "x" } },
             { "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end, help = "increment group", mode = { "x" } },
             { "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end, help = "decrement group", mode = { "x" } },
+        },
+    },
+    {
+        'Wansmer/treesj',
+        opts = {
+            use_default_keymaps = false,
+            max_join_length = 240,
+        },
+        keys = {
+            { "<leader>j", function() require('treesj').join() end,  desc = "Join block of code" },
+            { "<leader>s", function() require('treesj').split() end, desc = "Split block of code" },
         },
     },
 }

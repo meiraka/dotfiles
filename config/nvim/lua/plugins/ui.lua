@@ -333,4 +333,8 @@ return {
             { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "TODO", },
         },
     },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        opts = { max_lines = 1 },
+    },
 }
