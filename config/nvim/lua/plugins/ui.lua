@@ -242,8 +242,11 @@ return {
         opts = {
             presets = { command_palette = true },
             views = {
-                cmdline_popup = { position = { row = -17.5, col = "50%" } },
-                cmdline_popupmenu = { position = { row = -20.5, col = "50%" } },
+                cmdline_popup = { position = { row = 17.5, col = "50%" } },
+                cmdline_popupmenu = {
+                    position = { row = 19.5, col = "50%" },
+                    border = { style = { "├", "─", "┤", "│", "╯", "─", "╰", "│" } },
+                },
             },
             lsp = {
                 override = {
