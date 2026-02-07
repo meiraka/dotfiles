@@ -1,3 +1,5 @@
+local spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+local spinner_len = 10
 return {
     {
         'sainnhe/gruvbox-material',
@@ -59,7 +61,13 @@ return {
                     },
                     { 'diagnostics' },
                     {
-                        function() return require('neotest').statusline.lualine end,
+                        function()
+                            local neotest = require('neotest')
+                            if neotest.statusline.running then
+                                return spinner[os.time() % spinner_len] .. " " .. neotest.statusline.lualine
+                            end
+                            return neotest.statusline.lualine
+                        end,
                         cond = function() return package.loaded['neotest'] ~= nil end,
                     },
                 },

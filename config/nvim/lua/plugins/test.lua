@@ -75,7 +75,7 @@ return {
                 end,
                 -- lualine status line
                 statusline = function(client)
-                    local m = { lualine = "" }
+                    local m = { lualine = "", running = false }
                     local listener = function(adapter_id, _, partial)
                         local config = require('neotest.config')
                         local status = { passed = 0, failed = 0, skipped = 0, running = 0 }
@@ -97,8 +97,10 @@ return {
                                 table.insert(result, string.format('%%#%s#%s %d', config.highlights[k], config.icons[k], v))
                             end
                         end
+                        m.running = partial
                         m.lualine = table.concat(result, ' ')
                     end
+                    client.listeners.starting = function() m.running = true end
                     client.listeners.run = listener
                     client.listeners.results = listener
                     return m
