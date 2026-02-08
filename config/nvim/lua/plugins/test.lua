@@ -58,6 +58,7 @@ return {
                                 width = 0.8,
                                 height = 0.8,
                             })
+                            return
                         end
                         m.update_buf()
                         m.win:toggle()
