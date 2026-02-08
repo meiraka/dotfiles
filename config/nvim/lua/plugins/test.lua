@@ -199,7 +199,8 @@ return {
                 end,
                 desc = 'Test current dir'
             },
-            { '<leader>ts', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
+            { '<leader>ts', function() require("neotest").run.stop() end,                       desc = 'Stop test' },
+            { '<leader>tp', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
             { '<leader>to', function() require("neotest").floating_output_panel.toggle() end,   desc = 'Toggle test output' },
             { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Previous test failed' },
             { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
