@@ -160,7 +160,14 @@ return {
         build = function()
             if vim.fn.executable('rg') == 0 then
                 if vim.fn.executable('cargo') == 1 then
-                    vim.fn.jobstart('cargo install ripgrep')
+                    vim.notify("install ripgrep", vim.log.levels.INFO)
+                    vim.system({ 'cargo', 'install', 'ripgrep' }):wait()
+                end
+            end
+            if vim.fn.executable('ghq') == 0 then
+                if vim.fn.executable('go') == 1 then
+                    vim.notify("install ghq", vim.log.levels.INFO)
+                    vim.system({ "go", "install", "github.com/x-motemen/ghq@latest" }):wait()
                 end
             end
         end,
@@ -250,6 +257,32 @@ return {
             { "<leader>un",      function() Snacks.notifier.hide() end,                                  desc = "Dismiss All Notifications" },
             { "]]",              function() Snacks.words.jump(vim.v.count1) end,                         desc = "Next Reference",           mode = { "n", "t" } },
             { "[[",              function() Snacks.words.jump(-vim.v.count1) end,                        desc = "Prev Reference",           mode = { "n", "t" } },
+
+
+            {
+                "<leader>p",
+                function()
+                    Snacks.picker({
+                        finder = "proc",
+                        cmd = "ghq",
+                        args = { "list", "--full-path" },
+                        transform = function(item)
+                            item.file = item.text
+                            item.dir = true
+                        end,
+                        confirm = function(picker, item)
+                            if item then
+                                picker:close()
+                                vim.cmd.cd(Snacks.picker.util.dir(item))
+                                vim.cmd.enew()
+                                vim.cmd.only()
+                                Snacks.picker.smart({ filter = { cwd = true } })
+                            end
+                        end
+                    })
+                end,
+                desc = "Projects"
+            },
         },
     },
     {
