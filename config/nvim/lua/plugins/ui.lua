@@ -263,6 +263,7 @@ return {
                 "<leader>p",
                 function()
                     Snacks.picker({
+                        title = "Projects",
                         finder = "proc",
                         cmd = "ghq",
                         args = { "list", "--full-path" },
