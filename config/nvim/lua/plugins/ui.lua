@@ -156,7 +156,7 @@ return {
     {
         "folke/snacks.nvim",
         lazy = false,
-        priority = 900,
+        priority = 1000,
         build = function()
             if vim.fn.executable('rg') == 0 then
                 if vim.fn.executable('cargo') == 1 then
