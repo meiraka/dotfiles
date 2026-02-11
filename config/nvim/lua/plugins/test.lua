@@ -26,7 +26,9 @@ return {
                 lazy = true,
                 version = "*",
                 build = function()
-                    vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
+                    if vim.fn.executable('go') == 1 then
+                        vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
+                    end
                 end,
                 dependencies = {
                     "uga-rosa/utf8.nvim",
