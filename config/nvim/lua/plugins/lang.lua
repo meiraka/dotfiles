@@ -1,6 +1,24 @@
 return {
-    { 'mechatroner/rainbow_csv', ft = "csv", },
-    { 'mattn/vim-goimports',     ft = "go", },
+    {
+        "hat0uma/csvview.nvim",
+        opts = {
+            view = {
+                display_mode = "border",
+            },
+        },
+        config = function(_, opts)
+            require('csvview').setup(opts)
+            require('csvview').enable()
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = { "csv", "tsv" },
+                callback = function()
+                    require("csvview").enable()
+                end,
+            })
+        end,
+        ft = { "csv", "tsv" },
+    },
+    { 'mattn/vim-goimports', ft = "go", },
     {
         'MeanderingProgrammer/render-markdown.nvim',
         opts = {
