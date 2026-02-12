@@ -21,6 +21,7 @@ return {
                 'json', 'yaml', 'promql',
                 'regex',
                 'markdown', 'markdown_inline',
+                'proto', 'sql',
             },
         },
         config = function(_, opts)
