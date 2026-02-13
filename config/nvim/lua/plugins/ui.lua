@@ -178,7 +178,6 @@ return {
                     col = -1,
                 },
             },
-            bigfile = { enabled = true },
             explorer = {
                 enabled = true,
                 replace_netrw = true,
