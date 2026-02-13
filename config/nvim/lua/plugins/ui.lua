@@ -275,7 +275,6 @@ return {
                                 vim.cmd.cd(Snacks.picker.util.dir(item))
                                 vim.cmd.enew()
                                 vim.cmd.only()
-                                Snacks.picker.smart({ filter = { cwd = true } })
                             end
                         end
                     })
