@@ -11,6 +11,18 @@ return {
             { "g<C-a>", function() require("dial.map").manipulate("increment", "gvisual") end, desc = "increment group", mode = { "x" } },
             { "g<C-x>", function() require("dial.map").manipulate("decrement", "gvisual") end, desc = "decrement group", mode = { "x" } },
         },
+        config = function()
+            local augend = require("dial.augend")
+            require("dial.config").augends:register_group {
+                default = {
+                    augend.integer.alias.decimal,
+                    augend.date.alias["%Y/%m/%d"],
+                    augend.constant.alias.bool,
+                    augend.constant.alias.Bool,
+                    augend.semver.alias.semver,
+                },
+            }
+        end
     },
     {
         'Wansmer/treesj',
