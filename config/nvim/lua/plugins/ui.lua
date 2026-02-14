@@ -107,6 +107,9 @@ return {
                 margin = { horizontal = 0 },
             },
             render = function(props)
+                if props.focused then
+                    return {}
+                end
                 local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
                 if filename == '' then
                     filename = '[No Name]'
