@@ -1,16 +1,29 @@
 return {
+    -- {
+    --     'sainnhe/gruvbox-material',
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         -- Optionally configure and load the colorscheme
+    --         -- directly inside the plugin declaration.
+    --         vim.g.gruvbox_material_sign_column_background = 'linenr'
+    --         vim.g.gruvbox_material_dim_inactive_windows = true
+    --         vim.g.gruvbox_material_background = 'hard'
+    --         -- vim.cmd.colorscheme('gruvbox-material')
+    --     end,
+    -- },
     {
-        'sainnhe/gruvbox-material',
+        'rebelot/kanagawa.nvim',
         lazy = false,
         priority = 1000,
         config = function()
-            -- Optionally configure and load the colorscheme
-            -- directly inside the plugin declaration.
-            vim.g.gruvbox_material_sign_column_background = 'linenr'
-            vim.g.gruvbox_material_dim_inactive_windows = true
-            vim.g.gruvbox_material_background = 'hard'
-            vim.cmd.colorscheme('gruvbox-material')
-        end,
+            require('kanagawa').setup({
+                compile = false,
+                keywordStyle = { italic = false },
+                background = { dark = "dragon" },
+            })
+            vim.cmd.colorscheme('kanagawa')
+        end
     },
     {
         "echasnovski/mini.icons",
@@ -32,7 +45,7 @@ return {
         opts = {
             options = {
                 globalstatus = true,
-                theme = 'gruvbox-material',
+                theme = 'auto',
                 section_separators = { left = '', right = '' },
                 component_separators = { left = '', right = '' },
             },
