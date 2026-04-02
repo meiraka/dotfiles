@@ -36,7 +36,7 @@ local go_tags = function(p)
     vim.lsp.config('gopls', lspconfig)
     -- restart gopls
     for _, v in ipairs(vim.lsp.get_clients({ name = 'gopls' })) do
-        v.stop()
+        v:stop()
     end
     vim.defer_fn(function() vim.cmd("e") end, 100)
     require("neotest").golang.tags(t)
