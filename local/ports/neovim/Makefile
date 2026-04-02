@@ -4,7 +4,7 @@ all:: install
 
 USER=neovim
 REPO=neovim
-VERSION=v0.11.6
+VERSION=v0.12.0
 
 INSTALL_DIR=$(HOME)/.local/opt
 INSTALL_PREFIX?=$(INSTALL_DIR)/nvim-$(patsubst v%,%,$(VERSION))
