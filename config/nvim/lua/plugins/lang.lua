@@ -31,7 +31,7 @@ return {
                 border = 'thick',
             },
         },
-        ft = { "markdown" },
+        ft = { "markdown", "codecompanion" },
     },
     {
         '3rd/diagram.nvim',
