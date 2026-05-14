@@ -43,7 +43,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawn "sh ~/.xmonad/autostart.sh"
 
-myTerminal = "kitty"
+myTerminal = "wezterm"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
@@ -67,7 +67,7 @@ myLayoutHook = lessBorders OnlyScreenFloat $ toggleLayouts full (sparse ||| avoi
 scratchpads =
   [ NS
       "terminal"
-      "kitty --class terminalScratchpad"
+      "wezterm start --class terminalScratchpad"
       (className =? "terminalScratchpad")
       large,
     NS
