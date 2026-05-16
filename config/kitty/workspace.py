@@ -6,7 +6,7 @@ from kittens.tui.handler import kitten_ui
 
 @kitten_ui(allow_remote_control=True)
 def main(args: list[str]) -> str:
-    title = args[1]
+    target = args[1]
     cp = main.remote_control(
         ['ls'], capture_output=True)
     if cp.returncode != 0:
@@ -16,7 +16,8 @@ def main(args: list[str]) -> str:
     # find tab which title is args[1]
     for w in output:
         for t in w["tabs"]:
-            if t["title"] == title:
+            tabname = t["title"]
+            if tabname == target:
                 break
         else:
             continue
@@ -24,9 +25,8 @@ def main(args: list[str]) -> str:
     else:
         # if tab is not exists, create new tab
         main.remote_control(
-            ['launch', '--type=tab', '--tab-title', title], check=True)
+            ['launch', '--type=tab', '--tab-title', target], check=True)
 
     # focus
-    main.remote_control(['focus-tab', '--match', 'title:'+title], check=True)
-
+    main.remote_control(['focus-tab', '--match', 'title:'+target], check=True)
     return ""
