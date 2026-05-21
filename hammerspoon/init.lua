@@ -6,7 +6,7 @@ local window = require('hs.window')
 
 local function toggle(appName)
     return function()
-        local app = application.get(appName)
+        local app = application.find(appName, true)
         if app == nil then
             app = application.open(appName)
         end
@@ -30,4 +30,4 @@ local function toggle(appName)
 end
 
 
-hotkey.bind({ "cmd" }, "space", toggle('WezTerm'))
+hotkey.bind({ "cmd" }, "space", toggle('kitty'))
