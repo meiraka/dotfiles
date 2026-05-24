@@ -74,6 +74,7 @@ add-zle-hook-widget zle-line-pre-redraw update_prompt
 function set_user_var() {
     if [ "$TERM" = "tmux-256color" ]; then
         tmux set-environment "$1" "$2"
+        tmux refresh -S
     else
         printf "\033]1337;SetUserVar=%s=%s\007" $1 `echo -n $2 | base64`
     fi
