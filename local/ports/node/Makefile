@@ -1,7 +1,7 @@
 .PHONY: clean install
 install: link
 
-VERSION=v25.2.1
+VERSION=v24.16.0
 INSTALL_PREFIX?=$(HOME)
 INSTALL_DIR=$(INSTALL_PREFIX)/.local/opt
 
@@ -41,12 +41,11 @@ $(TARGET_LINK): $(TARGET)
 
 link: $(TARGET_LINK)
 
-src:
-	@git clone git@github.com:nodejs/node.git src
+GITHUB_RELEASES = https://api.github.com/repos/nodejs/node/releases
 
 .PHONY: update version versions
-update: src
-	$(eval NEW_VERSION := $(shell cd src && git fetch && git tag | grep -E ^v[0-9]+\.[0-9]+\.[0-9]+$ | sort --version-sort | tail -n 1))
+update:
+	$(eval NEW_VERSION := $(shell curl -sL $(GITHUB_RELEASES) | jq -r '[.[] | select(.name | contains("LTS"))][0].tag_name'))
 	@if [ "$(NEW_VERSION)" = "" ]; then echo failed to fetch tag; exit 1; fi
 	@sed -i -e "s/VERSION=$(VERSION)/VERSION=$(NEW_VERSION)/" Makefile
 	$(MAKE) link
@@ -54,8 +53,8 @@ update: src
 version:
 	@echo $(VERSION)
 
-versions: src
-	@cd src && git tag
+versions:
+	@curl -s $(GITHUB_RELEASES) | jq -r '[.[] | select(.name | contains("LTS"))][].tag_name'
 
 INSTALLED=$(subst -$(OS),,$(subst node-,,$(notdir $(shell readlink $(TARGET_LINK)))))
 installed:
