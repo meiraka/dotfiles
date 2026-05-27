@@ -47,7 +47,6 @@ config.keys = {
 
 config.window_decorations = "NONE"
 config.window_padding = { left = '0.5cell', right = 0, top = '0.25cell', bottom = 0 }
-config.enable_tab_bar = true
 config.show_new_tab_button_in_tab_bar = false
 config.show_tabs_in_tab_bar = false
 config.use_fancy_tab_bar = false
@@ -59,17 +58,19 @@ config.audible_bell = "Disabled"
 config.use_ime = true
 config.send_composed_key_when_right_alt_is_pressed = false
 
+config.enable_tab_bar = false
 -- workspaces
-local workspaces = 8
-for i = 1, workspaces do
-    table.insert(config.keys, {
-        key = tostring(i),
-        mods = 'ALT',
-        action = act.SwitchToWorkspace({
-            name = tostring(i),
-        }),
-    })
-end
+-- config.enable_tab_bar = true
+-- local workspaces = 8
+-- for i = 1, workspaces do
+--     table.insert(config.keys, {
+--         key = tostring(i),
+--         mods = 'ALT',
+--         action = act.SwitchToWorkspace({
+--             name = tostring(i),
+--         }),
+--     })
+-- end
 
 wezterm.on("gui-startup", function()
     -- setup and activate first workspace
@@ -83,65 +84,65 @@ wezterm.on("gui-startup", function()
     end
 end)
 
-wezterm.on('update-status', function(window, pane)
-    -- workspace indicator
-    local wsExists = {}
-    for _, l in ipairs(mux.get_workspace_names()) do wsExists[l] = true end
-    local fmt = {}
-    table.insert(fmt, { Background = { Color = config.colors.tab_bar.background } })
-    for i = 1, workspaces do
-        local ws = tostring(i)
-        if ws == window:active_workspace() then
-            -- active workspace
-            table.insert(fmt, { Foreground = { Color = config.colors.foreground } })
-            table.insert(fmt, { Text = " ●" })
-        elseif wsExists[ws] then
-            -- inactive workspaces
-            table.insert(fmt, { Foreground = { Color = config.colors.tab_bar.inactive_tab_edge } })
-            table.insert(fmt, { Text = " ●" })
-        else
-            -- empty workspaces
-            table.insert(fmt, { Foreground = { Color = config.colors.tab_bar.inactive_tab_edge } })
-            table.insert(fmt, { Text = " ○" })
-        end
-    end
-    table.insert(fmt, { Text = " " })
-    window:set_left_status(wezterm.format(fmt))
-
-    local right = {}
-
-    -- kube context from zshprompt
-    local kube_color = config.colors.ansi[5]
-    local context = pane:get_user_vars().KUBE_CONTEXT
-    if context ~= nil and context ~= "" then
-        powerline.right_hard(right, kube_color)
-        table.insert(right, { Foreground = { Color = config.colors.background } })
-        table.insert(right, { Text = '󱃾' .. ' ' })
-        table.insert(right, { Text = context .. ' ' })
-        local namespace = pane:get_user_vars().KUBE_NAMESPACE
-        if namespace ~= nil and namespace ~= "" then
-            powerline.right_soft(right, config.colors.background)
-            table.insert(right, { Text = namespace .. ' ' })
-        end
-    end
-
-    -- clock
-    if window:get_dimensions().is_full_screen then
-        powerline.right_hard(right, color.pseudo_alpha(config.colors.background, config.colors.foreground, 0.2))
-        table.insert(right, { Foreground = { Color = config.colors.background } })
-        table.insert(right, { Text = wezterm.strftime('%a %b %d %Y %H:%M:%S') .. ' ' })
-    end
-    window:set_right_status(wezterm.format(right))
-end)
-
-wezterm.on("toggle-tabbar", function(window, _)
-    local overrides = window:get_config_overrides() or {}
-    if not overrides.enable_tab_bar then
-        overrides.enable_tab_bar = true
-    else
-        overrides.enable_tab_bar = false
-    end
-    window:set_config_overrides(overrides)
-end)
+-- wezterm.on('update-status', function(window, pane)
+--     -- workspace indicator
+--     local wsExists = {}
+--     for _, l in ipairs(mux.get_workspace_names()) do wsExists[l] = true end
+--     local fmt = {}
+--     table.insert(fmt, { Background = { Color = config.colors.tab_bar.background } })
+--     for i = 1, workspaces do
+--         local ws = tostring(i)
+--         if ws == window:active_workspace() then
+--             -- active workspace
+--             table.insert(fmt, { Foreground = { Color = config.colors.foreground } })
+--             table.insert(fmt, { Text = " ●" })
+--         elseif wsExists[ws] then
+--             -- inactive workspaces
+--             table.insert(fmt, { Foreground = { Color = config.colors.tab_bar.inactive_tab_edge } })
+--             table.insert(fmt, { Text = " ●" })
+--         else
+--             -- empty workspaces
+--             table.insert(fmt, { Foreground = { Color = config.colors.tab_bar.inactive_tab_edge } })
+--             table.insert(fmt, { Text = " ○" })
+--         end
+--     end
+--     table.insert(fmt, { Text = " " })
+--     window:set_left_status(wezterm.format(fmt))
+--
+--     local right = {}
+--
+--     -- kube context from zshprompt
+--     local kube_color = config.colors.ansi[5]
+--     local context = pane:get_user_vars().KUBE_CONTEXT
+--     if context ~= nil and context ~= "" then
+--         powerline.right_hard(right, kube_color)
+--         table.insert(right, { Foreground = { Color = config.colors.background } })
+--         table.insert(right, { Text = '󱃾' .. ' ' })
+--         table.insert(right, { Text = context .. ' ' })
+--         local namespace = pane:get_user_vars().KUBE_NAMESPACE
+--         if namespace ~= nil and namespace ~= "" then
+--             powerline.right_soft(right, config.colors.background)
+--             table.insert(right, { Text = namespace .. ' ' })
+--         end
+--     end
+--
+--     -- clock
+--     if window:get_dimensions().is_full_screen then
+--         powerline.right_hard(right, color.pseudo_alpha(config.colors.background, config.colors.foreground, 0.2))
+--         table.insert(right, { Foreground = { Color = config.colors.background } })
+--         table.insert(right, { Text = wezterm.strftime('%a %b %d %Y %H:%M:%S') .. ' ' })
+--     end
+--     window:set_right_status(wezterm.format(right))
+-- end)
+--
+-- wezterm.on("toggle-tabbar", function(window, _)
+--     local overrides = window:get_config_overrides() or {}
+--     if not overrides.enable_tab_bar then
+--         overrides.enable_tab_bar = true
+--     else
+--         overrides.enable_tab_bar = false
+--     end
+--     window:set_config_overrides(overrides)
+-- end)
 
 return config
