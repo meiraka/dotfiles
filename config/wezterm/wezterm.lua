@@ -28,20 +28,20 @@ config.colors.tab_bar = {
 }
 
 config.disable_default_key_bindings = true
-config.leader = { key = 'f', mods = 'CTRL', timeout_milliseconds = 1000 }
+-- config.leader = { key = 'f', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
-    { key = "L",     mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
-    { key = "w",     mods = "SUPER",      action = act.CloseCurrentTab({ confirm = true }) },
-    { key = "c",     mods = "SUPER",      action = act.CopyTo("ClipboardAndPrimarySelection") },
-    { key = "v",     mods = "SUPER",      action = act.PasteFrom("Clipboard") },
-    { key = "-",     mods = "SUPER",      action = act.DecreaseFontSize },
-    { key = "+",     mods = "SUPER",      action = act.IncreaseFontSize },
-    { key = "0",     mods = "SUPER",      action = act.ResetFontSize },
-    { key = "h",     mods = "LEADER",     action = act.SplitHorizontal({}) },
-    { key = "v",     mods = "LEADER",     action = act.SplitVertical({}) },
-    { key = "Space", mods = "LEADER",     action = act.PaneSelect({}) },
-    { key = "f",     mods = "LEADER",     action = act.ToggleFullScreen },
-    { key = "t",     mods = "ALT",        action = act.EmitEvent("toggle-tabbar") },
+    { key = "L", mods = "CTRL|SHIFT", action = act.ShowDebugOverlay },
+    { key = "w", mods = "SUPER",      action = act.CloseCurrentTab({ confirm = true }) },
+    { key = "c", mods = "SUPER",      action = act.CopyTo("ClipboardAndPrimarySelection") },
+    { key = "v", mods = "SUPER",      action = act.PasteFrom("Clipboard") },
+    { key = "-", mods = "SUPER",      action = act.DecreaseFontSize },
+    { key = "+", mods = "SUPER",      action = act.IncreaseFontSize },
+    { key = "0", mods = "SUPER",      action = act.ResetFontSize },
+    -- { key = "h",     mods = "LEADER",     action = act.SplitHorizontal({}) },
+    -- { key = "v",     mods = "LEADER",     action = act.SplitVertical({}) },
+    -- { key = "Space", mods = "LEADER",     action = act.PaneSelect({}) },
+    -- { key = "f",     mods = "LEADER",     action = act.ToggleFullScreen },
+    -- { key = "t",     mods = "ALT",        action = act.EmitEvent("toggle-tabbar") },
 }
 
 
