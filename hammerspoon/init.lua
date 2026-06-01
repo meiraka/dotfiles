@@ -30,4 +30,4 @@ local function toggle(appName)
 end
 
 
-hotkey.bind({ "cmd" }, "space", toggle('kitty'))
+hotkey.bind({ "cmd" }, "space", toggle('WezTerm'))
