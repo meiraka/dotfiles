@@ -46,13 +46,13 @@ return {
             options = {
                 globalstatus = true,
                 theme = 'auto',
-                section_separators = { left = '', right = '' },
+                section_separators = { left = ' ', right = '' },
                 component_separators = { left = '', right = '' },
             },
             sections = {
                 lualine_a = { 'mode' },
                 lualine_b = {
-                    { 'filetype', icon_only = true, padding = { left = 1 }, separator = '' },
+                    { 'filetype', icon_only = true, padding = {}, separator = '' },
                     { 'filename', symbols = { modified = '', readonly = '' }, padding = { right = 1 }, separator = '' },
                 },
                 lualine_c = {
