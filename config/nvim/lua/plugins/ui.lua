@@ -27,8 +27,12 @@ return {
     },
     {
         "echasnovski/mini.icons",
-        opts = {},
-        lazy = true,
+        opts = {
+            filetype = {
+                codecompanion = { glyph = "󰭻", hl = 'MiniIconsPurple' },
+            },
+        },
+        lazy = false,
         specs = {
             { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
         },
