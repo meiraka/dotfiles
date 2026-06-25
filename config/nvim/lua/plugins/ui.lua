@@ -45,7 +45,6 @@ return {
     },
     {
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {
             options = {
                 globalstatus = true,
@@ -340,7 +339,6 @@ return {
     },
     {
         'folke/trouble.nvim',
-        dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
             auto_close = true,
             preview = {
