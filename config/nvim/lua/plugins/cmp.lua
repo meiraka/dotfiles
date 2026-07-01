@@ -25,6 +25,9 @@ return {
             fuzzy = { sorts = { 'exact', 'score', 'sort_text' } },
             sources = {
                 default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+                per_filetype = {
+                    codecompanion = { "codecompanion" },
+                },
                 providers = {
                     cmdline_history = {
                         name = 'cmdline_history',
