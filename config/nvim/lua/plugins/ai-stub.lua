@@ -8,7 +8,9 @@ return {
     {
         "olimorris/codecompanion.nvim",
         opts = {
-            language = "Japanese",
+            opts = {
+                language = "Japanese",
+            },
             interactions = {
                 -- chat = { adapter = "codex", model = "gpt-4.1" },
             },
