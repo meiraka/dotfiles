@@ -11,9 +11,9 @@ return {
                 min_width = 80,
                 border = 'thick',
             },
-            file_types = { "markdown", "codecompanion", "Avante" },
+            file_types = { "markdown", "codecompanion" },
         },
-        ft = { "markdown", "codecompanion", "Avante" },
+        ft = { "markdown", "codecompanion" },
     },
     {
         '3rd/diagram.nvim',

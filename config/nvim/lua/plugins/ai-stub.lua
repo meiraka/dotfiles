@@ -4,7 +4,6 @@ for _, file in ipairs(vim.fn.readdir(vim.fs.joinpath(vim.fn.stdpath('config'), "
     end
 end
 return {
-    { "yetone/avante.nvim", lazy = true },
     {
         "olimorris/codecompanion.nvim",
         opts = {
