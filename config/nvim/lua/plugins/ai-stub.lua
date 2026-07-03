@@ -1,8 +1,3 @@
-for _, file in ipairs(vim.fn.readdir(vim.fs.joinpath(vim.fn.stdpath('config'), "lua", "plugins"))) do
-    if string.sub(file, 1, 2) == "ai" and file ~= "ai-stub.lua" then
-        return {}
-    end
-end
 return {
     {
         "olimorris/codecompanion.nvim",
@@ -11,10 +6,27 @@ return {
                 language = "Japanese",
             },
             interactions = {
-                -- chat = { adapter = "codex", model = "gpt-4.1" },
+                chat = { adapter = "codex" },
+                inline = { adapter = "" },
+                cli = { adapter = "" },
             },
             adapters = {
-                acp = { opts = { show_presets = false } },
+                acp = {
+                    opts = { show_presets = false },
+                    codex = function()
+                        return require("codecompanion.adapters").extend("codex", {
+                            commands = { default = { "npx", "-y", "@agentclientprotocol/codex-acp" } },
+                        })
+                    end,
+                    claude_code = function()
+                        return require("codecompanion.adapters").extend("claude_code", {
+                            commands = {
+                                default = { "npx", "-y", "@agentclientprotocol/claude-agent-acp" },
+                                yolo = { "npx", "-y", "@agentclientprotocol/claude-agent-acp", "--yolo" },
+                            },
+                        })
+                    end,
+                },
                 http = { opts = { show_presets = false } },
             },
             display = {
@@ -29,7 +41,8 @@ return {
             },
         },
         keys = {
-            { "<leader>'", "<cmd>CodeCompanionChat Toggle<cr>", desc = "Chat" }
+            { "<leader>'", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "CodeCompanion Chat" },
+            { "<C-a>",     "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" }, desc = "CodeCompanion Actions" },
         },
     },
 }
