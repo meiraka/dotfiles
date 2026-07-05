@@ -161,6 +161,8 @@ return {
                 { "<leader>f", group = "Find" },
                 { "<leader>x", group = "List" },
                 { "<leader>l", group = "LSP" },
+                { "<leader>o", group = "Text Objects" },
+                { "<leader>c", group = "File" },
             },
         },
         keys = {
