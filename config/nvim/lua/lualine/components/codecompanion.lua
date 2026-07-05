@@ -41,6 +41,7 @@ local function get_live_codecompanion_state(bufnr)
 
     local adapter = chat.adapter or {}
     out.adapter_type = adapter.type
+    out.adapter_name = adapter.formatted_name
 
     if adapter.type == "acp" and chat.acp_connection then
         local models = chat.acp_connection:get_models() or {}
@@ -79,6 +80,11 @@ local function section_codecompanion(bufnr)
     local adapter = metadata and metadata.adapter or {}
     local parts = {}
 
+    local name = live.adapter_name or adapter.name
+    if name and name ~= "" then
+        table.insert(parts, tostring(name))
+    end
+
     local model = live.model or adapter.model
     if model and model ~= "" then
         table.insert(parts, tostring(model))
@@ -91,7 +97,7 @@ local function section_codecompanion(bufnr)
             mode = metadata.config_options.mode.name or metadata.config_options.mode.current
         end
         if mode then
-            table.insert(parts, "mode:" .. mode)
+            table.insert(parts, " " .. mode)
         end
 
         local thought_level = live.thought_level
@@ -99,7 +105,7 @@ local function section_codecompanion(bufnr)
             thought_level = metadata.config_options.thought_level.name or metadata.config_options.thought_level.current
         end
         if thought_level then
-            table.insert(parts, "thought:" .. thought_level)
+            table.insert(parts, "󰭻 " .. thought_level)
         end
     end
 
@@ -107,7 +113,7 @@ local function section_codecompanion(bufnr)
         return ""
     end
 
-    return "󰭻 " .. table.concat(parts, " | ")
+    return table.concat(parts, " ")
 end
 
 function M:init(options)

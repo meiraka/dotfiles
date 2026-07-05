@@ -57,9 +57,9 @@ return {
                 lualine_b = {
                     { 'filetype', icon_only = true, padding = {}, separator = '' },
                     { 'filename', symbols = { modified = '', readonly = '' }, padding = { right = 1 }, separator = '' },
+                    { 'codecompanion' },
                 },
                 lualine_c = {
-                    { 'codecompanion' },
                     {
                         'diff',
                         symbols = { added = ' ', modified = ' ', removed = ' ' },
