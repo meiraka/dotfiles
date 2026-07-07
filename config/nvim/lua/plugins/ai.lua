@@ -16,6 +16,12 @@ return {
                     codex = function()
                         return require("codecompanion.adapters").extend("codex", {
                             commands = { default = { "npx", "-y", "@agentclientprotocol/codex-acp" } },
+                            env = (function()
+                                if jit.os == "OSX" then
+                                    return { OPENAI_API_KEY = "cmd:security find-generic-password -s 'Codex Auth' -w | jq -r .OPENAI_API_KEY" }
+                                end
+                                return {}
+                            end)
                         })
                     end,
                     claude_code = function()
