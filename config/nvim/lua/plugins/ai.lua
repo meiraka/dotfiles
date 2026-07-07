@@ -21,7 +21,7 @@ return {
                                     return { OPENAI_API_KEY = "cmd:security find-generic-password -s 'Codex Auth' -w | jq -r .OPENAI_API_KEY" }
                                 end
                                 return {}
-                            end)
+                            end)()
                         })
                     end,
                     claude_code = function()
