@@ -26,7 +26,7 @@ return {
             sources = {
                 default = { "lazydev", "lsp", "path", "snippets", "buffer" },
                 per_filetype = {
-                    codecompanion = { "codecompanion" },
+                    codecompanion = { "codecompanion", "path", "buffer" },
                 },
                 providers = {
                     cmdline_history = {
