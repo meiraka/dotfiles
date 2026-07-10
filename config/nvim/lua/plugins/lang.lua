@@ -1,3 +1,4 @@
+local markdown = { "markdown", "codecompanion" }
 return {
     { 'mattn/vim-goimports', ft = "go", },
     {
@@ -11,9 +12,9 @@ return {
                 min_width = 80,
                 border = 'thick',
             },
-            file_types = { "markdown", "codecompanion" },
+            file_types = markdown,
         },
-        ft = { "markdown", "codecompanion" },
+        ft = markdown,
     },
     {
         '3rd/diagram.nvim',
@@ -25,8 +26,13 @@ return {
                     max_width_window_percentage = 50,
                     max_height_window_percentage = 50,
                 },
-                integrations = { markdown = { only_render_image_at_cursor_mode = "inline" } },
-                ft = { "markdown", "norg" },
+                integrations = {
+                    markdown = {
+                        only_render_image_at_cursor_mode = "inline",
+                        filetypes = markdown,
+                    }
+                },
+                ft = markdown,
             }
         },
         config = function()
@@ -57,7 +63,7 @@ return {
                 },
             })
         end,
-        ft = { "markdown", "norg" },
+        ft = markdown,
         keys = {
             {
                 "K", -- or any key you prefer
@@ -65,7 +71,7 @@ return {
                     require("diagram").show_diagram_hover()
                 end,
                 mode = "n",
-                ft = { "markdown", "norg" }, -- Only in these filetypes
+                ft = markdown, -- Only in these filetypes
                 desc = "Show diagram in new tab",
             },
         },
