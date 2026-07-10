@@ -47,8 +47,8 @@ return {
             },
         },
         keys = {
-            { "<leader>'", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "CodeCompanion Chat" },
-            { "<leader>a", "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" }, desc = "CodeCompanion Actions" },
+            { "<M-c>",     "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v", "i" }, desc = "CodeCompanion Chat" },
+            { "<leader>a", "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" },      desc = "CodeCompanion Actions" },
         },
     },
 }
