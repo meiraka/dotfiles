@@ -101,7 +101,7 @@ return {
                 },
                 lualine_x = {
                     {
-                        function() return require("noice").api.status.search.get_hl() end,
+                        function() return require("noice").api.status.search.get():gsub("%s+", " ") end,
                         cond = function() return require("noice").api.status.search.has() end,
                     },
                 },
