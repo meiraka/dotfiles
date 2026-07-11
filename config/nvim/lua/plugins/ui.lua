@@ -98,17 +98,21 @@ return {
                         cond = function() return require("noice").api.status.search.has() end,
                     },
                 },
-                lualine_y = { 'b:gitsigns_status_dict.root', function()
-                    local root = vim.b.gitsigns_status_dict.root
-                    if root == "" then
-                        return ""
-                    end
-                    local cwd = vim.fn.getcwd()
-                    if root == cwd then
-                        return ""
-                    end
-                    return string.sub(cwd, string.len(root) + 2, -1)
-                end
+                lualine_y = {
+                    function()
+                        return vim.fn.fnamemodify(vim.b.gitsigns_status_dict.root, ":~")
+                    end,
+                    function()
+                        local root = vim.b.gitsigns_status_dict.root
+                        if root == "" then
+                            return ""
+                        end
+                        local cwd = vim.fn.getcwd()
+                        if root == cwd then
+                            return ""
+                        end
+                        return string.sub(cwd, string.len(root) + 2, -1)
+                    end,
                 },
                 lualine_z = { { 'b:gitsigns_status_dict.head' } },
             },
