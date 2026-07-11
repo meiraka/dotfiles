@@ -53,7 +53,14 @@ return {
                 component_separators = { left = '', right = '' },
             },
             sections = {
-                lualine_a = { 'mode' },
+                lualine_a = {
+                    'mode',
+                    {
+                        -- set vim.opt.showmode = false
+                        function() return require("noice").api.status.mode.get() end,
+                        cond = function() return require("noice").api.status.mode.has() end,
+                    },
+                },
                 lualine_b = {
                     { 'filetype', icon_only = true, padding = {}, separator = '' },
                     { 'filename', symbols = { modified = '', readonly = '' }, padding = { right = 1 }, separator = '' },
