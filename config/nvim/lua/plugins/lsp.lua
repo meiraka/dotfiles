@@ -6,19 +6,24 @@ vim.api.nvim_create_autocmd('User', {
         vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, { desc = 'LSP Hover' })
 
         -- formatting
+        local fmt_ignore = { 'gopls', 'ts_ls' }
         local fmt_autocmds = {}
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('MyLspAttach', { clear = true }),
             callback = function(args)
                 local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+                for _, name in ipairs(fmt_ignore) do
+                    if name == client.name then
+                        return
+                    end
+                end
                 if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
                     fmt_autocmds[args.data.client_id] = vim.api.nvim_create_autocmd('BufWritePre', {
                         group = vim.api.nvim_create_augroup(tostring(args.data.client_id), { clear = true }),
                         buffer = args.buf,
                         callback = function()
-                            if vim.bo.filetype ~= "go" then
-                                vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
-                            end
+                            vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
                         end,
                     })
                 end
