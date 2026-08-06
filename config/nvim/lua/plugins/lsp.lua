@@ -7,7 +7,6 @@ vim.api.nvim_create_autocmd('User', {
 
         -- formatting
         local fmt_ignore = { 'gopls', 'ts_ls' }
-        local fmt_autocmds = {}
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('MyLspAttach', { clear = true }),
             callback = function(args)
@@ -19,21 +18,13 @@ vim.api.nvim_create_autocmd('User', {
                     end
                 end
                 if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
-                    fmt_autocmds[args.data.client_id] = vim.api.nvim_create_autocmd('BufWritePre', {
-                        group = vim.api.nvim_create_augroup(tostring(args.data.client_id), { clear = true }),
+                    vim.api.nvim_create_autocmd('BufWritePre', {
+                        group = vim.api.nvim_create_augroup('LSPFormat/' .. client.name .. tostring(args.buf), { clear = true }),
                         buffer = args.buf,
                         callback = function()
                             vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
                         end,
                     })
-                end
-            end,
-        })
-        vim.api.nvim_create_autocmd('LspDetach', {
-            group = vim.api.nvim_create_augroup('MyLspDetach', { clear = true }),
-            callback = function(args)
-                if fmt_autocmds[args.data.client_id] ~= nil then
-                    vim.api.nvim_del_autocmd(fmt_autocmds[args.data.client_id])
                 end
             end,
         })
