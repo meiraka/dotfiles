@@ -4,13 +4,16 @@ vim.api.nvim_create_autocmd('User', {
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { desc = 'LSP Rename' })
         vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition, { desc = 'LSP Definition' })
         vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = 'rounded' }) end, { desc = 'LSP Hover' })
+
+        -- formatting
+        local fmt_autocmds = {}
         vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('my.lsp', {}),
+            group = vim.api.nvim_create_augroup('MyLspAttach', { clear = true }),
             callback = function(args)
                 local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
                 if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
-                    vim.api.nvim_create_autocmd('BufWritePre', {
-                        group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
+                    fmt_autocmds[args.data.client_id] = vim.api.nvim_create_autocmd('BufWritePre', {
+                        group = vim.api.nvim_create_augroup(tostring(args.data.client_id), { clear = true }),
                         buffer = args.buf,
                         callback = function()
                             if vim.bo.filetype ~= "go" then
@@ -18,6 +21,14 @@ vim.api.nvim_create_autocmd('User', {
                             end
                         end,
                     })
+                end
+            end,
+        })
+        vim.api.nvim_create_autocmd('LspDetach', {
+            group = vim.api.nvim_create_augroup('MyLspDetach', { clear = true }),
+            callback = function(args)
+                if fmt_autocmds[args.data.client_id] ~= nil then
+                    vim.api.nvim_del_autocmd(fmt_autocmds[args.data.client_id])
                 end
             end,
         })
