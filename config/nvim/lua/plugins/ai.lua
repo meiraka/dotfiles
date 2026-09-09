@@ -47,8 +47,9 @@ return {
             },
         },
         keys = {
-            { "<M-c>",     "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v", "i" }, desc = "CodeCompanion Chat" },
-            { "<leader>a", "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" },      desc = "CodeCompanion Actions" },
+            { "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "CodeCompanion Chat" },
+            { "<C-a>",     "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" }, desc = "CodeCompanion Actions" },
+            { "ga",        "<cmd>CodeCompanionChat Add<cr>",    mode = { "v" },      desc = "CodeCompanion Add" },
         },
     },
 }
