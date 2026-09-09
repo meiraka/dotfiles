@@ -5,3 +5,4 @@ inode/directory=thunar.desktop
 
 [Added Associations]
 image/jpeg=org.xfce.ristretto.desktop;
+image/png=org.xfce.ristretto.desktop;
