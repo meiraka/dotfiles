@@ -24,14 +24,6 @@ return {
                             end)()
                         })
                     end,
-                    claude_code = function()
-                        return require("codecompanion.adapters").extend("claude_code", {
-                            commands = {
-                                default = { "npx", "-y", "@agentclientprotocol/claude-agent-acp" },
-                                yolo = { "npx", "-y", "@agentclientprotocol/claude-agent-acp", "--yolo" },
-                            },
-                        })
-                    end,
                 },
                 http = { opts = { show_presets = false } },
             },
