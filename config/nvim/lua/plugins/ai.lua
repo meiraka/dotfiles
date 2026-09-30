@@ -40,7 +40,7 @@ return {
         },
         keys = {
             { "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "CodeCompanion Chat" },
-            { "<c-a>",     "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" }, desc = "CodeCompanion Actions" },
+            { "<C-a>",     "<cmd>CodeCompanionActions<cr>",     mode = { "n", "v" }, desc = "CodeCompanion Actions" },
             { "ga",        "<cmd>CodeCompanionChat Add<cr>",    mode = { "v" },      desc = "CodeCompanion Add" },
         },
     },
