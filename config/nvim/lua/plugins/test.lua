@@ -34,6 +34,10 @@ return {
                     "uga-rosa/utf8.nvim",
                 },
             },
+            {
+                "rcasia/neotest-java",
+                ft = "java",
+            },
         },
         opts = {
             consumers = {
@@ -122,7 +126,8 @@ return {
                     },
                     warn_test_name_dupes = false,
                     sanitize_output = true,
-                }
+                },
+                ["neotest-java"] = {}
             },
             icons = {
                 passed = "",

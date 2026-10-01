@@ -17,6 +17,7 @@ return {
         opts = {
             ensure_installed = {
                 'bash', 'go',
+                'java', 'groovy',
                 'css', 'html', 'latex',
                 'json', 'yaml', 'promql',
                 'regex',
