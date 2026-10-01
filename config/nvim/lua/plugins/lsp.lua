@@ -40,6 +40,7 @@ vim.api.nvim_create_autocmd('User', {
             },
         })
         vim.lsp.enable({ "hls" })
+        vim.lsp.enable({ "jdtls" })
     end
 })
 return {
@@ -60,4 +61,5 @@ return {
         cmd = { "Mason" },
     },
     { 'neovim/nvim-lspconfig' },
+    { "mfussenegger/nvim-jdtls", ft = "java" },
 }
