@@ -21,6 +21,9 @@ return {
         "vim-test/vim-test",
         config = function()
             vim.g["test#strategy"] = "neovim"
+            vim.g["test#groovy#runner"] = "maventest"
+            vim.g["test#groovy#maventest#file_pattern"] = ".*Test.groovy"
+            vim.g["test#groovy#maventest#options"] = "-am -Dsurefire.failIfNoSpecifiedTests=false"
         end,
         keys = {
             { "<leader>tt", "<cmd>TestNearest<cr>", ft = ft_vim_test, desc = 'Test nearest func' },
