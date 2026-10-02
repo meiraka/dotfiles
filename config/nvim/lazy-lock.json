@@ -48,6 +48,7 @@
   "vim-fugitive": { "branch": "master", "commit": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0" },
   "vim-goimports": { "branch": "master", "commit": "66e23a2a5f76d8a18eea0258c733f23969a607a3" },
   "vim-sandwich": { "branch": "master", "commit": "74cf93d58ccc567d8e2310a69860f1b93af19403" },
+  "vim-test": { "branch": "master", "commit": "0ea8ee90e056118343d843a4406644de5e6b37ea" },
   "vim-vsnip": { "branch": "master", "commit": "9bcfabea653abdcdac584283b5097c3f8760abaa" },
   "wezterm-types": { "branch": "main", "commit": "3dcb284ccd891509727725e64d577bfa151f1bda" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }

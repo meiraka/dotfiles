@@ -1,4 +1,6 @@
 vim.g.neotest_statusline = ""
+local ft_neotest = { "go" }
+local ft_vim_test = { "java", "groovy" }
 return {
     {
         "andythigpen/nvim-coverage",
@@ -13,6 +15,17 @@ return {
         },
         keys = {
             { '<leader>tc', "<cmd>CoverageToggle<cr>", desc = 'Toggle Test Coverage' },
+        },
+    },
+    {
+        "vim-test/vim-test",
+        config = function()
+            vim.g["test#strategy"] = "neovim"
+        end,
+        keys = {
+            { "<leader>tt", "<cmd>TestNearest<cr>", ft = ft_vim_test, desc = 'Test nearest func' },
+            { "<leader>tf", "<cmd>TestFile<cr>",    ft = ft_vim_test, desc = 'Test current file' },
+            { "<leader>ta", "<cmd>TestSuite<cr>",   ft = ft_vim_test, desc = 'Test all' },
         },
     },
     {
@@ -184,6 +197,7 @@ return {
                     t.output_panel.clear()
                     t.run.run()
                 end,
+                ft = ft_neotest,
                 desc = 'Test nearest func'
             },
             {
@@ -198,6 +212,7 @@ return {
                     t.output_panel.clear()
                     t.run.run(path)
                 end,
+                ft = ft_neotest,
                 desc = 'Test current file'
             },
             {
@@ -207,13 +222,14 @@ return {
                     t.output_panel.clear()
                     t.run.run(vim.fn.expand("%:p:h"))
                 end,
+                ft = ft_neotest,
                 desc = 'Test current dir'
             },
-            { '<leader>ts', function() require("neotest").run.stop() end,                       desc = 'Stop test' },
-            { '<leader>tp', function() require("neotest").summary.toggle() end,                 desc = 'Toggle test summary' },
-            { '<leader>to', function() require("neotest").floating_output_panel.toggle() end,   desc = 'Toggle test output' },
-            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, desc = 'Previous test failed' },
-            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, desc = 'Next test failed' },
+            { '<leader>tk', function() require("neotest").run.stop() end,                       ft = ft_neotest, desc = 'Stop test' },
+            { '<leader>ts', function() require("neotest").summary.toggle() end,                 ft = ft_neotest, desc = 'Toggle test summary' },
+            { '<leader>to', function() require("neotest").floating_output_panel.toggle() end,   ft = ft_neotest, desc = 'Toggle test output' },
+            { '[n',         function() require("neotest").jump.prev({ status = "failed" }) end, ft = ft_neotest, desc = 'Previous test failed' },
+            { ']n',         function() require("neotest").jump.next({ status = "failed" }) end, ft = ft_neotest, desc = 'Next test failed' },
         },
     },
 }
