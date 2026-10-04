@@ -40,7 +40,6 @@ vim.api.nvim_create_autocmd('User', {
             },
         })
         vim.lsp.enable({ "hls" })
-        vim.lsp.enable({ "jdtls" })
     end
 })
 return {
@@ -60,6 +59,14 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         cmd = { "Mason" },
     },
+    {
+        'nvim-java/nvim-java',
+        opts = { spring_boot_tools = { enable = false } },
+        ft = "java",
+        config = function(_, opts)
+            require('java').setup(opts)
+            vim.lsp.enable('jdtls')
+        end,
+    },
     { 'neovim/nvim-lspconfig' },
-    { "mfussenegger/nvim-jdtls", ft = "java" },
 }
