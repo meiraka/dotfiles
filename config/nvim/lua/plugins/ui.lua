@@ -63,7 +63,7 @@ return {
                 },
                 lualine_b = {
                     { 'filetype', icon_only = true, padding = {}, separator = '' },
-                    { 'filename', symbols = { modified = '', readonly = '' }, padding = { right = 1 }, separator = '' },
+                    { 'filename', symbols = { modified = '', readonly = '' }, path = 1, padding = { right = 1 }, separator = '' },
                     { 'codecompanion' },
                 },
                 lualine_c = {
