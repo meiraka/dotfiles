@@ -1,3 +1,27 @@
+local package_files = function()
+    local ret = { title = "Package Files", dirs = {}, exclude = {}, formatters = { file = { filename_only = true } } }
+    local path = vim.fn.expand("%:.")
+    local dir = vim.fs.dirname(path)
+    local java = { "java", "groovy" }
+    for _, src_lang in ipairs(java) do
+        if path:match("%." .. src_lang .. "$") then
+            local main = (string.gsub(dir, "src/main", "src/test"))
+            local test = (string.gsub(dir, "src/test", "src/main"))
+            for _, dst_lang in ipairs(java) do
+                table.insert(ret.dirs, (string.gsub(main, src_lang, dst_lang)))
+                table.insert(ret.dirs, (string.gsub(test, src_lang, dst_lang)))
+                -- exclude subdir
+                table.insert(ret.exclude, (string.gsub(main, src_lang, dst_lang)) .. "/*/*")
+                table.insert(ret.exclude, (string.gsub(test, src_lang, dst_lang)) .. "/*/*")
+            end
+            return ret
+        end
+    end
+    table.insert(ret.dirs, dir)
+    table.insert(ret.exclude, dir .. "/*/*")
+    return ret
+end
+
 return {
     -- {
     --     'sainnhe/gruvbox-material',
@@ -264,6 +288,7 @@ return {
             { "<leader>ff",      function() Snacks.picker.files() end,                                   desc = "Find Files" },
             { "<leader>fg",      function() Snacks.picker.git_files() end,                               desc = "Find Git Files" },
             { "<leader>fr",      function() Snacks.picker.recent() end,                                  desc = "Recent" },
+            { "<leader>fp",      function() Snacks.picker.files(package_files()) end,                    desc = "Find Package File" },
             -- git
             { "<leader>gb",      function() Snacks.picker.git_branches() end,                            desc = "Git Branches" },
             { "<leader>gl",      function() Snacks.picker.git_log() end,                                 desc = "Git Log" },
