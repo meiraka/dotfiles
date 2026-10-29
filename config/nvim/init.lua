@@ -17,7 +17,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
-vim.opt.mouse = ""
+vim.opt.mouse = "a"
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.wildmode = "list:longest,full"
 vim.opt.termguicolors = true
